@@ -1,0 +1,31 @@
+<?php
+require_once __DIR__."/../config/function.php";
+?>
+
+<?php include __DIR__ . "/../template/header.php" ?>
+
+<body>
+    <main>
+        <h1 class="mb-5 text-center">ログイン</h1>
+        <form action="./login.php" method="post">
+            <div class="row justify-content-center">
+                <div class="mb-3 col-6">
+                    <label for="user_name" class="form-laber">ユーザー名</label>
+                    <input type="text" name="user_name" id="user_name" class="form-control" autocomplete="user_name" placeholder="半角英数字●●字以上">
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="mb-4 col-6">
+                    <label for="user_name" class="form-laber">パスワード</label>
+                    <input type="text" name="password" id="password" class="form-control" autocomplete="password" placeholder="半角英数字●●字以上">
+                </div>
+            </div>
+            <div class="text-center">
+                <input type="submit" value="ログイン" class="btn btn-primary">
+            </div>
+
+        </form>
+    </main>
+</body>
+
+</html>
