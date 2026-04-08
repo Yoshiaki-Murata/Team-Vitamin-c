@@ -1,0 +1,10 @@
+@charset "UTF-8";
+
+.l-wrapper {
+    margin-inline: clamp(15px, -50.141px + 17.371vw, 200px);
+    margin-block-start: 30px;
+}
+
+.c-title {
+    text-align: center;
+}
