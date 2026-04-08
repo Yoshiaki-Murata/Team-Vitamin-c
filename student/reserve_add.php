@@ -19,7 +19,7 @@ require_once __DIR__ . "/../inc/function.php";
             </li>
             <li class="col card m-1">
                 <p class="card-title text-center">11:00</p>
-                <p class="card-text text-center">空<span>3</span></p>
+                <p class="card-text text-center">空<span>2</span></p>
             </li>
             <li class="col card m-1">
                 <p class="card-title text-center">12:00</p>
@@ -27,7 +27,7 @@ require_once __DIR__ . "/../inc/function.php";
             </li>
             <li class="col card m-1">
                 <p class="card-title text-center">13:00</p>
-                <p class="card-text text-center">空<span>3</span></p>
+                <p class="card-text text-center">空<span>1</span></p>
             </li>
             <li class="col card m-1">
                 <p class="card-title text-center">14:00</p>

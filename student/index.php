@@ -46,7 +46,11 @@ AND rs.carecon_id=2";
     </div>
 
     <div class="mb-5">
-        <h2 class="mb-3">キャリコン予約状況</h2>
+        <div class="row">
+            <h2 class="mb-3 col-auto">キャリコン予約状況</h2>
+            <button class="btn btn-primary btn-sm col-auto" id="mReserveBtn">予約状況確認</button>
+        </div>
+
         <div>
             <table class="table ms-4">
                 <thead>
@@ -109,4 +113,53 @@ AND rs.carecon_id=2";
             <a href="./reserve_add.php" class="btn btn-warning">予約する</a>
         </div>
     </div>
+
+    <!-- モ‐ダル -->
+    <dialog class="modal">
+        <div class="modal-content">
+            <select name="date" id="date" class="mb-3 d-inline-block form-select w-auto">
+                <option value="2026-05-09">2026/5/9</option>
+                <option value="2026-05-16">2026/5/16</option>
+                <option value="2026-05-23">2026/5/23</option>
+            </select>
+            <table>
+                <thead>
+                    <tr>
+                        <th>時間</th>
+                        <th>予約者</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>10:00</td>
+                        <td>田中</td>
+                    </tr>
+                    <tr>
+                        <td>11:00</td>
+                        <td>田中</td>
+                    </tr>
+                    <tr>
+                        <td>12:00</td>
+                        <td>田中</td>
+                    </tr>
+                    <tr>
+                        <td>13:00</td>
+                        <td>田中</td>
+                    </tr>
+                    <tr>
+                        <td>14:00</td>
+                        <td>田中</td>
+                    </tr><tr>
+                        <td>15:00</td>
+                        <td>田中</td>
+                    </tr>
+                    <tr>
+                        <td>16:00</td>
+                        <td>田中</td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </dialog>
 </main>
