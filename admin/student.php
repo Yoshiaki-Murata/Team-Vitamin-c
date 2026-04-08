@@ -40,48 +40,88 @@ student_status.name AS status_name,courses.name AS course_name FROM students INN
 
 require_once './../inc/header.php';
 ?>
-<div class="l-wrapper">
 
-  <h1 class="c-title">学生一覧</h1>
-  <form method="GET" class="mb-3 w-25">
-    <label class="form-label">クラス選択</label>
-    <select name="class_id" class="form-select" onchange="this.form.submit()">
-      <option value="">全クラス</option>
-      <?php foreach ($classes as $class_select): ?>
-        <option value="<?php echo $class_select['id']; ?>"
-          <?php if ($class_select['id'] == $class_id) echo 'selected'; ?>>
-          <?php echo h($class_select['name']); ?>
-        </option>
-      <?php endforeach; ?>
-    </select>
-  </form>
-  <table class="table">
-    <thead>
-      <tr>
-        <th scope="col">出席番号</th>
-        <th scope="col">名前</th>
-        <th scope="col">訓練種別</th>
-        <th scope="col">入校日</th>
-        <th scope="col">終了予定日</th>
-        <th scope="col">パスワード</th>
-        <th scope="col">在籍状況</th>
-        <th scope="col">操作</th>
-      </tr>
-    </thead>
-    <tbody>
-      <?php foreach ($students as $student): ?>
+<body>
+  <div class="l-wrapper">
+
+    <h1 class="c-title">学生一覧</h1>
+    <form method="GET" class="mb-3 w-25">
+      <label class="form-label">クラス選択</label>
+      <select name="class_id" class="form-select" onchange="this.form.submit()">
+        <option value="">全クラス</option>
+        <?php foreach ($classes as $class_select): ?>
+          <option value="<?php echo $class_select['id']; ?>"
+            <?php if ($class_select['id'] == $class_id) echo 'selected'; ?>>
+            <?php echo h($class_select['name']); ?>
+          </option>
+        <?php endforeach; ?>
+      </select>
+    </form>
+    <table class="table">
+      <thead>
         <tr>
-          <th scope="row"><?php echo h($student['class_name'] . $student['number']); ?></th>
-          <td><?php echo h($student['name']); ?></td>
-          <td><?php echo h($student['course_name']); ?></td>
-          <td><?php echo h($student['admission_date']); ?></td>
-          <td><?php echo h($student['graduation_date']); ?></td>
-          <td><?php echo h($student['password']); ?></td>
-          <td><?php echo h($student['status_name']); ?></td>
-          <td><button type="button" class="btn btn-warning">詳細</button></td>
+          <th scope="col">出席番号</th>
+          <th scope="col">名前</th>
+          <th scope="col">訓練種別</th>
+          <th scope="col">入校日</th>
+          <th scope="col">終了予定日</th>
+          <th scope="col">パスワード</th>
+          <th scope="col">在籍状況</th>
+          <th scope="col">操作</th>
         </tr>
-      <?php endforeach; ?>
-</div>
+      </thead>
+      <tbody>
+        <?php foreach ($students as $student): ?>
+          <tr>
+            <th scope="row"><?php echo h($student['class_name'] . $student['number']); ?></th>
+            <td><?php echo h($student['name']); ?></td>
+            <td><?php echo h($student['course_name']); ?></td>
+            <td><?php echo h($student['admission_date']); ?></td>
+            <td><?php echo h($student['graduation_date']); ?></td>
+            <td><?php echo h($student['password']); ?></td>
+            <td><?php echo h($student['status_name']); ?></td>
+            <td>
+              <button type="button" class="btn btn-warning btn-detail" data-bs-toggle="modal" data-bs-target="#studentModal" data-id="<?php echo $student['id']; ?>" data-name="<?php echo h($student['name']); ?>">
+                詳細
+              </button>
+            </td>
+          </tr>
+        <?php endforeach; ?>
+      </tbody>
+    </table>
+    <div class="modal fade" id="studentModal" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content">
 
-</tbody>
-</table>
+          <div class="modal-header">
+            <h5 class="modal-title">学生詳細</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+
+          <div class="modal-body">
+            <p>ID: <span id="modal-id"></span></p>
+            <p>名前: <span id="modal-name"></span></p>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const buttons = document.querySelectorAll('.btn-detail');
+
+    buttons.forEach(button => {
+      button.addEventListener('click', function() {
+        const id = this.dataset.id;
+        const name = this.dataset.name;
+
+        document.getElementById('modal-id').textContent = id;
+        document.getElementById('modal-name').textContent = name;
+      });
+    });
+  });
+</script>
+
+<?php require_once './../inc/footer.php'; ?>

@@ -11,3 +11,5 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css">
     <title>訓練生ログイン画面</title>
 </head>
+
+<body>
