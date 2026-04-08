@@ -7,7 +7,7 @@ require_once __DIR__."/../inc/function.php";
 <body>
     <main>
         <h1 class="mb-5 text-center">ログイン</h1>
-        <form action="./login.php" method="post">
+        <form action="./login_do.php" method="post">
             <div class="row justify-content-center">
                 <div class="mb-3 col-6">
                     <label for="user_name" class="form-laber">ユーザー名</label>
