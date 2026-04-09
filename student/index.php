@@ -113,7 +113,7 @@ AND rs.carecon_id=2";
                         <td class="col-3">対面</td>
                         <td class="col-2">6C</td>
                         <td class="col-3">
-                            <form action="./reserve_del.php" method="post">
+                            <form action="./cancel_request.php" method="post">
                                 <input type="hidden" name="reserve-id" id="reserve-id">
                                 <input type="submit" value="キャンセル申請" class="btn btn-sm btn-danger">
                             </form>
