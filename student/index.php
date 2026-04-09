@@ -3,7 +3,7 @@
 
         // $name = $_SESSION["user_name"];
         // $id = $_SESSION["user_id"];
-        $id=2;
+        $id = 2;
         $db = db_connect();
         try {
             // 必須キャリコンの情報を取得
@@ -40,141 +40,143 @@ AND rs.carecon_id=2";
         ?> -->
 
 <?php include __DIR__ . "/../inc/header.php" ?>
+
 <body>
     <?php check_array($result_must); ?>
     <?php check_array($result_plus); ?>
-<main>
-    <div class="mb-5">
-        <h1>トップページ</h1>
-        <p>ようこそ●●さん</p>
-    </div>
-    <div class="mb-5">
-        <div class="row">
-            <h2 class="mb-3 col-auto">キャリコン予約状況</h2>
-            <button class="btn btn-primary btn-sm col-auto" id="mReserveBtn">予約状況確認</button>
+    <main>
+        <div class="mb-5">
+            <h1>トップページ</h1>
+            <p>ようこそ●●さん</p>
+        </div>
+        <div class="mb-5">
+            <div class="row">
+                <h2 class="mb-3 col-auto">キャリコン予約状況</h2>
+                <button class="btn btn-primary btn-sm col-auto" id="mReserveBtn">予約状況確認</button>
+            </div>
+
+            <div>
+                <table class="table ms-4">
+                    <thead>
+                        <tr class="row">
+                            <th class="col-2">日付</th>
+                            <th class="col-2">開始時間</th>
+                            <th class="col-3">面談方法</th>
+                            <th class="col-2">教室</th>
+                            <th class="col-3">操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($result_must as $rm): ?>
+                            <tr class="row">
+                                <td class="col-2">
+                                    <?php echo $rm["date"]; ?>
+                                </td>
+                                <td class="col-2">
+                                    <?php echo $rm["time"]; ?>
+                                </td>
+                                <td class="col-3">
+                                    <?php echo $rm["method_name"]; ?>
+                                </td>
+                                <td class="col-2">
+                                    <?php echo $rm["class_name"]; ?>
+                                </td>
+                                <td class="col-3">
+                                    <form action="./change_request.php" method="post">
+                                        <input type="hidden" name="reserve-id" id="reserve-id" value="<?php echo $rm["reserve_id"] ?>">
+                                        <input type="submit" value="変更申請" class="btn btn-sm btn-danger">
+                                    </form>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
         </div>
 
-        <div>
-            <table class="table ms-4">
-                <thead>
-                    <tr class="row">
-                        <th class="col-2">日付</th>
-                        <th class="col-2">開始時間</th>
-                        <th class="col-3">面談方法</th>
-                        <th class="col-2">教室</th>
-                        <th class="col-3">操作</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach($result_must as $rm): ?>
-                    <tr class="row">
-                        <td class="col-2">
-                            <?php echo $rm["date"]; ?>
-                        </td>
-                        <td class="col-2">
-                            <?php echo $rm["time"]; ?>
-                        </td>
-                        <td class="col-3">
-                            <?php echo $rm["method_name"]; ?>
-                        </td>
-                        <td class="col-2">
-                            <?php echo $rm["class_name"]; ?>
-                        </td>
-                        <td class="col-3">
-                            <form action="./reserve_del.php" method="post">
-                                <input type="hidden" name="reserve-id" id="reserve-id" value="<?php echo $rm["reserve_id"] ?>">
-                                <input type="submit" value="変更申請" class="btn btn-sm btn-danger">
-                            </form>
-                        </td>
-                    </tr>
-                    <?php endforeach; ?>
-                </tbody>
-            </table>
+        <div class="mb-4">
+            <h2 class="mb-3">キャリコンプラス予約状況</h2>
+            <div class="mb-3">
+                <table class="table ms-4">
+                    <thead>
+                        <tr class="row">
+                            <th class="col-2">日付</th>
+                            <th class="col-2">開始時間</th>
+                            <th class="col-3">面談方法</th>
+                            <th class="col-2">教室</th>
+                            <th class="col-3">操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="row">
+                            <td class="col-2">5/17</td>
+                            <td class="col-2">10:00～</td>
+                            <td class="col-3">対面</td>
+                            <td class="col-2">6C</td>
+                            <td class="col-3">
+                                <form action="./reserve_del.php" method="post">
+                                    <input type="hidden" name="reserve-id" id="reserve-id">
+                                    <input type="submit" value="キャンセル申請" class="btn btn-sm btn-danger">
+                                </form>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="text-center">
+                <a href="./reserve_add.php" class="btn btn-warning">予約する</a>
+            </div>
         </div>
-    </div>
 
-    <div class="mb-4">
-        <h2 class="mb-3">キャリコンプラス予約状況</h2>
-        <div class="mb-3">
-            <table class="table ms-4">
-                <thead>
-                    <tr class="row">
-                        <th class="col-2">日付</th>
-                        <th class="col-2">開始時間</th>
-                        <th class="col-3">面談方法</th>
-                        <th class="col-2">教室</th>
-                        <th class="col-3">操作</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr class="row">
-                        <td class="col-2">5/17</td>
-                        <td class="col-2">10:00～</td>
-                        <td class="col-3">対面</td>
-                        <td class="col-2">6C</td>
-                        <td class="col-3">
-                            <form action="./reserve_del.php" method="post">
-                                <input type="hidden" name="reserve-id" id="reserve-id">
-                                <input type="submit" value="キャンセル申請" class="btn btn-sm btn-danger">
-                            </form>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <div class="text-center">
-            <a href="./reserve_add.php" class="btn btn-warning">予約する</a>
-        </div>
-    </div>
+        <!-- モ‐ダル -->
+        <dialog class="modal" id=modal>
+            <div class="modal-content">
+                <select name="date" id="date" class="mb-3 d-inline-block form-select w-auto">
+                    <option value="2026-05-09">2026/5/9</option>
+                    <option value="2026-05-16">2026/5/16</option>
+                    <option value="2026-05-23">2026/5/23</option>
+                </select>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>時間</th>
+                            <th>予約者</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>10:00</td>
+                            <td>田中</td>
+                        </tr>
+                        <tr>
+                            <td>11:00</td>
+                            <td>田中</td>
+                        </tr>
+                        <tr>
+                            <td>12:00</td>
+                            <td>田中</td>
+                        </tr>
+                        <tr>
+                            <td>13:00</td>
+                            <td>田中</td>
+                        </tr>
+                        <tr>
+                            <td>14:00</td>
+                            <td>田中</td>
+                        </tr>
+                        <tr>
+                            <td>15:00</td>
+                            <td>田中</td>
+                        </tr>
+                        <tr>
+                            <td>16:00</td>
+                            <td>田中</td>
+                        </tr>
+                    </tbody>
+                </table>
 
-    <!-- モ‐ダル -->
-    <dialog class="modal" id=modal>
-        <div class="modal-content">
-            <select name="date" id="date" class="mb-3 d-inline-block form-select w-auto">
-                <option value="2026-05-09">2026/5/9</option>
-                <option value="2026-05-16">2026/5/16</option>
-                <option value="2026-05-23">2026/5/23</option>
-            </select>
-            <table>
-                <thead>
-                    <tr>
-                        <th>時間</th>
-                        <th>予約者</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>10:00</td>
-                        <td>田中</td>
-                    </tr>
-                    <tr>
-                        <td>11:00</td>
-                        <td>田中</td>
-                    </tr>
-                    <tr>
-                        <td>12:00</td>
-                        <td>田中</td>
-                    </tr>
-                    <tr>
-                        <td>13:00</td>
-                        <td>田中</td>
-                    </tr>
-                    <tr>
-                        <td>14:00</td>
-                        <td>田中</td>
-                    </tr><tr>
-                        <td>15:00</td>
-                        <td>田中</td>
-                    </tr>
-                    <tr>
-                        <td>16:00</td>
-                        <td>田中</td>
-                    </tr>
-                </tbody>
-            </table>
-
-        </div>
-    </dialog>
-</main>
-<script src="./../js/script.js"></script>
+            </div>
+        </dialog>
+    </main>
+    <script src="./../js/script.js"></script>
 </body>
