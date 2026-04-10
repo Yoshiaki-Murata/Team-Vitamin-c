@@ -67,7 +67,7 @@ $methods = getColumn($db, 'methods', 'name');
                 </tbody>
             </table>
             <p>枠を交換する場合は相手の名前をご記入ください。また、補足の連絡事項があればご記入ください。</p>
-            <form action=""><textarea name="change_text" id="change_text" class="form-control"></textarea></form>
+            <form action=""><textarea name="change_text" id="js-text" class="form-control"></textarea></form>
             <button type="button" class="btn btn-primary" id="js-open">変更内容を確認</button>
             <a href="./index.php" class="btn btn-info">TOPへ戻る</a>
         </div>
@@ -89,8 +89,7 @@ $methods = getColumn($db, 'methods', 'name');
                         <td id="js-method-write" class="col-4"></td>
                     </tr>
                 </table>
-
-                <p class="text-muted">textareaの内容をここに表示</p>
+                <p id="js-text-write"></p>
             </div>
 
             <div class="modal-footer mt-3">
