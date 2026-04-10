@@ -63,9 +63,9 @@ require_once './../inc/header.php';
           <th scope="col">出席番号</th>
           <th scope="col">名前</th>
           <th scope="col">訓練種別</th>
-          <th scope="col">入校日</th>
+          <!-- <th scope="col">入校日</th>
           <th scope="col">終了予定日</th>
-          <th scope="col">パスワード</th>
+          <th scope="col">パスワード</th> -->
           <th scope="col">在籍状況</th>
           <th scope="col">操作</th>
         </tr>
@@ -76,14 +76,26 @@ require_once './../inc/header.php';
             <th scope="row"><?php echo h($student['class_name'] . $student['number']); ?></th>
             <td><?php echo h($student['name']); ?></td>
             <td><?php echo h($student['course_name']); ?></td>
-            <td><?php echo h($student['admission_date']); ?></td>
+            <!-- <td><?php echo h($student['admission_date']); ?></td>
             <td><?php echo h($student['graduation_date']); ?></td>
-            <td><?php echo h($student['password']); ?></td>
+            <td><?php echo h($student['password']); ?></td> -->
             <td><?php echo h($student['status_name']); ?></td>
             <td>
-              <button type="button" class="btn btn-warning btn-detail" data-bs-toggle="modal" data-bs-target="#studentModal" data-id="<?php echo $student['id']; ?>" data-name="<?php echo h($student['name']); ?>">
+              <button
+                type="button" class="btn btn-warning"
+                data-bs-toggle="modal"
+                data-bs-target="#studentModal"
+                data-id="<?php echo $student['id']; ?>"
+                data-name="<?php echo h($student['name']); ?>"
+                data-number="<?php echo h($student['class_name'] . $student['number']); ?>"
+                data-course="<?php echo h($student['course_name']); ?>"
+                data-admission="<?php echo h($student['admission_date']); ?>"
+                data-graduation="<?php echo h($student['graduation_date']); ?>"
+                data-pass="<?php echo h($student['password']); ?>"
+                data-status="<?php echo h($student['status_name']); ?>">
                 詳細
               </button>
+
             </td>
           </tr>
         <?php endforeach; ?>
@@ -99,8 +111,45 @@ require_once './../inc/header.php';
           </div>
 
           <div class="modal-body">
-            <p>ID: <span id="modal-id"></span></p>
-            <p>名前: <span id="modal-name"></span></p>
+
+            <!-- 見やすくしたリスト -->
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item d-flex justify-content-between">
+                <span class="fw-bold">出席番号</span>
+                <span id="modal-number"></span>
+              </li>
+              <li class="list-group-item d-flex justify-content-between">
+                <span class="fw-bold">名前</span>
+                <span id="modal-name"></span>
+              </li>
+              <li class="list-group-item d-flex justify-content-between">
+                <span class="fw-bold">訓練種別</span>
+                <span id="modal-course"></span>
+              </li>
+              <li class="list-group-item d-flex justify-content-between">
+                <span class="fw-bold">入校日</span>
+                <span id="modal-admission"></span>
+              </li>
+              <li class="list-group-item d-flex justify-content-between">
+                <span class="fw-bold">終了予定日</span>
+                <span id="modal-graduation"></span>
+              </li>
+              <li class="list-group-item d-flex justify-content-between">
+                <span class="fw-bold">パスワード</span>
+                <span id="modal-pass"></span>
+              </li>
+              <li class="list-group-item d-flex justify-content-between">
+                <span class="fw-bold">在籍状況</span>
+                <span id="modal-status"></span>
+              </li>
+            </ul>
+
+            <!-- ボタンエリア -->
+            <div class="d-flex justify-content-center gap-3 mt-4">
+              <button type="button" class="btn btn-primary">登録内容修正</button>
+              <button type="button" class="btn btn-danger">削除</button>
+            </div>
+
           </div>
 
         </div>
@@ -109,18 +158,17 @@ require_once './../inc/header.php';
   </div>
 </body>
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
-    const buttons = document.querySelectorAll('.btn-detail');
+  const modal = document.getElementById('studentModal');
+  modal.addEventListener('show.bs.modal', function(event) {
+    const button = event.relatedTarget;
 
-    buttons.forEach(button => {
-      button.addEventListener('click', function() {
-        const id = this.dataset.id;
-        const name = this.dataset.name;
-
-        document.getElementById('modal-id').textContent = id;
-        document.getElementById('modal-name').textContent = name;
-      });
-    });
+    document.getElementById('modal-number').textContent = button.dataset.number;
+    document.getElementById('modal-name').textContent = button.dataset.name;
+    document.getElementById('modal-course').textContent = button.dataset.course;
+    document.getElementById('modal-admission').textContent = button.dataset.admission;
+    document.getElementById('modal-graduation').textContent = button.dataset.graduation;
+    document.getElementById('modal-pass').textContent = button.dataset.pass;
+    document.getElementById('modal-status').textContent = button.dataset.status;
   });
 </script>
 
