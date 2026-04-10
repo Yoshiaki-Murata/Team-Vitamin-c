@@ -11,7 +11,7 @@ $err_msg = '';
 $class_id = $_GET['class_id'] ?? '';
 
 try {
-  $sql = 'SELECT students.id,students.name,students.number,students.password,students.admission_date,students.graduation_date,classes.name AS class_name,
+  $sql = 'SELECT students.id,students.login_id, students.name,students.number,students.password,students.admission_date,students.graduation_date,classes.name AS class_name,
 student_status.name AS status_name,courses.name AS course_name FROM students INNER JOIN classes ON students.class_id = classes.id INNER JOIN student_status ON students.status_id = student_status.id INNER JOIN courses ON students.course_id = courses.id';
 
   if (!empty($class_id)) {
@@ -89,7 +89,8 @@ require_once './../inc/header.php';
                 data-admission="<?php echo h($student['admission_date']); ?>"
                 data-graduation="<?php echo h($student['graduation_date']); ?>"
                 data-pass="<?php echo h($student['password']); ?>"
-                data-status="<?php echo h($student['status_name']); ?>">
+                data-status="<?php echo h($student['status_name']); ?>"
+                data-login="<?php echo h($student['login_id']); ?>">
                 詳細
               </button>
 
@@ -133,7 +134,7 @@ require_once './../inc/header.php';
               </li>
               <li class="list-group-item d-flex justify-content-between">
                 <span class="fw-bold">ログインID</span>
-                <span id=""></span>
+                <span id="modal-login"></span>
               </li>
               <li class="list-group-item d-flex justify-content-between">
                 <span class="fw-bold">パスワード</span>
@@ -151,7 +152,9 @@ require_once './../inc/header.php';
 
             <!-- ボタンエリア -->
             <div class="d-flex justify-content-center gap-3 mt-4">
-              <button type="button" class="btn btn-primary">登録内容修正</button>
+              <a href="#" id="modal-edit-btn" class="btn btn-primary">
+                登録内容修正
+              </a>
               <a href="#" id="modal-delete-btn" class="btn btn-danger">
                 削除
               </a>
@@ -177,9 +180,13 @@ require_once './../inc/header.php';
     document.getElementById('modal-graduation').textContent = button.dataset.graduation;
     document.getElementById('modal-pass').textContent = button.dataset.pass;
     document.getElementById('modal-status').textContent = button.dataset.status;
+    document.getElementById('modal-login').textContent = button.dataset.login;
 
     const deleteBtn = document.getElementById('modal-delete-btn');
     deleteBtn.href = 'student_del.php?id=' + button.dataset.id;
+
+    const editBtn = document.getElementById('modal-edit-btn');
+    editBtn.href = 'student_edit.php?id=' + button.dataset.id;
   });
 </script>
 

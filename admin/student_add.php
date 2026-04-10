@@ -76,7 +76,7 @@ require_once './../inc/header.php';
       </div>
       <div class="form-group">
         <label class="mb-3 fw-bold">ログインID</label>
-        <input type="text" name="login-id" class="form-control mb-5" maxlength="255" placeholder="2025116c00" required>
+        <input type="text" name="login-id" class="form-control mb-5" maxlength="255" placeholder="年月教室番号2026026a00" required>
       </div>
       <div class="form-group">
         <label class="mb-3 fw-bold">パスワード</label>
