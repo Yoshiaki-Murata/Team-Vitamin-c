@@ -44,7 +44,10 @@ require_once './../inc/header.php';
 <body>
   <div class="l-wrapper">
 
-    <h1 class="c-title">学生一覧</h1>
+    <h1 class="c-title">訓練生一覧</h1>
+    <button type="button" class="btn btn-info mb-3" onclick="location.href='student_add.php'">
+      新規訓練生登録
+    </button>
     <form method="GET" class="mb-3 w-25">
       <label class="form-label">クラス選択</label>
       <select name="class_id" class="form-select" onchange="this.form.submit()">
@@ -63,9 +66,6 @@ require_once './../inc/header.php';
           <th scope="col">出席番号</th>
           <th scope="col">名前</th>
           <th scope="col">訓練種別</th>
-          <!-- <th scope="col">入校日</th>
-          <th scope="col">終了予定日</th>
-          <th scope="col">パスワード</th> -->
           <th scope="col">在籍状況</th>
           <th scope="col">操作</th>
         </tr>
@@ -76,9 +76,6 @@ require_once './../inc/header.php';
             <th scope="row"><?php echo h($student['class_name'] . $student['number']); ?></th>
             <td><?php echo h($student['name']); ?></td>
             <td><?php echo h($student['course_name']); ?></td>
-            <!-- <td><?php echo h($student['admission_date']); ?></td>
-            <td><?php echo h($student['graduation_date']); ?></td>
-            <td><?php echo h($student['password']); ?></td> -->
             <td><?php echo h($student['status_name']); ?></td>
             <td>
               <button
@@ -106,7 +103,7 @@ require_once './../inc/header.php';
         <div class="modal-content">
 
           <div class="modal-header">
-            <h5 class="modal-title">学生詳細</h5>
+            <h5 class="modal-title">訓練生詳細</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
           </div>
 
@@ -135,6 +132,10 @@ require_once './../inc/header.php';
                 <span id="modal-graduation"></span>
               </li>
               <li class="list-group-item d-flex justify-content-between">
+                <span class="fw-bold">ログインID</span>
+                <span id=""></span>
+              </li>
+              <li class="list-group-item d-flex justify-content-between">
                 <span class="fw-bold">パスワード</span>
                 <span id="modal-pass"></span>
               </li>
@@ -142,12 +143,18 @@ require_once './../inc/header.php';
                 <span class="fw-bold">在籍状況</span>
                 <span id="modal-status"></span>
               </li>
+              <li class="list-group-item d-flex justify-content-between">
+                <span class="fw-bold">キャリコン予約状況</span>
+                <span id=""></span>
+              </li>
             </ul>
 
             <!-- ボタンエリア -->
             <div class="d-flex justify-content-center gap-3 mt-4">
               <button type="button" class="btn btn-primary">登録内容修正</button>
-              <button type="button" class="btn btn-danger">削除</button>
+              <a href="#" id="modal-delete-btn" class="btn btn-danger">
+                削除
+              </a>
             </div>
 
           </div>
@@ -159,6 +166,7 @@ require_once './../inc/header.php';
 </body>
 <script>
   const modal = document.getElementById('studentModal');
+
   modal.addEventListener('show.bs.modal', function(event) {
     const button = event.relatedTarget;
 
@@ -169,6 +177,9 @@ require_once './../inc/header.php';
     document.getElementById('modal-graduation').textContent = button.dataset.graduation;
     document.getElementById('modal-pass').textContent = button.dataset.pass;
     document.getElementById('modal-status').textContent = button.dataset.status;
+
+    const deleteBtn = document.getElementById('modal-delete-btn');
+    deleteBtn.href = 'student_del.php?id=' + button.dataset.id;
   });
 </script>
 

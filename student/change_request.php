@@ -12,22 +12,9 @@ $stmt->bindParam(':reserve_id', $reserve_id, PDO::PARAM_INT);
 $stmt->execute();
 $reservation = $stmt->fetch(PDO::FETCH_ASSOC);
 
-
-$date_sql = "SELECT date FROM reservation_slots";
-$date_stmt = $db->prepare($date_sql);
-$date_stmt->execute();
-$dates = $date_stmt->fetchAll(PDO::FETCH_ASSOC);
-
-$time_sql = "SELECT time FROM times";
-$time_stmt = $db->prepare($time_sql);
-$time_stmt->execute();
-$times = $time_stmt->fetchAll(PDO::FETCH_ASSOC);
-
-$method_sql = "SELECT name FROM methods";
-$method_stmt = $db->prepare($method_sql);
-$method_stmt->execute();
-$methods = $method_stmt->fetchAll(PDO::FETCH_ASSOC);
-
+$dates = getColumn($db, 'reservation_slots', 'date');
+$times = getColumn($db, 'times', 'time');
+$methods = getColumn($db, 'methods', 'name');
 ?>
 
 <!DOCTYPE html>
