@@ -44,7 +44,7 @@ require_once './../inc/header.php';
 <body>
   <div class="l-wrapper">
 
-    <h1 class="c-title">学生一覧</h1>
+    <h1 class="c-title">訓練生一覧</h1>
     <button type="button" class="btn btn-info mb-3" onclick="location.href='student_add.php'">
       新規訓練生登録
     </button>
@@ -152,7 +152,9 @@ require_once './../inc/header.php';
             <!-- ボタンエリア -->
             <div class="d-flex justify-content-center gap-3 mt-4">
               <button type="button" class="btn btn-primary">登録内容修正</button>
-              <button type="button" class="btn btn-danger">削除</button>
+              <a href="#" id="modal-delete-btn" class="btn btn-danger">
+                削除
+              </a>
             </div>
 
           </div>
@@ -164,6 +166,7 @@ require_once './../inc/header.php';
 </body>
 <script>
   const modal = document.getElementById('studentModal');
+
   modal.addEventListener('show.bs.modal', function(event) {
     const button = event.relatedTarget;
 
@@ -174,6 +177,9 @@ require_once './../inc/header.php';
     document.getElementById('modal-graduation').textContent = button.dataset.graduation;
     document.getElementById('modal-pass').textContent = button.dataset.pass;
     document.getElementById('modal-status').textContent = button.dataset.status;
+
+    const deleteBtn = document.getElementById('modal-delete-btn');
+    deleteBtn.href = 'student_del.php?id=' + button.dataset.id;
   });
 </script>
 
