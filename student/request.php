@@ -35,8 +35,8 @@ ORDER BY t.time ASC;";
 
 <?php include __DIR__ . "/../inc/header.php" ?>
 <!-- <?php check_array($date); ?> -->
-<main class="container mt-5">
-    <h1 class="mb-5 text-center">予約画面</h1>
+<main class="l-wrapper">
+    <h1 class="c-title">予約画面</h1>
     <div class="text-center">
         <select name="date" id="dateSelect" class="mb-3 d-inline-block form-select w-auto">
             <?php foreach ($result as $r): ?>

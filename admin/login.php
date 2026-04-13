@@ -1,12 +1,12 @@
 <?php
-require_once __DIR__."/../config/function.php";
+require_once __DIR__ . "/../inc/function.php";
 ?>
 
-<?php include __DIR__ . "/../template/header.php" ?>
+<?php require_once './../inc/header.php'; ?>
 
 <body>
-    <main>
-        <h1 class="mb-5 text-center">ログイン</h1>
+    <main class="l-wrapper">
+        <h1 class="c-title">ログイン</h1>
         <form action="./login.php" method="post">
             <div class="row justify-content-center">
                 <div class="mb-3 col-6">
@@ -28,4 +28,4 @@ require_once __DIR__."/../config/function.php";
     </main>
 </body>
 
-</html>
+<?php require_once './../inc/footer.php'; ?>

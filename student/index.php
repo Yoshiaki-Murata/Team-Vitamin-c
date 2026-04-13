@@ -39,11 +39,11 @@ WHERE ri.student_id=:user_id AND ri.method_id=2";
 <?php include __DIR__ . "/../inc/header.php" ?>
 
 <body>
-    <?php check_array($result_must); ?>
-    <?php check_array($result_plus); ?>
-    <main>
+    <!-- <?php check_array($result_must); ?> -->
+    <!-- <?php check_array($result_plus); ?> -->
+    <main class="l-wrapper">
         <div class="mb-5">
-            <h1>トップページ</h1>
+            <h1 class="c-title">トップページ</h1>
             <p>ようこそ●●さん</p>
         </div>
         <div class="mb-5">
