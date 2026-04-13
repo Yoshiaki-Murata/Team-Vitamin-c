@@ -49,7 +49,7 @@ try {
 
     $stmt->execute();
 
-    header('Location: student.php');
+    header('Location: students.php');
     exit;
 } catch (PDOException $e) {
     echo '登録失敗: ' . $e->getMessage();
