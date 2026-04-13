@@ -5,17 +5,36 @@ require_once __DIR__ . "/../inc/function.php";
 
 <?php
 $db = db_connect();
+// クリックされた予約情報を取得
 $reserve_id = $_POST['reserve-id'];
-$sql = "SELECT reservation_infos.id AS reserve_id,reservation_slots.date,times.time, methods.name FROM reservation_infos INNER JOIN reservation_slots ON reservation_infos.slot_id = reservation_slots.id INNER JOIN times ON reservation_slots.time_id = times.id INNER JOIN methods ON reservation_infos.method_id = methods.id WHERE reservation_infos.id = :reserve_id";
+$sql = "SELECT 
+reservation_infos.id AS reserve_id,
+reservation_slots.date,times.time, methods.name 
+FROM reservation_infos 
+INNER JOIN reservation_slots ON reservation_infos.slot_id = reservation_slots.id 
+INNER JOIN times ON reservation_slots.time_id = times.id 
+INNER JOIN methods ON reservation_infos.method_id = methods.id 
+WHERE reservation_infos.id = :reserve_id";
+
 $stmt = $db->prepare($sql);
 $stmt->bindParam(':reserve_id', $reserve_id, PDO::PARAM_INT);
 $stmt->execute();
 $reservation = $stmt->fetch(PDO::FETCH_ASSOC);
 
-$dates = getColumn($db, 'reservation_slots', 'date');
-$times = getColumn($db, 'times', 'time');
-$methods = getColumn($db, 'methods', 'name');
+// スロットを取得
+$slot_sql = "SELECT reservation_slots.id,date,time FROM reservation_slots JOIN reservation_infos ON reservation_infos.slot_id=reservation_slots.id JOIN times ON reservation_slots.time_id=times.id";
+$slot_stmt = $db->prepare($slot_sql);
+$slot_stmt->execute();
+$slots = $slot_stmt->fetchAll(PDO::FETCH_ASSOC);
+
+// メソッドを取得
+$method_sql = "SELECT id,name FROM methods";
+$method_stmt = $db->prepare($method_sql);
+$method_stmt->execute();
+$methods = $method_stmt->fetchAll(PDO::FETCH_ASSOC);
+
 ?>
+
 
 <!DOCTYPE html>
 <html lang="ja">
@@ -42,24 +61,19 @@ $methods = getColumn($db, 'methods', 'name');
                     </tr>
                     <tr class="row">
                         <td class="col-3">変更希望内容</td>
-                        <td class="col-3">
-                            <select name="date" class="form-select" id="js-date">
-                                <?php foreach ($dates as $item):  ?>
-                                    <option value="<?php echo $item["date"]; ?>"><?php echo $item["date"]; ?></option>
-                                <?php endforeach; ?>
-                            </select>
-                        </td>
-                        <td class="col-3">
-                            <select name="time" class="form-select" id="js-time">
-                                <?php foreach ($times as $item):  ?>
-                                    <option value="<?php echo $item["time"]; ?>"><?php echo $item["time"]; ?></option>
+                        <td class="col-6">
+                            <select name="date" class="form-select" id="js-slot">
+                                <?php foreach ($slots as $item):  ?>
+                                    <option value="<?php echo $item["id"]; ?>">
+                                        <?php echo $item["date"] . ' ' . $item["time"]; ?>
+                                    </option>
                                 <?php endforeach; ?>
                             </select>
                         </td>
                         <td class="col-3">
                             <select name="method" class="form-select" id="js-method">
                                 <?php foreach ($methods as $item):  ?>
-                                    <option value="<?php echo $item["name"]; ?>"><?php echo $item["name"]; ?></option>
+                                    <option value="<?php echo $item["id"]; ?>"><?php echo $item["name"]; ?></option>
                                 <?php endforeach; ?>
                             </select>
                         </td>
@@ -84,8 +98,7 @@ $methods = getColumn($db, 'methods', 'name');
             <div class="modal-body">
                 <table class="table text-center align-middle">
                     <tr class="row">
-                        <td id="js-date-write" class="col-4"></td>
-                        <td id="js-time-write" class="col-4"></td>
+                        <td id="js-slot-write" class="col-4"></td>
                         <td id="js-method-write" class="col-4"></td>
                     </tr>
                 </table>
