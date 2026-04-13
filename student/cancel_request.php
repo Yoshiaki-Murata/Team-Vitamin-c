@@ -1,12 +1,20 @@
 <?php
 require_once __DIR__ . "/../inc/function.php";
+
+session_start();
+
+// ログインしていない場合はログイン画面に戻す（セキュリティ対策）
+if (!isset($_SESSION['user_name'])) {
+    header('Location: login.php');
+    exit;
+}
 ?>
 
 <?php include __DIR__ . "/../inc/header.php" ?>
 <main class="container mt-5">
     <h1 class="mb-5 text-center">キャンセル申請</h1>
     <div class="text-center">
-        <p>ようこそ●●さん</p>
+        <p>ようこそ<?php echo htmlspecialchars($_SESSION['user_name'], ENT_QUOTES, 'UTF-8'); ?>さん</p>
     </div>
     <div class="mb-4">
         <h2 class="mb-3">キャリコンプラス予約状況</h2>
@@ -22,9 +30,11 @@ require_once __DIR__ . "/../inc/function.php";
                     <?php foreach ($result_must as $rm): ?>
                         <tr class="row">
                             <td class="col-1">
+                                <!-- 5/17 -->
                                 <?php echo $rm["date"]; ?>
                             </td>
                             <td class="col-2">
+                                <!-- 10:00～ -->
                                 <?php echo $rm["time"]; ?>
                             </td>
                         <?php endforeach; ?>
