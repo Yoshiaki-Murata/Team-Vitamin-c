@@ -50,7 +50,7 @@ require_once './../inc/header.php';
       </div>
       <div class="form-group">
         <label class="mb-3 fw-bold">番号</label>
-        <input type="text" name="number" class="form-control mb-5" placeholder="00" required>
+        <input type="text" name="number" class="form-control mb-5" placeholder="半角数字2桁 例：01" required>
       </div>
       <div class="form-group">
         <label class="mb-3 fw-bold">名前</label>
@@ -77,7 +77,9 @@ require_once './../inc/header.php';
       </div>
       <div class="form-group">
         <label class="mb-3 fw-bold">ログインID</label>
-        <input type="text" name="login-id" class="form-control mb-5" maxlength="255" placeholder="年月教室番号2026026A00" required>
+        <p>入校年(例：2026)＋入校月(例：5月→05)＋教室名(例：6A)＋出席番号(例：01)</p>
+        <input type="text" name="login-id" class="form-control mb-5" maxlength="255" placeholder="2026056A01" required>
+
       </div>
       <div class="form-group">
         <label class="mb-3 fw-bold">パスワード</label>

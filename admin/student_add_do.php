@@ -29,6 +29,28 @@ if ($password === '') {
     exit('パスワードを入力してください');
 }
 
+// 出席番号が数字2桁でない時
+if (!preg_match('/^\d{2}$/', $number)) {
+    header('location:student_add.php');
+    exit();
+}
+
+// 訓練生の名前、漢字、ひらがな、カタカナ、長音記号を1文字以上
+//  半角または全角スペースがあってもなくても良い（0回または1回）
+if (!preg_match('/^[一-龠ぁ-んァ-ヶー]+[ 　]?[一-龠ぁ-んァ-ヶー]+$/', $name)) {
+    header('location:student_add.php');
+    exit();
+}
+
+// ログインID
+
+
+// パスワード
+if (!preg_match('/^\d{8}$/', $password)) {
+    header('location:student_add.php');
+    exit();
+}
+
 try {
     $sql = "INSERT INTO students 
     (class_id, number, name, course_id, admission_date, graduation_date, login_id, password, status_id)
