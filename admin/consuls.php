@@ -64,7 +64,7 @@ require_once './../inc/header.php';
           <tr>
             <td><?php echo h($consul['name']) ?></td>
             <td>
-              <div class="d-flex gap-3 mt-4">
+              <div class="d-flex gap-2">
                 <button
                   type="button"
                   class="btn btn-primary mb-3 edit-btn"
@@ -115,7 +115,6 @@ require_once './../inc/header.php';
     </div>
 
     <!-- 削除モーダル -->
-    <!-- 削除モーダル -->
     <div class="modal fade" id="delConsultantModal" tabindex="-1" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -134,8 +133,8 @@ require_once './../inc/header.php';
             </div>
 
             <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">いいえ</button>
-              <button type="submit" class="btn btn-danger">はい（削除）</button>
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">戻る</button>
+              <button type="submit" class="btn btn-danger">削除</button>
             </div>
           </form>
 

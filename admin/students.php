@@ -151,7 +151,7 @@ require_once './../inc/header.php';
             </ul>
 
             <!-- ボタンエリア -->
-            <div class="d-flex justify-content-center gap-3 mt-4">
+            <div class="d-flex justify-content-center gap-2 mt-4">
               <a href="#" id="modal-edit-btn" class="btn btn-primary">
                 登録内容修正
               </a>

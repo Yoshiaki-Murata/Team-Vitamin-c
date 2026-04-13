@@ -38,7 +38,7 @@ require_once './../inc/header.php';
 <body>
   <div class="l-wrapper">
 
-    <h1 class="c-title">削除確認</h1>
+    <h1 class="c-title">削除 確認画面</h1>
 
     <table class="table">
       <thead>
@@ -62,6 +62,8 @@ require_once './../inc/header.php';
         </tr>
       </tbody>
     </table>
+
+    <p>本当に削除しますか？</p>
 
     <div class="text-center mt-4">
       <form action="student_del_do.php" method="post" style="display:inline;">
