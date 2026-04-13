@@ -5,7 +5,7 @@ $db = db_connect();
 
 // POSTチェック
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    header('Location: student.php');
+    header('Location: students.php');
     exit;
 }
 
@@ -54,7 +54,7 @@ try {
 
     $stmt->execute();
 
-    header('Location: student.php');
+    header('Location: students.php');
     exit;
 } catch (PDOException $e) {
     echo '更新失敗: ' . $e->getMessage();

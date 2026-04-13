@@ -104,7 +104,7 @@ require_once './../inc/header.php';
 			</select>
 
 			<button type="submit" class="btn btn-primary">更新</button>
-			<a href="student.php" class="btn btn-secondary">戻る</a>
+			<a href="students.php" class="btn btn-secondary">戻る</a>
 
 		</form>
 

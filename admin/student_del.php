@@ -71,7 +71,7 @@ require_once './../inc/header.php';
         </button>
       </form>
 
-      <a href="student.php" class="btn btn-secondary">
+      <a href="students.php" class="btn btn-secondary">
         戻る
       </a>
     </div>

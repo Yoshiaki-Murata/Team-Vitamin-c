@@ -5,7 +5,7 @@ $db = db_connect();
 
 // POSTチェック
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    header('Location: student.php');
+    header('Location: students.php');
     exit;
 }
 
@@ -25,7 +25,7 @@ try {
     $stmt->execute();
 
     // 一覧へ戻る
-    header('Location: student.php');
+    header('Location: students.php');
     exit;
 } catch (PDOException $e) {
     echo '削除失敗: ' . $e->getMessage();
