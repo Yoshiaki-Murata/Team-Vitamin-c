@@ -46,71 +46,75 @@ $methods = $method_stmt->fetchAll(PDO::FETCH_ASSOC);
 </head>
 
 <body>
-    <main class="container mt-5 l-wrapper">
-        <h1 class="mb-5 text-center">変更申請</h1>
-        <div class="text-center">
-            <table class="table mb-8">
-                <tbody>
-                    <tr class="row">
-                        <td class="col-3">予約内容</td>
-                        <td class="col-3"><?php echo $reservation["date"] ?>
-                        </td>
-                        <td class="col-3"><?php echo $reservation["time"] ?>
-                        </td>
-                        <td class="col-3"><?php echo $reservation["name"] ?></td>
-                    </tr>
-                    <tr class="row">
-                        <td class="col-3">変更希望内容</td>
-                        <td class="col-6">
-                            <select name="date" class="form-select" id="js-slot">
-                                <?php foreach ($slots as $item):  ?>
-                                    <option value="<?php echo $item["id"]; ?>">
-                                        <?php echo $item["date"] . ' ' . $item["time"]; ?>
-                                    </option>
-                                <?php endforeach; ?>
-                            </select>
-                        </td>
-                        <td class="col-3">
-                            <select name="method" class="form-select" id="js-method">
-                                <?php foreach ($methods as $item):  ?>
-                                    <option value="<?php echo $item["id"]; ?>"><?php echo $item["name"]; ?></option>
-                                <?php endforeach; ?>
-                            </select>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <p>枠を交換する場合は相手の名前をご記入ください。また、補足の連絡事項があればご記入ください。</p>
-            <form action=""><textarea name="change_text" id="js-text" class="form-control"></textarea></form>
-            <button type="button" class="btn btn-primary" id="js-open">変更内容を確認</button>
-            <a href="./index.php" class="btn btn-info">TOPへ戻る</a>
-        </div>
-    </main>
-
-    <!-- modal -->
-    <dialog id="js-modal" class="modal-dialog p-3 border rounded shadow">
-        <div class="modal-content p-3">
-
-            <h2 class="modal-header fs-5 border-bottom pb-2 mb-3">
-                変更希望内容
-            </h2>
-
-            <div class="modal-body">
-                <table class="table text-center align-middle">
-                    <tr class="row">
-                        <td id="js-slot-write" class="col-4"></td>
-                        <td id="js-method-write" class="col-4"></td>
-                    </tr>
+    <form action="./change_request_do.php" method="post">
+        <main class="container mt-5 l-wrapper">
+            <h1 class="mb-5 text-center">変更申請</h1>
+            <div class="text-center">
+                <table class="table mb-8">
+                    <tbody>
+                        <tr class="row">
+                            <td class="col-3">予約内容</td>
+                            <td class="col-3"><?php echo $reservation["date"] ?>
+                            </td>
+                            <td class="col-3"><?php echo $reservation["time"] ?>
+                            </td>
+                            <td class="col-3"><?php echo $reservation["name"] ?></td>
+                        </tr>
+                        <!-- <tr class="row">
+                            <td class="col-3">変更希望内容</td>
+                            <td class="col-6">
+                                <select name="slot" class="form-select" id="js-slot">
+                                    <?php foreach ($slots as $item):  ?>
+                                        <option value="<?php echo $item["id"]; ?>">
+                                            <?php echo $item["date"] . ' ' . $item["time"]; ?>
+                                        </option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </td>
+                            <td class="col-3">
+                                <select name="method" class="form-select" id="js-method">
+                                    <?php foreach ($methods as $item):  ?>
+                                        <option value="<?php echo $item["id"]; ?>"><?php echo $item["name"]; ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </td>
+                        </tr> -->
+                    </tbody>
                 </table>
-                <p id="js-text-write"></p>
+                <p>希望日時、枠を交換する場合は相手の名前をご記入ください。また、補足の連絡事項があればご記入ください。</p>
+                <textarea name="change_text" id="js-text" class="form-control"></textarea>
+                <button type="button" class="btn btn-primary" id="js-open">変更内容を確認</button>
+                <a href="./index.php" class="btn btn-info">TOPへ戻る</a>
             </div>
+        </main>
 
-            <div class="modal-footer mt-3">
-                <button class="btn btn-primary">送信</button>
-                <button class="btn btn-secondary" id="js-close">閉じる</button>
+        <!-- modal -->
+        <dialog id="js-modal" class="modal-dialog p-3 border rounded shadow">
+            <div class="modal-content p-3">
+
+                <h2 class="modal-header fs-5 border-bottom pb-2 mb-3">
+                    変更希望内容
+                </h2>
+
+                <div class="modal-body">
+                    <table class="table text-center align-middle">
+                        <tr class="row">
+                            <td id="js-slot-write" class="col-4"></td>
+                            <td id="js-method-write" class="col-4"></td>
+                        </tr>
+                    </table>
+                    <p id="js-text-write"></p>
+                </div>
+
+                <div class="modal-footer mt-3">
+                    <button class="btn btn-primary">送信</button>
+
+                    <button class="btn btn-secondary" id="js-close">閉じる</button>
+                </div>
             </div>
-        </div>
-    </dialog>
+        </dialog>
+    </form>
+
     <script>
         // change_request
         const openBtn = document.getElementById('js-open');
@@ -129,8 +133,6 @@ $methods = $method_stmt->fetchAll(PDO::FETCH_ASSOC);
 
         openBtn.addEventListener('click', () => {
             modal.showModal();
-            modalWrite('slot');
-            modalWrite('method');
             modalWrite('text');
         });
         closeBtn.addEventListener('click', () => {
