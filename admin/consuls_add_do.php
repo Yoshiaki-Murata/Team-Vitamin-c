@@ -15,12 +15,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     try {
         $db = db_connect();
+
         $sql = "INSERT INTO consultants (name) VALUES (:name)";
         $stmt = $db->prepare($sql);
         $stmt->bindValue(':name', $name, PDO::PARAM_STR);
         $stmt->execute();
 
         header('Location: consuls.php');
+        exit();
     } catch (PDOException $e) {
         exit('エラー: ' . $e->getMessage());
     }

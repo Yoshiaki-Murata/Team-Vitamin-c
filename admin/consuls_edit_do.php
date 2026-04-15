@@ -5,14 +5,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $id = $_POST['id'];
     $name = $_POST['name'];
 
-    $db = db_connect();
+    // 講師の名前、漢字、ひらがな、カタカナ、長音記号を1文字以上
+    //  半角または全角スペースがあってもなくても良い（0回または1回）
+    if (!preg_match('/^[一-龠ぁ-んァ-ヶー]+[ 　]?[一-龠ぁ-んァ-ヶー]+$/', $name)) {
+        //header('location:consuls.php');
+        exit('名前を正しく入力');
+    }
 
-    $sql = "UPDATE consultants SET name = :name WHERE id = :id";
-    $stmt = $db->prepare($sql);
-    $stmt->bindValue(':name', $name, PDO::PARAM_STR);
-    $stmt->bindValue(':id', $id, PDO::PARAM_INT);
-    $stmt->execute();
+    try {
+        $db = db_connect();
 
-    header('Location: consuls.php');
-    exit;
+        $sql = "UPDATE consultants SET name = :name WHERE id = :id";
+        $stmt = $db->prepare($sql);
+        $stmt->bindValue(':name', $name, PDO::PARAM_STR);
+        $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+        $stmt->execute();
+
+        header('Location: consuls.php');
+        exit();
+    } catch (PDOException $e) {
+        exit('エラー: ' . $e->getMessage());
+    }
 }
