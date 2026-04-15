@@ -14,9 +14,9 @@ $class_id = $_POST['class_id'] ?? '';
 $number = $_POST['number'] ?? '';
 $name = $_POST['name'] ?? '';
 $course_id = $_POST['course_id'] ?? '';
-$admission_date = $_POST['admission-date'] ?? '';
-$graduation_date = $_POST['graduation-date'] ?? '';
-$login_id = $_POST['login-id'] ?? '';
+$admission_date = $_POST['admission_date'] ?? '';
+$graduation_date = $_POST['graduation_date'] ?? '';
+$login_id = $_POST['login_id'] ?? '';
 $password = $_POST['password'] ?? '';
 $status_id = $_POST['status_id'] ?? '';
 
@@ -31,24 +31,27 @@ if ($password === '') {
 
 // 出席番号が数字2桁でない時
 if (!preg_match('/^\d{2}$/', $number)) {
-    header('location:student_add.php');
-    exit();
+    //header('location:student_add.php');
+    exit('出席番号を2桁にしてください');
 }
 
 // 訓練生の名前、漢字、ひらがな、カタカナ、長音記号を1文字以上
 //  半角または全角スペースがあってもなくても良い（0回または1回）
 if (!preg_match('/^[一-龠ぁ-んァ-ヶー]+[ 　]?[一-龠ぁ-んァ-ヶー]+$/', $name)) {
-    header('location:student_add.php');
-    exit();
+    //header('location:student_add.php');
+    exit('名前を正しく入力');
 }
 
-// ログインID
+// ログインID 数字とアルファベット
+if (!preg_match('/^[0-9A-I]{10}$/', $login_id)) {
+    //header('location:student_add.php');
+    exit('ID登録不可');
+}
 
-
-// パスワード
+// パスワード 
 if (!preg_match('/^\d{8}$/', $password)) {
-    header('location:student_add.php');
-    exit();
+    //header('location:student_add.php');
+    exit('パスワード');
 }
 
 try {
