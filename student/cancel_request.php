@@ -4,7 +4,7 @@ require_once __DIR__ . "/../inc/function.php";
 session_start();
 
 // ログインしていない場合はログイン画面に戻す（セキュリティ対策）
-if (!isset($_SESSION['user_name'])) {
+if (!isset($_SESSION['login_id'])) {
     header('Location: login.php');
     exit;
 }
@@ -14,7 +14,7 @@ if (!isset($_SESSION['user_name'])) {
 <main class="container mt-5">
     <h1 class="mb-5 text-center">キャンセル申請</h1>
     <div class="text-center">
-        <p>ようこそ<?php echo htmlspecialchars($_SESSION['user_name'], ENT_QUOTES, 'UTF-8'); ?>さん</p>
+        <p>ようこそ<?php echo htmlspecialchars($_SESSION['name'], ENT_QUOTES, 'UTF-8'); ?>さん</p>
     </div>
     <div class="mb-4">
         <h2 class="mb-3">キャリコンプラス予約状況</h2>
