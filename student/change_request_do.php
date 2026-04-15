@@ -1,28 +1,25 @@
 <?php
-require_once __DIR__ . './../inc/function.php';
+require_once __DIR__ . '/../inc/function.php';
 
 // TODO: データ受け取り
 if (!empty($_POST)) {
     // POST送信されたとき
-    if (!empty($_POST['date']) && !empty($_POST['time']) && !empty($_POST['method'])) {
+    if (!empty($_POST['text']) && !empty($_POST['reserve-id'])) {
         // TODO: 必須項目チェック（空の場合）
-        $date = $_POST['date'];
-        $time = $_POST['time'];
-        $method = $_POST['method'];
+        $text = $_POST['text'];
+        $reserve_id = $_POST['reserve-id'];
 
         // DBに接続
         try {
             $db = db_connect();
-            // 一致するスロットを探す
-            $sql = 'SELECT date,time_id FROM reservation_slots WHERE date=:date AND time_id=:time';
-
-
             // テーブルに挿入するSQL
-            $sql2 = 'INSERT INTO reservation_infos (date,time,method) VALUES (:date,:time,:method)';
+            $sql2 = 'INSERT INTO apply_lists (reserve_info_id,apply_detail,apply_status_id) VALUES (:reserve_id,:text,:apply_status_id)';
             $stmt2 = $db->prepare($sql2);
-            $stmt2->bindParam(':date', $date, PDO::PARAM_STR);
-            $stmt2->bindParam(':time', $time, PDO::PARAM_STR);
-            $stmt2->bindParam(':method', $method, PDO::PARAM_STR);
+            $stmt2->bindParam(':reserve_id', $reserve_id, PDO::PARAM_STR);
+            $stmt2->bindParam(':text', $text, PDO::PARAM_STR);
+            // ステータスIDは常に未
+            $status = 1;
+            $stmt2->bindValue(':apply_status_id', $status, PDO::PARAM_STR);
             $stmt2->execute();
 
             // トップページへ画面遷移
