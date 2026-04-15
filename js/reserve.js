@@ -76,16 +76,16 @@ document.addEventListener("DOMContentLoaded", init);
 
 // -------------予約実行処理---------------
 
-// モーダル要素の取得
+// 1 モーダル要素の取得
 const dialog = document.querySelector("dialog");
 const modalClose = document.getElementById("modalClose");
 
-// 閉じるボタン
+// 2 閉じるボタン
 modalClose.addEventListener("click", () => {
     dialog.close();
 });
 
-// 予約ボタンクリック時の処理
+// 3 予約ボタンクリック時の処理
 document.getElementById("reserveInfo").addEventListener("click", async (e) => {
     if (e.target.classList.contains("reserve-btn")) {
         const date = e.target.getAttribute("data-date");
@@ -109,7 +109,7 @@ document.getElementById("reserveInfo").addEventListener("click", async (e) => {
 
 function renderModalTable(slots) {
     const tbody = document.querySelector("#modalTable tbody");
-    tbody.innerHTML = ""; // 前の情報をクリア
+    tbody.innerHTML = ""; 
 
     slots.forEach(slot => {
         const tr = document.createElement("tr");
@@ -134,7 +134,7 @@ function renderModalTable(slots) {
     });
 }
 
-// モーダル内の「予約する」ボタンが押された時
+// 4 モーダル内の「予約する」ボタンが押された時
 document.querySelector("#modalTable").addEventListener("click", async (e) => {
     if (e.target.classList.contains("final-reserve-btn")) {
         const slotId = e.target.getAttribute("data-slot-id");
