@@ -4,13 +4,24 @@ require_once __DIR__ . '/../inc/function.php';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $name = $_POST['name'];
 
-    $db = db_connect();
+    // 講師の名前、漢字、ひらがな、カタカナ、長音記号を1文字以上
+    //  半角または全角スペースがあってもなくても良い（0回または1回）
+    if (!preg_match('/^[一-龠ぁ-んァ-ヶー]+[ 　]?[一-龠ぁ-んァ-ヶー]+$/', $name)) {
+        //header('location:consuls.php');
+        exit('名前を正しく入力');
+    }
 
-    $sql = "INSERT INTO consultants (name) VALUES (:name)";
-    $stmt = $db->prepare($sql);
-    $stmt->bindValue(':name', $name, PDO::PARAM_STR);
-    $stmt->execute();
 
-    header('Location: consuls.php');
-    exit;
+
+    try {
+        $db = db_connect();
+        $sql = "INSERT INTO consultants (name) VALUES (:name)";
+        $stmt = $db->prepare($sql);
+        $stmt->bindValue(':name', $name, PDO::PARAM_STR);
+        $stmt->execute();
+
+        header('Location: consuls.php');
+    } catch (PDOException $e) {
+        exit('エラー: ' . $e->getMessage());
+    }
 }
