@@ -25,7 +25,7 @@ INNER JOIN methods mt ON ri.method_id= mt.id
 INNER JOIN times ti ON rsl.time_id = ti.id
 LEFT JOIN classes cl ON rsl.class_id = cl.id
 LEFT JOIN carecons cr ON rsl.carecon_id =cr.id
-WHERE ri.student_id=:user_id AND ri.method_id=2";
+WHERE ri.student_id=:login_id AND ri.method_id=2";
             $sql_plus = "SELECT ri.id AS reserve_id,rs.date,t.time,m.name AS method_name,c.name AS class_name FROM `reservation_infos` ri
 INNER JOIN reservation_slots rs ON ri.slot_id=rs.id
 INNER JOIN times t ON rs.time_id = t.id
@@ -51,7 +51,7 @@ AND rs.carecon_id=2";
     <main class="l-wrapper">
         <div class="mb-5">
             <h1 class="c-title">トップページ</h1>
-            <p>ようこそ●●さん</p>
+            <p>ようこそ<?php echo htmlspecialchars($_SESSION['name'], ENT_QUOTES, 'UTF-8'); ?>さん</p>
         </div>
         <div class="mb-5">
             <div class="row">
