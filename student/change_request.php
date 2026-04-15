@@ -111,7 +111,32 @@ $methods = $method_stmt->fetchAll(PDO::FETCH_ASSOC);
             </div>
         </div>
     </dialog>
-    <script src="./../js/script.js"></script>
+    <script>
+        // change_request
+        const openBtn = document.getElementById('js-open');
+        const closeBtn = document.getElementById('js-close');
+        const modal = document.getElementById('js-modal');
+
+        function modalWrite(cat) {
+            const element = document.getElementById(`js-${cat}`);
+            const writeArea = document.getElementById(`js-${cat}-write`);
+            if (cat === 'text') {
+                writeArea.textContent = element.value;
+            } else {
+                writeArea.textContent = element.options[element.selectedIndex].text;
+            }
+        };
+
+        openBtn.addEventListener('click', () => {
+            modal.showModal();
+            modalWrite('slot');
+            modalWrite('method');
+            modalWrite('text');
+        });
+        closeBtn.addEventListener('click', () => {
+            modal.close();
+        })
+    </script>
 </body>
 
 </html>
