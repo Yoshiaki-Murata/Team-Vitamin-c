@@ -10,13 +10,13 @@ require_once __DIR__ . "/../inc/function.php";
         <form action="./login_do.php" method="post">
             <div class="row justify-content-center">
                 <div class="mb-3 col-6">
-                    <label for="user_name" class="form-laber">ユーザー名</label>
-                    <input type="text" name="user_name" id="user_name" class="form-control" autocomplete="user_name" placeholder="半角英数字●●字以上">
+                    <label for="login_id" class="form-laber">ログインID</label>
+                    <input type="text" name="login_id" id="login_id" class="form-control" autocomplete="login_id" placeholder="半角英数字●●字以上">
                 </div>
             </div>
             <div class="row justify-content-center">
                 <div class="mb-4 col-6">
-                    <label for="user_name" class="form-laber">パスワード</label>
+                    <label for="login_id" class="form-laber">パスワード</label>
                     <input type="text" name="password" id="password" class="form-control" autocomplete="password" placeholder="半角英数字●●字以上">
                 </div>
             </div>

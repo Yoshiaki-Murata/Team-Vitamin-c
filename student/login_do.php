@@ -3,15 +3,15 @@ session_start();
 require_once __DIR__ . ('/../inc/function.php');
 
 if (!empty($_POST)) {
-    if (!empty($_POST['user_name']) && !empty($_POST['password'])) {
-        $name = $_POST['user_name'];
+    if (!empty($_POST['login_id']) && !empty($_POST['password'])) {
+        $login_id = $_POST['login_id'];
         $password = $_POST['password'];
 
         try {
             $db = db_connect();
-            $sql = 'SELECT * FROM admins WHERE name=:name';
+            $sql = 'SELECT * FROM admins WHERE login_id=:login_id';
             $stmt = $db->prepare($sql);
-            $stmt->bindParam(':name', $name, PDO::PARAM_STR);
+            $stmt->bindParam(':login_id', $login_id, PDO::PARAM_STR);
             $stmt->execute();
 
             $result = $stmt->fetch(PDO::FETCH_ASSOC);
