@@ -69,16 +69,16 @@ require_once './../inc/header.php';
       </div>
       <div class="form-group">
         <label class="mb-3 fw-bold">入校日</label>
-        <input type="date" name="admission-date" class="form-control mb-5" required>
+        <input type="date" name="admission_date" class="form-control mb-5" required>
       </div>
       <div class="form-group">
         <label class="mb-3 fw-bold">終了予定日</label>
-        <input type="date" name="graduation-date" class="form-control mb-5" required>
+        <input type="date" name="graduation_date" class="form-control mb-5" required>
       </div>
       <div class="form-group">
         <label class="mb-3 fw-bold">ログインID</label>
         <p>入校年(例：2026)＋入校月(例：5月→05)＋教室名(例：6A)＋出席番号(例：01)</p>
-        <input type="text" name="login-id" class="form-control mb-5" maxlength="255" placeholder="2026056A01" required>
+        <input type="text" name="login_id" class="form-control mb-5" maxlength="255" placeholder="2026056A01" required>
 
       </div>
       <div class="form-group">

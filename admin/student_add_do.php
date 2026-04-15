@@ -14,9 +14,9 @@ $class_id = $_POST['class_id'] ?? '';
 $number = $_POST['number'] ?? '';
 $name = $_POST['name'] ?? '';
 $course_id = $_POST['course_id'] ?? '';
-$admission_date = $_POST['admission-date'] ?? '';
-$graduation_date = $_POST['graduation-date'] ?? '';
-$login_id = $_POST['login-id'] ?? '';
+$admission_date = $_POST['admission_date'] ?? '';
+$graduation_date = $_POST['graduation_date'] ?? '';
+$login_id = $_POST['login_id'] ?? '';
 $password = $_POST['password'] ?? '';
 $status_id = $_POST['status_id'] ?? '';
 
