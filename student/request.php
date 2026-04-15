@@ -48,19 +48,6 @@ WHERE rs.reserve_status_id=1";
                     <th class="text-center">予約</th>
                 </thead>
                 <tbody>
-                    <td class="text-center">2026-04-11</td>
-                    <td class="text-center">13:00～</td>
-                    <td class="text-center">6C教室</td>
-                    <td class="text-center">未定</td>
-                    <td>
-                        <select name="method" id="method" class="form-select">
-                            <option value="1">対面</option>
-                            <option value="2">zoom</option>
-                        </select>
-                    </td>
-                    <td>
-                        <button class="btn btn-warning">予約する</button>
-                    </td>
                 </tbody>
             </table>
                 <button class="btn btn-warning" id="modalClose">
