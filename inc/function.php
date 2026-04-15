@@ -41,3 +41,16 @@ function getColumn($db, $table, $column)
     $stmt->execute();
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
+
+// 管理ページへログイン時チェック
+function check_logined()
+{
+    if (session_status() == PHP_SESSION_NONE) {
+        session_start();
+    }
+
+    if (!isset($_SESSION["admin_session_id"])) {
+        header("location:login.php");
+        exit();
+    }
+}
