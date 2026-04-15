@@ -21,17 +21,13 @@ $stmt->bindParam(':reserve_id', $reserve_id, PDO::PARAM_INT);
 $stmt->execute();
 $reservation = $stmt->fetch(PDO::FETCH_ASSOC);
 
-// スロットを取得
-$slot_sql = "SELECT reservation_slots.id,date,time FROM reservation_slots JOIN reservation_infos ON reservation_infos.slot_id=reservation_slots.id JOIN times ON reservation_slots.time_id=times.id";
-$slot_stmt = $db->prepare($slot_sql);
-$slot_stmt->execute();
-$slots = $slot_stmt->fetchAll(PDO::FETCH_ASSOC);
-
 // メソッドを取得
 $method_sql = "SELECT id,name FROM methods";
 $method_stmt = $db->prepare($method_sql);
 $method_stmt->execute();
 $methods = $method_stmt->fetchAll(PDO::FETCH_ASSOC);
+
+check_array($reservation);
 
 ?>
 
@@ -60,29 +56,10 @@ $methods = $method_stmt->fetchAll(PDO::FETCH_ASSOC);
                             </td>
                             <td class="col-3"><?php echo $reservation["name"] ?></td>
                         </tr>
-                        <!-- <tr class="row">
-                            <td class="col-3">変更希望内容</td>
-                            <td class="col-6">
-                                <select name="slot" class="form-select" id="js-slot">
-                                    <?php foreach ($slots as $item):  ?>
-                                        <option value="<?php echo $item["id"]; ?>">
-                                            <?php echo $item["date"] . ' ' . $item["time"]; ?>
-                                        </option>
-                                    <?php endforeach; ?>
-                                </select>
-                            </td>
-                            <td class="col-3">
-                                <select name="method" class="form-select" id="js-method">
-                                    <?php foreach ($methods as $item):  ?>
-                                        <option value="<?php echo $item["id"]; ?>"><?php echo $item["name"]; ?></option>
-                                    <?php endforeach; ?>
-                                </select>
-                            </td>
-                        </tr> -->
                     </tbody>
                 </table>
                 <p>希望日時、枠を交換する場合は相手の名前をご記入ください。また、補足の連絡事項があればご記入ください。</p>
-                <textarea name="change_text" id="js-text" class="form-control"></textarea>
+                <textarea name="text" id="js-text" class="form-control"></textarea>
                 <button type="button" class="btn btn-primary" id="js-open">変更内容を確認</button>
                 <a href="./index.php" class="btn btn-info">TOPへ戻る</a>
             </div>
@@ -97,19 +74,14 @@ $methods = $method_stmt->fetchAll(PDO::FETCH_ASSOC);
                 </h2>
 
                 <div class="modal-body">
-                    <table class="table text-center align-middle">
-                        <tr class="row">
-                            <td id="js-slot-write" class="col-4"></td>
-                            <td id="js-method-write" class="col-4"></td>
-                        </tr>
-                    </table>
                     <p id="js-text-write"></p>
                 </div>
 
                 <div class="modal-footer mt-3">
-                    <button class="btn btn-primary">送信</button>
+                    <input type="hidden" name="reserve-id" value="<?php echo $reserve_id; ?>">
+                    <button class="btn btn-primary" type="submit">送信</button>
 
-                    <button class="btn btn-secondary" id="js-close">閉じる</button>
+                    <button class="btn btn-secondary" id="js-close" type="button">閉じる</button>
                 </div>
             </div>
         </dialog>
@@ -121,19 +93,11 @@ $methods = $method_stmt->fetchAll(PDO::FETCH_ASSOC);
         const closeBtn = document.getElementById('js-close');
         const modal = document.getElementById('js-modal');
 
-        function modalWrite(cat) {
-            const element = document.getElementById(`js-${cat}`);
-            const writeArea = document.getElementById(`js-${cat}-write`);
-            if (cat === 'text') {
-                writeArea.textContent = element.value;
-            } else {
-                writeArea.textContent = element.options[element.selectedIndex].text;
-            }
-        };
-
         openBtn.addEventListener('click', () => {
             modal.showModal();
-            modalWrite('text');
+            const element = document.getElementById('js-text');
+            const writeArea = document.getElementById('js-text-write');
+            writeArea.textContent = element.value;
         });
         closeBtn.addEventListener('click', () => {
             modal.close();
