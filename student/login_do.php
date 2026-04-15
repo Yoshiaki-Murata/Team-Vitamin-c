@@ -1,7 +1,6 @@
 <?php
 require_once __DIR__ . ('/../inc/function.php');
 
-check_array($_POST);
 
 if (!empty($_POST)) {
     if (!empty($_POST['login_id']) && !empty($_POST['password'])) {
@@ -10,7 +9,7 @@ if (!empty($_POST)) {
 
         try {
             $db = db_connect();
-            $sql = 'SELECT * FROM admins WHERE login_id=:login_id';
+            $sql = 'SELECT * FROM students WHERE login_id=:login_id';
             $stmt = $db->prepare($sql);
             $stmt->bindParam(':login_id', $login_id, PDO::PARAM_STR);
             $stmt->execute();
