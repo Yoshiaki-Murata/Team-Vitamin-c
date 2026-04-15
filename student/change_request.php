@@ -78,7 +78,9 @@ check_array($reservation);
                 </div>
 
                 <div class="modal-footer mt-3">
+
                     <input type="hidden" name="reserve-id" value="<?php echo $reserve_id; ?>">
+
                     <button class="btn btn-primary" type="submit">送信</button>
 
                     <button class="btn btn-secondary" id="js-close" type="button">閉じる</button>
