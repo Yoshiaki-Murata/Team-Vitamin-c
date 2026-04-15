@@ -1,6 +1,6 @@
 <?php
-session_start();
 require_once __DIR__ . ('/../inc/function.php');
+
 
 if (!empty($_POST)) {
     if (!empty($_POST['login_id']) && !empty($_POST['password'])) {
@@ -9,17 +9,18 @@ if (!empty($_POST)) {
 
         try {
             $db = db_connect();
-            $sql = 'SELECT * FROM admins WHERE login_id=:login_id';
+            $sql = 'SELECT * FROM students WHERE login_id=:login_id';
             $stmt = $db->prepare($sql);
             $stmt->bindParam(':login_id', $login_id, PDO::PARAM_STR);
             $stmt->execute();
 
             $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            check_array($result);
 
             if ($result) {
-                if (password_verify($password, $result['password'])) {
-                    $_SESSION['id'] = $result['id'];
-                    $_SESSION['name'] = $result['name'];
+                if ($password == $result['password']) {
+                    $_SESSION['user_id'] = $result['id'];
+                    $_SESSION['user_name'] = $result['name'];
                     header('location:index.php');
                     exit();
                 }

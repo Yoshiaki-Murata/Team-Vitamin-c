@@ -16,8 +16,8 @@ require_once __DIR__ . "/../inc/function.php";
             </div>
             <div class="row justify-content-center">
                 <div class="mb-4 col-6">
-                    <label for="login_id" class="form-laber">パスワード</label>
-                    <input type="text" name="password" id="password" class="form-control" autocomplete="password" placeholder="半角英数字●●字以上">
+                    <label for="password" class="form-laber">パスワード</label>
+                    <input type="password" name="password" id="password" class="form-control" autocomplete="password" placeholder="半角英数字●●字以上">
                 </div>
             </div>
             <div class="text-center">
@@ -28,4 +28,3 @@ require_once __DIR__ . "/../inc/function.php";
     </main>
 </body>
 
-<?php require_once './../inc/footer.php';

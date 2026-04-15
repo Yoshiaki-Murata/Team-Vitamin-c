@@ -1,26 +1,25 @@
 <!-- <?php
         require_once __DIR__ . "/../inc/function.php";
 
-        // $name = $_SESSION["user_name"];
-        // $id = $_SESSION["user_id"];
-        $id = 2;
+        $name = $_SESSION["user_name"];
+        $login_id = $_SESSION["user_id"];
         $db = db_connect();
         try {
             // 必須キャリコンの情報を取得
-            $sql_must = "SELECT ri.id,ti.time,mt.name AS method_name,cl.name AS class_name FROM reservation_infos ri 
+            $sql_must = "SELECT ri.id,ti.time,rsl.date,mt.name AS method_name,cl.name AS class_name FROM reservation_infos ri 
 INNER JOIN reservation_slots rsl ON ri.slot_id = rsl.id
 INNER JOIN methods mt ON ri.method_id= mt.id
 INNER JOIN times ti ON rsl.time_id = ti.id
 LEFT JOIN classes cl ON rsl.class_id = cl.id
 LEFT JOIN carecons cr ON rsl.carecon_id =cr.id
-WHERE ri.student_id=:user_id AND ri.method_id=1";
+WHERE ri.student_id=:login_id AND ri.method_id=1";
             $stmt_must = $db->prepare($sql_must);
             $stmt_must->bindParam(":login_id", $login_id, PDO::PARAM_INT);
             $stmt_must->execute();
             $result_must = $stmt_must->fetchAll(PDO::FETCH_ASSOC);
 
             // キャリコンプラスの情報を取得
-            $sql_plus = "SELECT ri.id,ti.time,mt.name AS method_name,cl.name AS class_name FROM reservation_infos ri 
+            $sql_plus = "SELECT ri.id,ti.time,rsl.date,mt.name AS method_name,cl.name AS class_name FROM reservation_infos ri 
 INNER JOIN reservation_slots rsl ON ri.slot_id = rsl.id
 INNER JOIN methods mt ON ri.method_id= mt.id
 INNER JOIN times ti ON rsl.time_id = ti.id
@@ -85,11 +84,11 @@ AND rs.carecon_id=2";
                                         <?php echo $rm["method_name"]; ?>
                                     </td>
                                     <td class="col-2">
-                                        <?php echo $rm["class_name"]; ?>
+                                        <?php echo $rm["class_name"] ?? "未定"; ?>
                                     </td>
                                     <td class="col-3">
                                         <form action="./change_request.php" method="post">
-                                            <input type="hidden" name="reserve-id" id="reserve-id" value="<?php echo $rm["reserve_id"] ?>">
+                                            <input type="hidden" name="reserve-id" id="reserve-id" value="<?php echo $rm["id"] ?>">
                                             <input type="submit" value="変更申請" class="btn btn-sm btn-danger">
                                         </form>
                                     </td>
@@ -130,11 +129,11 @@ AND rs.carecon_id=2";
                                         <?php echo $rm["method_name"]; ?>
                                     </td>
                                     <td class="col-2">
-                                        <?php echo $rm["class_name"]; ?>
+                                        <?php echo $rm["class_name"] ?? "未定"; ?>
                                     </td>
                                     <td class="col-3">
                                         <form action="./change_request.php" method="post">
-                                            <input type="hidden" name="reserve-id" id="reserve-id" value="<?php echo $rm["reserve_id"] ?>">
+                                            <input type="hidden" name="reserve-id" id="reserve-id" value="<?php echo $rm["id"] ?>">
                                             <input type="submit" value="変更申請" class="btn btn-sm btn-danger">
                                         </form>
                                     </td>
