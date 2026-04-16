@@ -5,6 +5,7 @@ $db = db_connect();
 // パラメータの取得
 $date = $_GET['date'] ?? '';
 $time = $_GET['time'] ?? ''; 
+$user_id= $_SESSION["user_id"];
 
 try {
     if ($date && $time) {
@@ -29,6 +30,9 @@ try {
         $stmt->bindValue(':time', $time, PDO::PARAM_STR);
         $stmt->execute();
         $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $data=[
+            "userId"=>$user_id
+        ];
 
     } else if ($date) {
         // --- 2. その日の時間ごとの空き枠数を返す処理  ---
@@ -47,6 +51,9 @@ try {
         $stmt->bindValue(':date', $date, PDO::PARAM_STR);
         $stmt->execute();
         $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+         $data=[
+            "userId"=>$user_id
+        ];
     } else {
         $data = ["error" => "Date parameter is missing"];
     }

@@ -26,14 +26,7 @@ INNER JOIN times ti ON rsl.time_id = ti.id
 LEFT JOIN classes cl ON rsl.class_id = cl.id
 LEFT JOIN carecons cr ON rsl.carecon_id =cr.id
 WHERE ri.student_id=:login_id AND ri.method_id=2";
-            $sql_plus = "SELECT ri.id AS reserve_id,rs.date,t.time,m.name AS method_name,c.name AS class_name FROM `reservation_infos` ri
-INNER JOIN reservation_slots rs ON ri.slot_id=rs.id
-INNER JOIN times t ON rs.time_id = t.id
-INNER JOIN methods m ON ri.method_id=m.id
-INNER JOIN classes c ON rs.class_id = c.id
-INNER JOIN carecons ON rs.carecon_id= carecons.id
-WHERE ri.student_id=:login_id
-AND rs.carecon_id=2";
+            
             $stmt_plus = $db->prepare($sql_plus);
             $stmt_plus->bindParam(":login_id", $login_id, PDO::PARAM_INT);
             $stmt_plus->execute();
@@ -120,20 +113,20 @@ AND rs.carecon_id=2";
                             <?php foreach ($result_plus as $rp): ?>
                                 <tr class="row">
                                     <td class="col-2">
-                                        <?php echo $rm["date"]; ?>
+                                        <?php echo $rp["date"]; ?>
                                     </td>
                                     <td class="col-2">
-                                        <?php echo $rm["time"]; ?>
+                                        <?php echo $rp["time"]; ?>
                                     </td>
                                     <td class="col-3">
-                                        <?php echo $rm["method_name"]; ?>
+                                        <?php echo $rp["method_name"]; ?>
                                     </td>
                                     <td class="col-2">
-                                        <?php echo $rm["class_name"] ?? "未定"; ?>
+                                        <?php echo $rp["class_name"] ?? "未定"; ?>
                                     </td>
                                     <td class="col-3">
                                         <form action="./change_request.php" method="post">
-                                            <input type="hidden" name="reserve-id" id="reserve-id" value="<?php echo $rm["id"] ?>">
+                                            <input type="hidden" name="reserve-id" id="reserve-id" value="<?php echo $rp["id"] ?>">
                                             <input type="submit" value="変更申請" class="btn btn-sm btn-danger">
                                         </form>
                                     </td>
