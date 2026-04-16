@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__ . "/../inc/function.php";
 ?>
-<?php include __DIR__ . "/../inc/header.php" ?>
+<?php include __DIR__ . "/../inc/header_student.php" ?>
 
 <?php
 $db = db_connect();

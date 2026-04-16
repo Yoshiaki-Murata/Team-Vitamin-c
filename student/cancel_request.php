@@ -10,7 +10,7 @@ if (!isset($_SESSION['login_id'])) {
 }
 ?>
 
-<?php include __DIR__ . "/../inc/header.php" ?>
+<?php include __DIR__ . "/../inc/header_student.php" ?>
 <main class="container mt-5">
     <h1 class="mb-5 text-center">キャンセル申請</h1>
     <div class="text-center">
