@@ -16,9 +16,21 @@
     <header>
         <nav class="bg-body-tertiary">
             <ul class="nav justify-content-center">
-                <li class="nav-item"><a href="/team-vitamin-c/student/index.php" class="nav-link">トップページ</a></li>
-                <li class="nav-item"><a href="/team-vitamin-c/student/request.php" class="nav-link">プラス新規予約</a></li>
-                <li class="nav-item"><a href="/team-vitamin-c/student/logout_do.php" class="btn  btn-outline-secondary">ログアウト</a></li>
+                <li class="nav-item">
+                    <a href="./index.php" class="nav-link text-reset">
+                        トップページ
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="./request.php" class="nav-link text-reset">
+                        プラス新規予約
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="./logout_do.php" class="btn  btn-outline-secondary">
+                        ログアウト
+                    </a>
+                </li>
             </ul>
         </nav>
     </header>
