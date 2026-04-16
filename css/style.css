@@ -10,7 +10,9 @@
     margin-bottom: 30px;
 }
 
-
+.l-header nav {
+    padding-block: 10px;
+}
 
 .c-footer {
     text-align: center;

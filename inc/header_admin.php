@@ -13,7 +13,7 @@
 </head>
 
 <body>
-    <header>
+    <header class="l-header">
         <nav class="bg-body-tertiary">
             <ul class="nav justify-content-center">
                 <li class="nav-item"><a href="/team-vitamin-c/admin/index.php" class="nav-link">トップ</a></li>
