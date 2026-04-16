@@ -37,13 +37,18 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="./scedule.php" class="nav-link text-reset">
+                    <a href="./schedule.php" class="nav-link text-reset">
                         予約枠
                     </a>
                 </li>
                 <li class="nav-item">
                     <a href="./request.php" class="nav-link text-reset">
                         申請
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="./reservation.php" class="nav-link text-reset">
+                        予約情報
                     </a>
                 </li>
                 <li class="nav-item">
