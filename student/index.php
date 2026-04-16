@@ -125,9 +125,9 @@ WHERE ri.student_id=:login_id AND ri.method_id=2";
                                         <?php echo $rp["class_name"] ?? "未定"; ?>
                                     </td>
                                     <td class="col-3">
-                                        <form action="./change_request.php" method="post">
+                                        <form action="./cancel_request.php" method="post">
                                             <input type="hidden" name="reserve-id" id="reserve-id" value="<?php echo $rp["id"] ?>">
-                                            <input type="submit" value="変更申請" class="btn btn-sm btn-danger">
+                                            <input type="submit" value="キャンセル申請" class="btn btn-sm btn-danger">
                                         </form>
                                     </td>
                                 </tr>
