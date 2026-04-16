@@ -20,7 +20,41 @@ $carecon_id = $_POST['carecon_id'] ?? '';
 $status_id = $_POST['reserve_status_id'] ?? '';
 
 try {
-    $sql = 'UPDATE reservation_slots SET date=:date,time_id=:time_id,lines_id=:lines_id,class_id=:class_id,consultant_id=:consultant_id,carecon_id=:carecon_id,reserve_status_id=:reserve_status_id WHERE id = :id';
+
+    //  重複チェック（自分以外）
+    $sql = '
+        SELECT COUNT(*) 
+        FROM reservation_slots
+        WHERE date = :date
+        AND time_id = :time_id
+        AND lines_id = :lines_id
+        AND id != :id
+    ';
+    $stmt = $db->prepare($sql);
+    $stmt->bindValue(':date', $date, PDO::PARAM_STR);
+    $stmt->bindValue(':time_id', $time_id, PDO::PARAM_INT);
+    $stmt->bindValue(':lines_id', $lines_id, PDO::PARAM_INT);
+    $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+    $stmt->execute();
+
+    if ($stmt->fetchColumn() > 0) {
+        // 重複あり
+        exit('この日時・ラインはすでに登録されています');
+    }
+
+    //  UPDATE
+    $sql = '
+        UPDATE reservation_slots 
+        SET 
+            date = :date,
+            time_id = :time_id,
+            lines_id = :lines_id,
+            class_id = :class_id,
+            consultant_id = :consultant_id,
+            carecon_id = :carecon_id,
+            reserve_status_id = :reserve_status_id
+        WHERE id = :id
+    ';
 
     $stmt = $db->prepare($sql);
 
