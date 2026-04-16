@@ -12,7 +12,7 @@ if (!isset($_SESSION['login_id'])) {
 
 <?php include __DIR__ . "/../inc/header_student.php" ?>
 <main class="container mt-5">
-    <h1 class="mb-5 text-center">キャンセル申請</h1>
+    <h1 class="mb-5 text-center">キャンセル・変更申請</h1>
     <div class="text-center">
         <p>ようこそ<?php echo htmlspecialchars($_SESSION['name'], ENT_QUOTES, 'UTF-8'); ?>さん</p>
     </div>
@@ -35,18 +35,18 @@ if (!isset($_SESSION['login_id'])) {
                             </td>
                             <td class="col-2">
                                 <!-- 10:00～ -->
-                                <?php echo $rm["time"]; ?>
+                                <?php echo $rm["time_id"]; ?>
                             </td>
                         <?php endforeach; ?>
                 </tbody>
             </table>
-            <form action="./reserve.php" method="post" id="cancelForm">
-                <input type="hidden" name="reserve-id" id="reserve-id" value="<?php echo $rm["reserve_id"] ?>">
-                <label>キャンセル申請理由</label>
+            <form action="./complete.php" method="post" id="cancelForm">
+                <input type="hidden" name="login_id" id="login_id" value="<?php echo htmlspecialchars($_SESSION['login_id'], ENT_QUOTES, 'UTF-8'); ?>">
+                <label>キャンセル・変更申請理由</label>
                 <textarea name="body" class="form-control" rows="5"></textarea>
 
                 <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#confirmModal">
-                    キャンセル申請
+                    キャンセル・変更申請
                 </button>
             </form>
         </div>
@@ -55,11 +55,11 @@ if (!isset($_SESSION['login_id'])) {
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="confirmModalLabel">キャンセル確認</h5>
+                    <h5 class="modal-title" id="confirmModalLabel">キャンセル・変更確認</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <p>本当に予約をキャンセルしますか？</p>
+                    <p>予約の変更またはキャンセルの申請をしますか？</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">いいえ</button>
