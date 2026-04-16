@@ -38,7 +38,7 @@ student_status.name AS status_name,courses.name AS course_name FROM students INN
   $err_msg = 'データの取得に失敗しました:' . $e->getMessage();
 };
 
-require_once './../inc/header.php';
+require_once './../inc/header_admin.php';
 ?>
 
 <body>
