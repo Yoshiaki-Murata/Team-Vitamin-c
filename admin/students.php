@@ -50,7 +50,7 @@ INNER JOIN student_status ON students.status_id = student_status.id INNER JOIN c
   $err_msg = 'データの取得に失敗しました:' . $e->getMessage();
 };
 
-require_once './../inc/header.php';
+require_once './../inc/header_admin.php';
 ?>
 
 <body>
