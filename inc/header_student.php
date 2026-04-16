@@ -17,7 +17,6 @@
         <nav class="bg-body-tertiary">
             <ul class="nav justify-content-center">
                 <li class="nav-item"><a href="/team-vitamin-c/student/index.php" class="nav-link">トップページ</a></li>
-                <li class="nav-item"><a href="/team-vitamin-c/student/request.php" class="nav-link">キャリコン予約確認</a></li>
                 <li class="nav-item"><a href="/team-vitamin-c/student/request.php" class="nav-link">プラス新規予約</a></li>
                 <li class="nav-item"><a href="/team-vitamin-c/student/logout_do.php" class="btn  btn-outline-secondary">ログアウト</a></li>
             </ul>
