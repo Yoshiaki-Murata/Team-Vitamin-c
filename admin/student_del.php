@@ -32,7 +32,7 @@ try {
   exit('データ取得失敗: ' . $e->getMessage());
 }
 
-require_once './../inc/header.php';
+require_once './../inc/header_admin.php';
 ?>
 
 <body>

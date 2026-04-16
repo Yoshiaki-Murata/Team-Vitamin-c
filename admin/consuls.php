@@ -16,7 +16,7 @@ try {
 }
 
 
-require_once './../inc/header.php';
+require_once './../inc/header_admin.php';
 ?>
 
 <body>

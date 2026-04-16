@@ -90,7 +90,7 @@ ORDER BY
   $err_msg = 'データの取得に失敗しました:' . $e->getMessage();
 };
 
-require_once './../inc/header.php';
+require_once './../inc/header_admin.php';
 ?>
 
 <body>

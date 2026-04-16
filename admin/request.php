@@ -52,7 +52,7 @@ reservation_slots.time_id ASC';
 
 // check_array($requests);
 
-require_once './../inc/header.php';
+require_once './../inc/header_admin.php';
 ?>
 
 

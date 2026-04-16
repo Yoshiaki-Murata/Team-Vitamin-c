@@ -2,7 +2,7 @@
 require_once __DIR__ . "/../inc/function.php";
 ?>
 
-<?php require_once './../inc/header.php'; ?>
+<?php require_once './../inc/header_admin.php'; ?>
 
 <body>
     <main class="l-wrapper">
