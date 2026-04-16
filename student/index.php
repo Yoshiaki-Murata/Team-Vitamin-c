@@ -43,7 +43,7 @@ AND rs.carecon_id=2";
         }
         ?> -->
 
-<?php include __DIR__ . "/../inc/header.php" ?>
+<?php include __DIR__ . "/../inc/header_student.php" ?>
 
 <body>
     <!-- <?php check_array($result_must); ?> -->
