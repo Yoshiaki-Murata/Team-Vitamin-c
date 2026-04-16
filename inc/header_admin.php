@@ -17,12 +17,17 @@
         <nav class="bg-body-tertiary">
             <ul class="nav justify-content-center">
                 <li class="nav-item ">
-                    <a href=".index.php" class="nav-link text-reset">
+                    <a href="./index.php" class="nav-link text-reset">
                         トップ
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="./admin/students.php" class="nav-link text-reset">
+                    <a href="./masters.php" class="nav-link text-reset">
+                        管理者
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="./students.php" class="nav-link text-reset">
                         訓練生
                     </a>
                 </li>
