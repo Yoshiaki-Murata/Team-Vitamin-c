@@ -7,24 +7,28 @@ require_once './../inc/header_admin.php';
 ?>
 
 <body>
-    <div class="container text-center">
-        <div class="row g-2">
+    <div class="container text-center mt-5">
+        <div class="row g-5">
             <div class="col-6">
-                <p class="p-3">訓練生一覧</p>
+                <p class="p-4 bg-secondary-subtle"><a href="students.php">訓練生一覧</a></p>
             </div>
             <div class="col-6">
-                <p class="p-3">講師一覧</p>
+                <p class="p-4 bg-secondary-subtle"><a href="consuls.php">講師一覧</a></p>
             </div>
             <div class="col-6">
-                <p class="p-3">予約枠作成ページ</p>
+                <p class="p-4 bg-secondary-subtle"><a href="masters.php">管理者一覧</a></p>
             </div>
             <div class="col-6">
-                <p class="p-3">申請状況一覧</p>
+                <p class="p-4 bg-secondary-subtle"><a href="schedule.php">キャリコン枠作成</a></p>
+            </div>
+            <div class="col-6">
+                <p class="p-4 bg-secondary-subtle"><a href="reservation.php">キャリコン予約状況</a></p>
+            </div>
+            <div class="col-6">
+                <p class="p-4 bg-secondary-subtle"><a href="request.php">申請情報一覧</a></p>
             </div>
         </div>
     </div>
 
 
 </body>
-
-</html>
