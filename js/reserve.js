@@ -5,7 +5,7 @@
 async function fetchReserveData(date) {
     if (!date) return [];
     try {
-        const res = await fetch(`./request_do.php?date=${date}`);
+        const res = await fetch(`./request_api.php?date=${date}`);
         if (!res.ok) throw new Error('Network response was not ok');
         return await res.json();
     } catch (error) {
@@ -91,15 +91,15 @@ document.getElementById("reserveInfo").addEventListener("click", async (e) => {
         const date = e.target.getAttribute("data-date");
         const time = e.target.getAttribute("data-time");
 
-        // 1. 詳細データをPHPから取得
+        //  詳細データをPHPから取得
         try {
-            const response = await fetch(`./request_do.php?date=${date}&time=${time}`);
+            const response = await fetch(`./request_api.php?date=${date}&time=${time}`);
             const slots = await response.json();
             
-            // 2. モーダルのテーブルを生成
+            //  モーダルのテーブルを生成
             renderModalTable(slots);
             
-            // 3. モーダル表示
+            //  モーダル表示
             document.querySelector("dialog").showModal();
         } catch (error) {
             console.error("詳細取得エラー:", error);
@@ -125,7 +125,7 @@ function renderModalTable(slots) {
                 </select>
             </td>
             <td>
-                <button class="btn btn-warning final-reserve-btn" data-slot-id="${slot.slot_id}">
+                <button class="btn btn-warning final-reserve-btn" data-slot-id="${slot.slot_id}" user-id="${slot.userId}">
                     予約する
                 </button>
             </td>
@@ -139,6 +139,27 @@ document.querySelector("#modalTable").addEventListener("click", async (e) => {
     if (e.target.classList.contains("final-reserve-btn")) {
         const slotId = e.target.getAttribute("data-slot-id");
         const methodId = e.target.closest("tr").querySelector(".method-select").value;
- 
+        const userId= e.target.getAttribute("user-id")
+
+        const reserveData={
+            slot_id:slotId,
+            method_id:methodId
+        }
+
+        try{
+            const response= await fetch("./request_do.php",{
+                method:"POST",
+                headers:{"Content-type":"application/json"},
+                body:JSON.stringify(reserveData)
+            })
+
+            const result= await response.json();
+            if(result.success){
+                alert(result.message);
+            }
+
+        }catch(error){
+            console.error("エラーが発生しました",error);
+        }
     }
 });

@@ -1,59 +1,54 @@
 <?php
 require_once __DIR__ . "/../inc/function.php";
 $db = db_connect();
+$db->beginTransaction();
 
-// パラメータの取得
-$date = $_GET['date'] ?? '';
-$time = $_GET['time'] ?? ''; 
 
-try {
-    if ($date && $time) {
-        // --- 1. 特定の時間帯の詳細情報を返す処理 ---
-        $sql = "SELECT 
-                    rs.id AS slot_id,
-                    rs.date,
-                    t.time,
-                    c.name AS class_name,
-                    con.name AS consultant_name
-                FROM reservation_slots rs
-                LEFT JOIN times t ON rs.time_id = t.id
-                LEFT JOIN classes c ON rs.class_id = c.id
-                LEFT JOIN consultants con ON rs.consultant_id = con.id
-                WHERE rs.date = :date 
-                  AND t.time = :time 
-                  AND rs.carecon_id= 2
-                  AND rs.reserve_status_id = 1";
+header('Content-Type: application/json');
 
-        $stmt = $db->prepare($sql);
-        $stmt->bindValue(':date', $date, PDO::PARAM_STR);
-        $stmt->bindValue(':time', $time, PDO::PARAM_STR);
-        $stmt->execute();
-        $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+// JSからのJSONデータを受け取る
+$inputJSON = file_get_contents('php://input');
+$input = json_decode($inputJSON, true);
 
-    } else if ($date) {
-        // --- 2. その日の時間ごとの空き枠数を返す処理  ---
-        $sql = "SELECT 
-                    t.time,
-                    COUNT(rs.id) AS reserve_count
-                FROM times t
-                LEFT JOIN reservation_slots rs ON t.id = rs.time_id 
-                    AND rs.date = :date 
-                    AND rs.reserve_status_id = 1
-                    AND rs.carecon_id= 2
-                GROUP BY t.id, t.time
-                ORDER BY t.id ASC";
+if ($input) {
+    $student_id = $_SESSION["user_id"] ?? null;
 
-        $stmt = $db->prepare($sql);
-        $stmt->bindValue(':date', $date, PDO::PARAM_STR);
-        $stmt->execute();
-        $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    } else {
-        $data = ["error" => "Date parameter is missing"];
+    if (!$student_id) {
+        echo json_encode(["success" => false, "message" => "ログインセッションが切れました"]);
+        exit;
     }
 
-    header('Content-Type: application/json');
-    echo json_encode($data);
+    $method_id = $input["method_id"];
+    $slot_id = $input["slot_id"];
 
-} catch (PDOException $e) {
-    echo json_encode(["error" => $e->getMessage()]);
+    try {
+        // reserve_infoに予約する。
+        $sql_reserve_info = "INSERT INTO `reservation_infos`
+        (`slot_id`, `student_id`, `method_id`) VALUES 
+        (:slot_id, :student_id, :method_id)";
+
+        $stmt_reserve_info = $db->prepare($sql_reserve_info);
+        $stmt_reserve_info->bindParam(":slot_id", $slot_id, PDO::PARAM_INT);
+        $stmt_reserve_info->bindParam(":student_id", $student_id, PDO::PARAM_INT);
+        $stmt_reserve_info->bindParam(":method_id", $method_id, PDO::PARAM_INT);
+        $stmt_reserve_info->execute();
+
+        // reserve_infoに予約した情報と該当するreserve_slotを書き換える
+        $sql_reserve_slot = "UPDATE `reservation_slots` SET `reserve_status_id`=2 
+        WHERE id=:id";
+        $stmt_reserve_slot = $db->prepare($sql_reserve_slot);
+        $stmt_reserve_slot->bindParam(":id", $slot_id, PDO::PARAM_INT);
+
+
+        if ($stmt_reserve_slot->execute()) {
+            echo json_encode(["success" => true, "message" => "予約が確定しました！"]);
+        }
+
+        $db->commit();
+    } catch (PDOException $e) {
+        if ($db->inTransaction()) {
+            $db->rollBack();
+        }
+        echo json_encode(["success" => false, "message" => "データベースエラーが発生しました"]);
+    }
 }
