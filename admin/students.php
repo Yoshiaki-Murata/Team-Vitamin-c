@@ -11,8 +11,20 @@ $err_msg = '';
 $class_id = $_GET['class_id'] ?? '';
 
 try {
-  $sql = 'SELECT students.id,students.login_id, students.name,students.number,students.password,students.admission_date,students.graduation_date,classes.name AS class_name,
-student_status.name AS status_name,courses.name AS course_name FROM students INNER JOIN classes ON students.class_id = classes.id INNER JOIN student_status ON students.status_id = student_status.id INNER JOIN courses ON students.course_id = courses.id';
+  $sql = 'SELECT 
+  students.id,
+  students.login_id, 
+  students.name,
+  students.number,
+  students.password,
+  students.admission_date,
+  students.graduation_date,
+  classes.name AS class_name,
+student_status.name AS status_name,
+courses.name AS course_name 
+FROM students 
+INNER JOIN classes ON students.class_id = classes.id 
+INNER JOIN student_status ON students.status_id = student_status.id INNER JOIN courses ON students.course_id = courses.id';
 
   if (!empty($class_id)) {
     $sql .= ' WHERE students.class_id = :class_id';
@@ -38,7 +50,7 @@ student_status.name AS status_name,courses.name AS course_name FROM students INN
   $err_msg = 'データの取得に失敗しました:' . $e->getMessage();
 };
 
-require_once './../inc/header.php';
+require_once './../inc/header_admin.php';
 ?>
 
 <body>

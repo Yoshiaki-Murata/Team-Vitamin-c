@@ -17,9 +17,10 @@
         <nav class="bg-body-tertiary">
             <ul class="nav justify-content-center">
                 <li class="nav-item"><a href="/team-vitamin-c/admin/index.php" class="nav-link">トップ</a></li>
+                <li class="nav-item"><a href="/team-vitamin-c/admin/masters.php" class="nav-link">管理者</a></li>
                 <li class="nav-item"><a href="/team-vitamin-c/admin/students.php" class="nav-link">訓練生</a></li>
                 <li class="nav-item"><a href="/team-vitamin-c/admin/consuls.php" class="nav-link">コンサルタント</a></li>
-                <li class="nav-item"><a href="/team-vitamin-c/admin/scedule.php" class="nav-link">予約枠</a></li>
+                <li class="nav-item"><a href="/team-vitamin-c/admin/schedule.php" class="nav-link">予約枠</a></li>
                 <li class="nav-item"><a href="/team-vitamin-c/admin/request.php" class="nav-link">申請</a></li>
                 <li class="nav-item"><a href="/team-vitamin-c/admin/logout_do.php" class="btn  btn-outline-secondary">ログアウト</a></li>
             </ul>

@@ -5,7 +5,7 @@
 async function fetchReserveData(date) {
     if (!date) return [];
     try {
-        const res = await fetch(`./request_do.php?date=${date}`);
+        const res = await fetch(`./request_api.php?date=${date}`);
         if (!res.ok) throw new Error('Network response was not ok');
         return await res.json();
     } catch (error) {
@@ -93,7 +93,7 @@ document.getElementById("reserveInfo").addEventListener("click", async (e) => {
 
         //  詳細データをPHPから取得
         try {
-            const response = await fetch(`./request_do.php?date=${date}&time=${time}`);
+            const response = await fetch(`./request_api.php?date=${date}&time=${time}`);
             const slots = await response.json();
             
             //  モーダルのテーブルを生成
@@ -139,17 +139,27 @@ document.querySelector("#modalTable").addEventListener("click", async (e) => {
     if (e.target.classList.contains("final-reserve-btn")) {
         const slotId = e.target.getAttribute("data-slot-id");
         const methodId = e.target.closest("tr").querySelector(".method-select").value;
-        const userId= e.t{arget.getAttribute("user-id")
+        const userId= e.target.getAttribute("user-id")
 
-        const data={
-            user
+        const reserveData={
+            slot_id:slotId,
+            method_id:methodId
         }
 
         try{
+            const response= await fetch("./request_do.php",{
+                method:"POST",
+                headers:{"Content-type":"application/json"},
+                body:JSON.stringify(reserveData)
+            })
 
+            const result= await response.json();
+            if(result.success){
+                alert(result.message);
+            }
 
         }catch(error){
-            console.error("エラーが発生しました".error);
+            console.error("エラーが発生しました",error);
         }
     }
 });
