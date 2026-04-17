@@ -6,7 +6,8 @@ require_once __DIR__ . "/../inc/function.php";
 <?php
 $db = db_connect();
 // クリックされた予約情報を取得
-$reserve_id = $_POST['reserve-id'];
+// $reserve_id = $_POST['reserve-id'];
+$reserve_id = 4;
 $sql = "SELECT 
 reservation_infos.id AS reserve_id,
 reservation_slots.date,times.time, methods.name 
@@ -26,8 +27,6 @@ $method_sql = "SELECT id,name FROM methods";
 $method_stmt = $db->prepare($method_sql);
 $method_stmt->execute();
 $methods = $method_stmt->fetchAll(PDO::FETCH_ASSOC);
-
-check_array($reservation);
 
 ?>
 
@@ -60,7 +59,7 @@ check_array($reservation);
                 </table>
                 <p>希望日時、枠を交換する場合は相手の名前をご記入ください。また、補足の連絡事項があればご記入ください。</p>
                 <textarea name="text" id="js-text" class="form-control"></textarea>
-                <button type="button" class="btn btn-primary" id="js-open">変更内容を確認</button>
+                <button type="button" class="btn btn-primary" id="js-open">内容を確認</button>
                 <a href="./index.php" class="btn btn-info">TOPへ戻る</a>
             </div>
         </main>
@@ -79,8 +78,7 @@ check_array($reservation);
 
                 <div class="modal-footer mt-3">
 
-                    <input type="hidden" name="reserve-id" value="<?php echo $reserve_id; ?>">
-
+                    <input type="hidden" name="reserve_id" value="<?php echo $reserve_id; ?>">
                     <button class="btn btn-primary" type="submit">送信</button>
 
                     <button class="btn btn-secondary" id="js-close" type="button">閉じる</button>
