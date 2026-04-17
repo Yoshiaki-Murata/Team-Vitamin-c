@@ -118,7 +118,7 @@ require_once './../inc/header_admin.php';
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">パスワード</label>
-                                <input type="text" name="password" id="edit-password" class="form-control" required>
+                                <input type="text" name="password" class="form-control" required>
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -142,7 +142,7 @@ require_once './../inc/header_admin.php';
 
                     <form action="master_del_do.php" method="post">
                         <div class="modal-body">
-                            <p>このコンサルタントを削除しますか？</p>
+                            <p>この管理者を削除しますか？</p>
 
                             <!-- idを送る -->
                             <input type="hidden" name="id" id="delete-id">
