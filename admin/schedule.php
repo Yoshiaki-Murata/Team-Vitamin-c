@@ -371,8 +371,8 @@ require_once './../inc/header_admin.php';
               <input type="hidden" name="id" id="delete-id">
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">いいえ</button>
-              <button type="submit" class="btn btn-danger">はい(削除)</button>
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">戻る</button>
+              <button type="submit" class="btn btn-danger">削除</button>
             </div>
           </form>
         </div>
