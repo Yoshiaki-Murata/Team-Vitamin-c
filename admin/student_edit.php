@@ -55,12 +55,12 @@ require_once './../inc/header_admin.php';
 			<!-- 番号 -->
 			<label>番号</label>
 			<input type="text" name="number" class="form-control mb-3" required
-				value="<?php echo h($student['number']); ?>">
+				value="<?php echo h($student['number']); ?>" placeholder="半角数字2桁 例：01">
 
 			<!-- 名前 -->
 			<label>名前</label>
 			<input type="text" name="name" class="form-control mb-3" required
-				value="<?php echo h($student['name']); ?>">
+				value="<?php echo h($student['name']); ?>" placeholder="例：リカレント太郎">
 
 			<!-- 種別 -->
 			<label>訓練種別</label>
@@ -78,19 +78,19 @@ require_once './../inc/header_admin.php';
 			<input type="date" name="admission_date" class="form-control mb-3" required
 				value="<?php echo h($student['admission_date']); ?>">
 
-			<label>終了予定日</label>
+			<label>修了予定日</label>
 			<input type="date" name="graduation_date" class="form-control mb-3" required
 				value="<?php echo h($student['graduation_date']); ?>">
 
 			<!-- ログインID -->
 			<label>ログインID</label>
 			<input type="text" name="login_id" class="form-control mb-3" required
-				value="<?php echo h($student['login_id']); ?>">
+				value="<?php echo h($student['login_id']); ?>" placeholder="入校年＋入校月＋教室名＋出席番号(例：2026056A01)">
 
 			<!-- パスワード -->
 			<label>パスワード</label>
 			<input type="text" name="password" class="form-control mb-3" required
-				value="<?php echo h($student['password']); ?>">
+				value="<?php echo h($student['password']); ?>" placeholder="数字8桁">
 
 			<!-- 在籍状況 -->
 			<label>在籍状況</label>
