@@ -166,7 +166,8 @@ try {
             </div>
             <button class="btn btn-warning mx-auto" id="closeModal">閉じる</button>
         </dialog>
-            
+
     </main>
     <script src="./../js/student.js"></script>
 </body>
+<?php require_once './../inc/footer.php'; ?>

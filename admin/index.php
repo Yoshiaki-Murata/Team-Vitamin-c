@@ -32,3 +32,4 @@ require_once './../inc/header_admin.php';
 
 
 </body>
+<?php require_once './../inc/footer.php'; ?>

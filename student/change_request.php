@@ -106,3 +106,4 @@ $methods = $method_stmt->fetchAll(PDO::FETCH_ASSOC);
 </body>
 
 </html>
+<?php require_once './../inc/footer.php'; ?>
