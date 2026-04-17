@@ -29,7 +29,7 @@ try {
 	exit('エラー: ' . $e->getMessage());
 }
 
-require_once './../inc/header.php';
+require_once './../inc/header_admin.php';
 ?>
 
 <body>
