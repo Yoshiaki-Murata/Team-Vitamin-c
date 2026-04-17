@@ -2,9 +2,9 @@
 require_once __DIR__ . '/../inc/function.php';
 
 // TODO: データ受け取り
-if (!empty($_GET)) {
+if (!empty($_POST)) {
 
-    $id = $_GET['id'];
+    $id = $_POST['id'];
 
     // DBに接続
     try {

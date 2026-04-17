@@ -4,10 +4,10 @@ require_once __DIR__ . '/../inc/function.php';
 // TODO: データ受け取り
 if (!empty($_POST)) {
     // POST送信されたとき
-    if (!empty($_POST['name']) && !empty($_POST['login_id']) && !empty($_POST['pass'])) {
+    if (!empty($_POST['name']) && !empty($_POST['login_id']) && !empty($_POST['password'])) {
         $name = $_POST['name'];
         $login_id = $_POST['login_id'];
-        $password = $_POST['pass'];
+        $password = $_POST['password'];
 
         // DBに接続
         try {
@@ -17,7 +17,7 @@ if (!empty($_POST)) {
             $stmt = $db->prepare($sql);
             $stmt->bindParam(':name', $name, PDO::PARAM_STR);
             $stmt->bindParam(':login_id', $login_id, PDO::PARAM_STR);
-            $stmt->bindParam(':password', $password, PDO::PARAM_STR);
+            $stmt->bindParam(':password', $password, PDO::PARAM_INT);
             $stmt->execute();
 
             // トップページへ画面遷移
