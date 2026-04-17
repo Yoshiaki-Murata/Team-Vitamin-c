@@ -17,7 +17,7 @@ if (!empty($_GET)) {
         $stmt->execute();
 
         // トップページへ画面遷移
-        header('location:index.php');
+        header('location:masters.php');
         exit();
     } catch (PDOException $e) {
         exit('エラー: ' . $e->getMessage());
