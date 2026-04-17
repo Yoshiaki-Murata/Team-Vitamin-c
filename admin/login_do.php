@@ -20,19 +20,19 @@ if (!empty($_POST)) {
 
             if ($result) {
                 if ($password == $result['password']) {
-                    $_SESSION['user_id'] = $result['id'];
+                    $_SESSION['login_id'] = $result['id'];
                     $_SESSION['user_name'] = $result['name'];
                     $_SESSION["user_class_id"] = $result["class_id"];
-                    header('location:index.php');
-                    exit();
+                    //header('location:login.php');
+                    exit('エラー1');
                 }
             }
-            header('location:login.php');
+            //header('location:login.php');
             exit();
         } catch (PDOException $e) {
             exit('エラー: ' . $e->getMessage());
         }
     }
 }
-header('location:login.php');
-exit();
+//header('location:login.php');
+exit('エラー2');
