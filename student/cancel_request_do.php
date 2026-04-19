@@ -34,12 +34,7 @@ try {
 <?php include __DIR__ . "/../inc/header_student.php" ?>
 <?php check_array($_SESSION); ?>
 <main class="container mt-5">
-    <h1 class="mb-5 text-center">キャンセル・変更申請</h1>
-    <div class="text-center">
-        <p>ようこそ <?php echo htmlspecialchars($_SESSION["user_name"]); ?> さん</p>
-    </div>
-
-    <div class="mb-4">
+  <div class="mb-4">
         <h2 class="mb-3">キャリコンプラス予約状況</h2>
         <table class="table">
             <thead>
@@ -68,3 +63,4 @@ try {
         </table>
     </div>
 </main>
+  <?php require_once __DIR__ . '/inc/footer.php'; ?>
