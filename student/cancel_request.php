@@ -1,70 +1,107 @@
 <?php
 require_once __DIR__ . "/../inc/function.php";
+?>
+<?php include __DIR__ . "/../inc/header_student.php" ?>
 
-session_start();
-
-// ログインしていない場合はログイン画面に戻す（セキュリティ対策）
-// if (!isset($_SESSION['login_id'])) {
-//     header('Location: login.php');
-//     exit;
-// }
-
-$name = $_SESSION["user_name"];
-$login_id = $_SESSION["user_id"];
+<?php
 $db = db_connect();
-try {
-    // キャリコンプラスの情報を取得
-    $sql_plus = "SELECT ri.id,ti.time,rsl.date,mt.name AS method_name FROM reservation_infos ri 
-            INNER JOIN reservation_slots rsl ON ri.slot_id = rsl.id
-            INNER JOIN methods mt ON ri.method_id= mt.id
-            INNER JOIN times ti ON rsl.time_id = ti.id
-            LEFT JOIN classes cl ON rsl.class_id = cl.id
-            LEFT JOIN carecons cr ON rsl.carecon_id =cr.id
-            WHERE ri.student_id=:login_id AND ri.method_id=2";
+// クリックされた予約情報を取得
+ $reserve_id = $_POST['reserve-id'];
+// $reserve_id = 4;
+$sql = "SELECT 
+reservation_infos.id AS reserve_id,
+reservation_slots.date,times.time, methods.name 
+FROM reservation_infos 
+INNER JOIN reservation_slots ON reservation_infos.slot_id = reservation_slots.id 
+INNER JOIN times ON reservation_slots.time_id = times.id 
+INNER JOIN methods ON reservation_infos.method_id = methods.id 
+WHERE reservation_infos.id = :reserve_id";
 
-    $stmt_plus = $db->prepare($sql_plus);
-    $stmt_plus->bindParam(":login_id", $login_id, PDO::PARAM_INT);
-    $stmt_plus->execute();
-    $result_plus = $stmt_plus->fetchAll(PDO::FETCH_ASSOC);
-} catch (PDOException $e) {
-    echo "エラ‐" . $e->getMessage();
-}
+$stmt = $db->prepare($sql);
+$stmt->bindParam(':reserve_id', $reserve_id, PDO::PARAM_INT);
+$stmt->execute();
+$reservation = $stmt->fetch(PDO::FETCH_ASSOC);
+
+// メソッドを取得
+$method_sql = "SELECT id,name FROM methods";
+$method_stmt = $db->prepare($method_sql);
+$method_stmt->execute();
+$methods = $method_stmt->fetchAll(PDO::FETCH_ASSOC);
+
 ?>
 
-<?php include __DIR__ . "/../inc/header_student.php" ?>
-<?php check_array($_SESSION); ?>
-<main class="container mt-5">
-    <h1 class="mb-5 text-center">キャンセル・変更申請</h1>
-    <div class="text-center">
-        <p>ようこそ <?php echo htmlspecialchars($_SESSION["user_name"]); ?> さん</p>
-    </div>
 
-    <div class="mb-4">
-        <h2 class="mb-3">キャリコンプラス予約状況</h2>
-        <table class="table">
-            <thead>
-                <tr class="row">
-                    <th class="col-2">日付</th>
-                    <th class="col-2">開始時間</th>
-                    <th class="col-3">面談方法</th>
-                    <th class="col-5"></th>
-                </tr>
-            </thead>
-            <tbody> 
-                <?php foreach ($result_plus as $rp): ?>
-                    <tr class="row">
-                        <td class="col-2"><?php echo htmlspecialchars($rp["date"]); ?></td>
-                        <td class="col-2"><?php echo htmlspecialchars($rp["time"]); ?></td>
-                        <td class="col-3"><?php echo htmlspecialchars($rp["method_name"]); ?></td>
-                        <td class="col-2">
-                            <form action="./cancel_request_do.php" method="post" id="cancelForm_<?php echo $rp['id']; ?>">
-                                <input type="hidden" name="reserve-id" value="<?php echo $rp["id"]; ?>">
-                                <textarea name="body" class="form-control mb-2" rows="2" placeholder="理由を入力"></textarea>
-                            </form>
-                        </td>
-                    </tr>
-                <?php endforeach; ?>
-            </tbody>
-        </table>
-    </div>
-</main>
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>キャンセル申請</title>
+</head>
+<body>
+    <form action="./cancel_request_do.php" method="post">
+        <main class="container mt-5 l-wrapper">
+            <h1 class="mb-5 text-center">キャンセル申請</h1>
+            <div class="text-center">
+                <table class="table mb-8">
+                    <tbody>
+                        <tr class="row">
+                            <td class="col-3">予約内容</td>
+                            <td class="col-3"><?php echo $reservation["date"] ?>
+                            </td>
+                            <td class="col-3"><?php echo $reservation["time"] ?>
+                            </td>
+                            <td class="col-3"><?php echo $reservation["name"] ?></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p>希望日時、枠を交換する場合は相手の名前をご記入ください。また、補足の連絡事項があればご記入ください。</p>
+                <textarea name="text" id="js-text" class="form-control"></textarea>
+                <button type="button" class="btn btn-primary" id="js-open">内容を確認</button>
+                <a href="./index.php" class="btn btn-info">TOPへ戻る</a>
+            </div>
+        </main>
+
+        <!-- modal -->
+        <dialog id="js-modal" class="modal-dialog p-3 border rounded shadow">
+            <div class="modal-content p-3">
+
+                <h2 class="modal-header fs-5 border-bottom pb-2 mb-3">
+                    変更希望内容
+                </h2>
+
+                <div class="modal-body">
+                    <p id="js-text-write"></p>
+                </div>
+
+                <div class="modal-footer mt-3">
+
+                    <input type="hidden" name="reserve_id" value="<?php echo $reserve_id; ?>">
+                    <button class="btn btn-primary" type="submit">送信</button>
+
+                    <button class="btn btn-secondary" id="js-close" type="button">閉じる</button>
+                </div>
+            </div>
+        </dialog>
+    </form>
+
+    <script>
+        // change_request
+        const openBtn = document.getElementById('js-open');
+        const closeBtn = document.getElementById('js-close');
+        const modal = document.getElementById('js-modal');
+
+        openBtn.addEventListener('click', () => {
+            modal.showModal();
+            const element = document.getElementById('js-text');
+            const writeArea = document.getElementById('js-text-write');
+            writeArea.textContent = element.value;
+        });
+        closeBtn.addEventListener('click', () => {
+            modal.close();
+        })
+    </script>
+</body>
+
+</html>
