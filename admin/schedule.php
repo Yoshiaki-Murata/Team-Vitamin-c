@@ -223,7 +223,7 @@ require_once './../inc/header_admin.php';
       <div class="w-100">
         <label class="form-label">日付で絞り込み</label>
         <select name="date" class="form-select" onchange="this.form.submit()">
-          <option value="">全日付</option>
+          <option value="">全日程</option>
           <?php foreach ($dates as $d): ?>
             <option value="<?php echo h($d['date']); ?>"
               <?php if ($d['date'] === $date) echo 'selected'; ?>>
