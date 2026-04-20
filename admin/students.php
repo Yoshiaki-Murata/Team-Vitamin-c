@@ -224,7 +224,7 @@ require_once './../inc/header_admin.php';
     if (reserveData[studentId]) {
       let html = '';
       reserveDetail.forEach(e => {
-        html += `【${e.name}】<br>${e.date}<br>${e.time}<br>${e.method_name}`
+        html += `【${e.name}】<br>${e.date}<br>${e.time}<br>${e.method_name}<br>`
       })
       document.getElementById('modal-reserve').innerHTML = html;
     }
