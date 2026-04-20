@@ -13,7 +13,7 @@ try {
             INNER JOIN classes c ON s.class_id=c.id
             INNER JOIN student_status ss ON s.status_id =ss.id
             INNER JOIN carecons cr ON rs.carecon_id = cr.id
-            INNER JOIN times t ON rs.id = t.id
+            INNER JOIN times t ON rs.time_id = t.id
             WHERE cr.id=1
             AND rs.date=:date 
             AND c.id=:class_id";

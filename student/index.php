@@ -12,7 +12,7 @@ try {
             INNER JOIN times ti ON rsl.time_id = ti.id
             LEFT JOIN classes cl ON rsl.class_id = cl.id
             LEFT JOIN carecons cr ON rsl.carecon_id =cr.id
-            WHERE ri.student_id=:login_id AND ri.method_id=1";
+            WHERE ri.student_id=:login_id AND rsl.carecon_id=1";
     $stmt_must = $db->prepare($sql_must);
     $stmt_must->bindParam(":login_id", $login_id, PDO::PARAM_INT);
     $stmt_must->execute();
@@ -25,7 +25,7 @@ try {
             INNER JOIN times ti ON rsl.time_id = ti.id
             LEFT JOIN classes cl ON rsl.class_id = cl.id
             LEFT JOIN carecons cr ON rsl.carecon_id =cr.id
-            WHERE ri.student_id=:login_id AND ri.method_id=2";
+            WHERE ri.student_id=:login_id AND rsl.carecon_id=2";
 
     $stmt_plus = $db->prepare($sql_plus);
     $stmt_plus->bindParam(":login_id", $login_id, PDO::PARAM_INT);
