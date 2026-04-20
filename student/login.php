@@ -27,3 +27,4 @@ require_once __DIR__ . "/../inc/function.php";
         </form>
     </main>
 </body>
+<?php require_once './../inc/footer.php'; ?>

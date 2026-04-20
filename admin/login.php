@@ -16,7 +16,7 @@ require_once __DIR__ . "/../inc/function.php";
 <body>
     <main class="l-wrapper">
         <h1 class="c-title">管理者ログイン</h1>
-        <form action="./login.php" method="post">
+        <form action="login_do.php" method="post">
             <div class="row justify-content-center">
                 <div class="mb-3 col-6">
                     <label for="login_id" class="form-laber">ログインID</label>
@@ -26,7 +26,7 @@ require_once __DIR__ . "/../inc/function.php";
             <div class="row justify-content-center">
                 <div class="mb-4 col-6">
                     <label for="login_id" class="form-laber">パスワード</label>
-                    <input type="text" name="password" id="password" class="form-control" autocomplete="password" placeholder="半角数字8字">
+                    <input type="password" name="password" id="password" class="form-control" autocomplete="password" placeholder="半角数字8字">
                 </div>
             </div>
             <div class="text-center">

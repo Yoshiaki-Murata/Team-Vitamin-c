@@ -49,7 +49,7 @@ function check_logined()
         session_start();
     }
 
-    if (!isset($_SESSION["admin_session_id"])) {
+    if (!isset($_SESSION["login_id"])) {
         header("location:login.php");
         exit();
     }

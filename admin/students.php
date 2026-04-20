@@ -50,6 +50,21 @@ INNER JOIN student_status ON students.status_id = student_status.id INNER JOIN c
   $err_msg = 'データの取得に失敗しました:' . $e->getMessage();
 };
 
+
+// 生徒の予約を取得
+$reserve_sql = "SELECT students.id,students.name, reservation_slots.date, times.time, carecons.name, methods.name AS 'method_name' FROM reservation_infos JOIN students ON reservation_infos.student_id=students.id JOIN reservation_slots ON reservation_infos.slot_id=reservation_slots.id JOIN methods ON reservation_infos.method_id=methods.id JOIN times ON reservation_slots.time_id=times.id JOIN carecons ON reservation_slots.carecon_id=carecons.id";
+$reserve_stmt = $db->prepare($reserve_sql);
+$reserve_stmt->execute();
+$reserves = $reserve_stmt->fetchAll(PDO::FETCH_ASSOC);
+
+$reserve_by_student = [];
+
+foreach ($reserves as $r) {
+  $student_id = $r['id'];
+  $reserve_by_student[$student_id][] = $r;
+}
+
+
 require_once './../inc/header_admin.php';
 ?>
 
@@ -111,6 +126,7 @@ require_once './../inc/header_admin.php';
         <?php endforeach; ?>
       </tbody>
     </table>
+    <!-- modal -->
     <div class="modal fade" id="studentModal" tabindex="-1">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -158,7 +174,13 @@ require_once './../inc/header_admin.php';
               </li>
               <li class="list-group-item d-flex justify-content-between">
                 <span class="fw-bold">キャリコン予約状況</span>
-                <span id=""></span>
+                <span id="modal-reserve">
+                  <?php foreach ($reserves as $reserve): ?>
+                    <div>
+                      <?php echo $reserve['date']; ?> <?php echo $reserve['time']; ?>
+                    </div>
+                  <?php endforeach; ?>
+                </span>
               </li>
             </ul>
 
@@ -193,7 +215,27 @@ require_once './../inc/header_admin.php';
     document.getElementById('modal-pass').textContent = button.dataset.pass;
     document.getElementById('modal-status').textContent = button.dataset.status;
     document.getElementById('modal-login').textContent = button.dataset.login;
+    const reserveData = <?php echo json_encode($reserve_by_student); ?>;
+    const studentId = button.dataset.id;
+    const reserveDetail = reserveData[studentId];
 
+
+    // 予約がある場合
+    if (reserveData[studentId]) {
+      let html = '';
+      reserveDetail.forEach(e => {
+        html += `【${e.name}】<br>${e.date}<br>${e.time}<br>${e.method_name}`
+      })
+      document.getElementById('modal-reserve').innerHTML = html;
+    }
+
+
+    // 予約が無い場合
+    if (!reserveData[studentId]) {
+      document.getElementById('modal-reserve').textContent = '予約なし';
+    }
+
+    // 編集・削除ボタン
     const deleteBtn = document.getElementById('modal-delete-btn');
     deleteBtn.href = 'student_del.php?id=' + button.dataset.id;
 

@@ -215,6 +215,7 @@ require_once './../inc/header_admin.php';
     <!-- 削除モーダルここまで -->
   </div>
 </body>
+
 <script>
   document.addEventListener('DOMContentLoaded', () => {
     const editBtns = document.querySelectorAll('.edit-btn');

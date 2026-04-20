@@ -82,7 +82,7 @@ const modalClose = document.getElementById("modalClose");
 
 // 2 閉じるボタン
 modalClose.addEventListener("click", () => {
-    dialog.close;
+    dialog.close();
 });
 
 // 3 予約ボタンクリック時の処理

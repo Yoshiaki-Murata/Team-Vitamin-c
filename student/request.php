@@ -62,3 +62,4 @@ WHERE rs.reserve_status_id=1";
 
 </main>
 <script src="./../js/reserve.js"></script>
+<?php require_once './../inc/footer.php'; ?>

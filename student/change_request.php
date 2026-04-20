@@ -6,8 +6,8 @@ require_once __DIR__ . "/../inc/function.php";
 <?php
 $db = db_connect();
 // クリックされた予約情報を取得
-// $reserve_id = $_POST['reserve-id'];
-$reserve_id = 4;
+ $reserve_id = $_POST['reserve-id'];
+// $reserve_id = 4;
 $sql = "SELECT 
 reservation_infos.id AS reserve_id,
 reservation_slots.date,times.time, methods.name 
@@ -39,7 +39,6 @@ $methods = $method_stmt->fetchAll(PDO::FETCH_ASSOC);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>変更申請</title>
 </head>
-
 <body>
     <form action="./change_request_do.php" method="post">
         <main class="container mt-5 l-wrapper">
@@ -106,3 +105,4 @@ $methods = $method_stmt->fetchAll(PDO::FETCH_ASSOC);
 </body>
 
 </html>
+<?php require_once './../inc/footer.php'; ?>

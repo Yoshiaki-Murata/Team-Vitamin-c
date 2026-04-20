@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__ . '/../inc/function.php';
 
-//check_logined();
+check_logined();
 
 require_once './../inc/header_admin.php';
 ?>
@@ -32,3 +32,4 @@ require_once './../inc/header_admin.php';
 
 
 </body>
+<?php require_once './../inc/footer.php'; ?>

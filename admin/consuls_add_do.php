@@ -6,10 +6,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // 講師の名前、漢字、ひらがな、カタカナ、長音記号を1文字以上
     //  半角または全角スペースがあってもなくても良い（0回または1回）
+    if (!$name) {
+        exit('名前が未入力です。');
+    }
+    if (mb_strlen($name) > 20 || mb_strlen($name) < 2) {
+        exit('2文字以上、20文字以内で入力してください。');
+    }
     if (!preg_match('/^[一-龠ぁ-んァ-ヶー]+[ 　]?[一-龠ぁ-んァ-ヶー]+$/', $name)) {
         //header('location:consuls.php');
-        exit('名前を正しく入力');
+        exit('名前を正しく入力してください。');
     }
+
 
 
 
