@@ -31,6 +31,14 @@ try {
     $stmt_plus->bindParam(":login_id", $login_id, PDO::PARAM_INT);
     $stmt_plus->execute();
     $result_plus = $stmt_plus->fetchAll(PDO::FETCH_ASSOC);
+
+    // 必須キャリコンの開催日の情報を取得する
+    $sql_cr = "SELECT DISTINCT rs.date
+    FROM reservation_slots rs 
+    WHERE rs.carecon_id=1";
+    $stmt_cr = $db->prepare($sql_cr);
+    $stmt_cr->execute();
+    $cr = $stmt_cr->fetchAll(PDO::FETCH_ASSOC);
 } catch (PDOException $e) {
     echo "エラ‐" . $e->getMessage();
 }
@@ -39,9 +47,6 @@ try {
 <?php include __DIR__ . "/../inc/header_student.php" ?>
 
 <body>
-    <!-- <?php check_array($result_must); ?> -->
-    <!-- <?php check_array($result_plus); ?> -->
-    <?php check_array($_SESSION); ?>
     <main class="l-wrapper">
         <div class="mb-5">
             <h1 class="c-title">トップページ</h1>
@@ -150,8 +155,9 @@ try {
                     キャリコン　予約情報
                 </h2>
                 <select name="modalDate" id="modalDate" class="form-select mx-auto w-50 mb-4">
-                    <option value="2026-04-18">2026-04-18</option>
-                    <option value="2026-04-25">2026-04-25</option>
+                    <?php foreach ($cr as $c): ?>
+                        <option value="<?php echo $c["date"]; ?>"><?php echo $c["date"]; ?></option>
+                    <?php endforeach; ?>
                 </select>
                 <table class="table" id="modalTable">
                     <thead>
@@ -166,7 +172,7 @@ try {
             </div>
             <button class="btn btn-warning mx-auto" id="closeModal">閉じる</button>
         </dialog>
-            
+
     </main>
     <script src="./../js/student.js"></script>
 </body>
