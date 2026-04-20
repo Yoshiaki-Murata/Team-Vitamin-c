@@ -41,8 +41,7 @@ try {
     carecon_lines.line AS reserve_line, 
     reserve_status.name AS reservation_status,
     students.id AS student_id,
-    methods.id AS method_id,
-    classes.id AS class_id
+    methods.id AS method_id
   FROM reservation_slots
     LEFT JOIN reservation_infos ON reservation_infos.slot_id = reservation_slots.id 
     INNER JOIN times ON reservation_slots.time_id = times.id 
@@ -88,49 +87,46 @@ require_once './../inc/header_admin.php';
   <div class="l-wrapper">
     <h1 class="c-title">予約情報一覧</h1>
 
-    <!-- フィルター -->
     <form method="get" class="mb-3 w-50">
       <div class="d-flex gap-2">
-
         <div class="flex-fill">
-          <label class="form-label">日付で絞り込み</label>
+          <label>日付</label>
           <select name="date" class="form-select" onchange="this.form.submit()">
             <option value="">全日程</option>
             <?php foreach ($dates as $d): ?>
-              <option value="<?= h($d['date']); ?>" <?= ($d['date'] === $date) ? 'selected' : '' ?>>
-                <?= h($d['date']); ?>
+              <option value="<?= h($d['date']) ?>" <?= ($d['date'] === $date) ? 'selected' : '' ?>>
+                <?= h($d['date']) ?>
               </option>
             <?php endforeach; ?>
           </select>
         </div>
 
         <div class="flex-fill">
-          <label class="form-label">ラインで絞り込み</label>
+          <label>ライン</label>
           <select name="line" class="form-select" onchange="this.form.submit()">
             <option value="">全ライン</option>
-            <?php foreach ($lines as $line_select): ?>
-              <option value="<?= h($line_select['id']); ?>" <?= ($line_select['id'] == $line_id) ? 'selected' : '' ?>>
-                <?= h($line_select['line']); ?>
+            <?php foreach ($lines as $l): ?>
+              <option value="<?= h($l['id']) ?>" <?= ($l['id'] == $line_id) ? 'selected' : '' ?>>
+                <?= h($l['line']) ?>
               </option>
             <?php endforeach; ?>
           </select>
         </div>
-
       </div>
     </form>
 
-    <table class="table mb-5">
+    <table class="table">
       <thead>
         <tr>
           <th>ライン</th>
           <th>日付</th>
           <th>時間</th>
-          <th>訓練生名</th>
+          <th>訓練生</th>
           <th>教室</th>
-          <th>担当講師</th>
-          <th>実施方法</th>
-          <th>予約ステータス</th>
-          <th>操作</th>
+          <th>講師</th>
+          <th>方法</th>
+          <th>状態</th>
+          <th></th>
         </tr>
       </thead>
       <tbody>
@@ -140,34 +136,28 @@ require_once './../inc/header_admin.php';
             <td><?= h($row['date']) ?></td>
             <td><?= h($row['reserve_time']) ?></td>
             <td><?= $row['reserve_student'] ? h($row['reserve_student']) : '-' ?></td>
-            <td><?= $row['reserve_class'] ? h($row['reserve_class']) : '未定' ?></td>
-            <td><?= $row['reserve_consultant'] ? h($row['reserve_consultant']) : '未定' ?></td>
-            <td><?= $row['reserve_method'] ? h($row['reserve_method']) : '-' ?></td>
+            <td><?= $row['reserve_class'] ?: '未定' ?></td>
+            <td><?= $row['reserve_consultant'] ?: '未定' ?></td>
+            <td><?= $row['reserve_method'] ?: '-' ?></td>
             <td><?= h($row['reservation_status']) ?></td>
             <td>
               <?php if ($row['reservation_id']): ?>
                 <button class="btn btn-primary edit-btn"
-                  data-bs-toggle="modal"
-                  data-bs-target="#editReserveModal"
-                  data-id="<?= h($row['reservation_id']) ?>"
-                  data-student-id="<?= h($row['student_id']) ?>"
-                  data-method-id="<?= h($row['method_id']) ?>"
-                  data-student-class-id="<?= h($row['student_class_id']) ?>">
-                  変更
-                </button>
+                  data-bs-toggle="modal" data-bs-target="#editReserveModal"
+                  data-id="<?= $row['reservation_id'] ?>"
+                  data-student-id="<?= $row['student_id'] ?>"
+                  data-method-id="<?= $row['method_id'] ?>"
+                  data-student-class-id="<?= $row['student_class_id'] ?>">
+                  変更</button>
                 <button class="btn btn-danger del-btn"
-                  data-bs-toggle="modal"
-                  data-bs-target="#delReserveModal"
-                  data-id="<?= h($row['reservation_id']) ?>">
-                  削除
-                </button>
+                  data-bs-toggle="modal" data-bs-target="#delReserveModal"
+                  data-id="<?= $row['reservation_id'] ?>">
+                  削除</button>
               <?php else: ?>
                 <button class="btn btn-warning add-btn"
-                  data-bs-toggle="modal"
-                  data-bs-target="#addReserveModal"
-                  data-id="<?= h($row['slot_id']) ?>">
-                  追加
-                </button>
+                  data-bs-toggle="modal" data-bs-target="#addReserveModal"
+                  data-id="<?= $row['slot_id'] ?>">
+                  追加</button>
               <?php endif; ?>
             </td>
           </tr>
@@ -175,32 +165,94 @@ require_once './../inc/header_admin.php';
       </tbody>
     </table>
 
-    <!-- モーダル（そのまま維持） -->
     <!-- 追加 -->
     <div class="modal fade" id="addReserveModal" tabindex="-1">
       <div class="modal-dialog">
         <div class="modal-content">
-          <form action="./reservation_add_do.php" method="post">
+
+          <form method="post" action="./reservation_add_do.php">
+
             <div class="modal-header">
               <h5 class="modal-title">新規予約追加</h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
+
             <div class="modal-body">
               <input type="hidden" name="slot_id" id="add-slot-id">
 
               <div class="mb-3">
                 <label>クラス</label>
-                <select name="class_id" class="class-select form-select">
+                <select id="add-class" name="class_id" class="form-select">
                   <option value="">選択してください</option>
-                  <?php foreach ($classes as $class): ?>
-                    <option value="<?= h($class['id']) ?>"><?= h($class['name']) ?></option>
+                  <?php foreach ($classes as $c): ?>
+                    <option value="<?= $c['id'] ?>"><?= $c['name'] ?></option>
                   <?php endforeach; ?>
                 </select>
               </div>
 
               <div class="mb-3">
                 <label>訓練生</label>
-                <select name="student_id" class="student-select form-select">
+                <select id="add-student" name="student_id" class="form-select">
+                  <option value="">選択してください</option>
+                  <?php foreach ($students as $s): ?>
+                    <option value="<?= $s['id'] ?>" data-class-id="<?= $s['class_id'] ?>">
+                      <?= $s['name'] ?>
+                    </option>
+                  <?php endforeach; ?>
+                </select>
+              </div>
+
+              <div class="mb-3">
+                <label>実施方法</label>
+                <select name="method_id" class="form-select">
+                  <?php foreach ($methods as $m): ?>
+                    <option value="<?= $m['id'] ?>"><?= $m['name'] ?></option>
+                  <?php endforeach; ?>
+                </select>
+              </div>
+            </div>
+
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">キャンセル</button>
+              <button type="submit" class="btn btn-primary">追加</button>
+            </div>
+
+          </form>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- 編集 -->
+    <div class="modal fade" id="editReserveModal" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+
+          <form action="./reservation_edit_do.php" method="post">
+
+            <div class="modal-header">
+              <h5 class="modal-title">予約編集</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body">
+              <input type="hidden" name="id" id="edit-id">
+
+              <div class="mb-3">
+                <label class="form-label">クラス</label>
+                <select name="class_id" id="edit-class" class="form-select">
+                  <option value="">選択してください</option>
+                  <?php foreach ($classes as $class): ?>
+                    <option value="<?= h($class['id']) ?>">
+                      <?= h($class['name']) ?>
+                    </option>
+                  <?php endforeach; ?>
+                </select>
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label">訓練生</label>
+                <select name="student_id" id="edit-student" class="form-select">
                   <option value="">選択してください</option>
                   <?php foreach ($students as $student): ?>
                     <option value="<?= h($student['id']) ?>" data-class-id="<?= h($student['class_id']) ?>">
@@ -211,11 +263,13 @@ require_once './../inc/header_admin.php';
               </div>
 
               <div class="mb-3">
-                <label>実施方法</label>
-                <select name="method_id" class="form-select">
+                <label class="form-label">実施方法</label>
+                <select name="method_id" id="edit-method" class="form-select">
                   <option value="">選択してください</option>
                   <?php foreach ($methods as $method): ?>
-                    <option value="<?= h($method['id']) ?>"><?= h($method['name']) ?></option>
+                    <option value="<?= h($method['id']) ?>">
+                      <?= h($method['name']) ?>
+                    </option>
                   <?php endforeach; ?>
                 </select>
               </div>
@@ -223,31 +277,39 @@ require_once './../inc/header_admin.php';
 
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">キャンセル</button>
-              <button type="submit" class="btn btn-primary">追加</button>
+              <button type="submit" class="btn btn-primary">更新</button>
             </div>
+
           </form>
+
         </div>
       </div>
     </div>
 
-    <!-- 削除モーダル -->
+    <!-- 削除 -->
     <div class="modal fade" id="delReserveModal" tabindex="-1">
       <div class="modal-dialog">
         <div class="modal-content">
+
           <form action="./reservation_del_do.php" method="post">
+
             <div class="modal-header">
               <h5 class="modal-title">削除確認</h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
+
             <div class="modal-body">
               <p>この予約を削除しますか？</p>
               <input type="hidden" name="id" id="del-id">
             </div>
+
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">いいえ</button>
               <button type="submit" class="btn btn-danger">削除</button>
             </div>
+
           </form>
+
         </div>
       </div>
     </div>
@@ -255,16 +317,47 @@ require_once './../inc/header_admin.php';
   </div>
 
   <script>
-    document.querySelectorAll('.add-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        document.getElementById('add-slot-id').value = btn.dataset.id;
-      });
+    function filter(classId, studentId) {
+      const c = document.getElementById(classId);
+      const s = document.getElementById(studentId);
+      const opts = [...s.options];
+
+      c.onchange = () => {
+        const val = c.value;
+        s.innerHTML = '<option value="">選択</option>';
+        opts.forEach(o => {
+          if (!val || o.dataset.classId === val) s.appendChild(o);
+        });
+      };
+      c.dispatchEvent(new Event('change'));
+    }
+
+    filter('add-class', 'add-student');
+    filter('edit-class', 'edit-student');
+
+    document.querySelectorAll('.add-btn').forEach(b => {
+      b.onclick = () => {
+        document.getElementById('add-slot-id').value = b.dataset.id;
+      };
     });
 
-    document.querySelectorAll('.del-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        document.getElementById('del-id').value = btn.dataset.id;
-      });
+    document.querySelectorAll('.del-btn').forEach(b => {
+      b.onclick = () => {
+        document.getElementById('del-id').value = b.dataset.id;
+      };
+    });
+
+    document.querySelectorAll('.edit-btn').forEach(b => {
+      b.onclick = () => {
+        document.getElementById('edit-id').value = b.dataset.id;
+        const c = document.getElementById('edit-class');
+        c.value = b.dataset.studentClassId;
+        c.dispatchEvent(new Event('change'));
+        setTimeout(() => {
+          document.getElementById('edit-student').value = b.dataset.studentId;
+        }, 0);
+        document.getElementById('edit-method').value = b.dataset.methodId;
+      };
     });
   </script>
 
