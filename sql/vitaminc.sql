@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- ホスト: 127.0.0.1
--- 生成日時: 2026-04-16 06:50:06
+-- 生成日時: 2026-04-21 07:38:49
 -- サーバのバージョン： 10.4.32-MariaDB
 -- PHP のバージョン: 8.2.12
 
@@ -49,19 +49,19 @@ INSERT INTO `admins` (`id`, `name`, `password`, `login_id`) VALUES
 
 CREATE TABLE `apply_lists` (
   `id` int(11) NOT NULL,
-  `reserve_info_id` int(11) NOT NULL,
+  `reserve_info_id` int(11) DEFAULT NULL,
   `apply_detail` text NOT NULL,
   `apply_status_id` int(11) NOT NULL,
-  `apply_datetime` datetime NOT NULL
+  `apply_datetime` datetime NOT NULL,
+  `res_date` date DEFAULT NULL COMMENT '初期データ',
+  `res_time` varchar(20) DEFAULT NULL COMMENT '初期データ',
+  `res_line` int(11) DEFAULT NULL COMMENT '初期データ',
+  `res_student_name` varchar(100) DEFAULT NULL COMMENT '初期データ',
+  `res_class_name` varchar(100) NOT NULL COMMENT '初期データ',
+  `res_consultant_name` varchar(100) NOT NULL COMMENT '初期データ',
+  `res_method_name` varchar(50) DEFAULT NULL COMMENT '初期データ',
+  `carecon_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-
---
--- テーブルのデータのダンプ `apply_lists`
---
-
-INSERT INTO `apply_lists` (`id`, `reserve_info_id`, `apply_detail`, `apply_status_id`, `apply_datetime`) VALUES
-(7, 4, 'test', 1, '2026-04-16 04:39:32'),
-(9, 6, 'test', 2, '2026-04-16 04:39:44');
 
 -- --------------------------------------------------------
 
@@ -237,8 +237,13 @@ CREATE TABLE `reservation_infos` (
 --
 
 INSERT INTO `reservation_infos` (`id`, `slot_id`, `student_id`, `method_id`) VALUES
-(4, 9, 17, 1),
-(6, 13, 27, 1);
+(10, 14, 18, 1),
+(11, 15, 28, 1),
+(12, 16, 26, 1),
+(15, 20, 18, 1),
+(17, 21, 28, 1),
+(18, 22, 21, 2),
+(19, 17, 17, 1);
 
 -- --------------------------------------------------------
 
@@ -262,13 +267,18 @@ CREATE TABLE `reservation_slots` (
 --
 
 INSERT INTO `reservation_slots` (`id`, `date`, `time_id`, `class_id`, `consultant_id`, `carecon_id`, `reserve_status_id`, `lines_id`) VALUES
-(6, '2026-04-18', 1, 1, 2, 1, 1, 1),
-(7, '2026-04-18', 2, 1, 2, 1, 1, 1),
-(8, '2026-04-18', 3, 1, 2, 1, 1, 1),
-(9, '2026-04-18', 4, 1, 2, 1, 1, 1),
-(10, '2026-04-18', 5, 1, 2, 1, 1, 1),
-(12, '2026-04-18', 6, 1, 2, 1, 1, 1),
-(13, '2026-04-18', 1, 2, 1, 2, 1, 2);
+(14, '2026-04-25', 1, NULL, NULL, 1, 2, 1),
+(15, '2026-04-25', 2, NULL, NULL, 1, 2, 1),
+(16, '2026-04-25', 3, NULL, NULL, 1, 2, 1),
+(17, '2026-04-25', 1, 12, 4, 2, 2, 2),
+(18, '2026-04-25', 2, NULL, NULL, 2, 1, 2),
+(19, '2026-04-25', 3, NULL, NULL, 2, 1, 2),
+(20, '2026-05-02', 1, NULL, NULL, 1, 2, 1),
+(21, '2026-05-02', 2, NULL, NULL, 1, 2, 1),
+(22, '2026-05-02', 3, NULL, NULL, 1, 2, 1),
+(23, '2026-05-02', 1, NULL, NULL, 2, 1, 2),
+(24, '2026-05-02', 2, NULL, NULL, 2, 1, 2),
+(25, '2026-05-02', 3, NULL, NULL, 2, 1, 2);
 
 -- --------------------------------------------------------
 
@@ -488,7 +498,7 @@ ALTER TABLE `admins`
 -- テーブルの AUTO_INCREMENT `apply_lists`
 --
 ALTER TABLE `apply_lists`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- テーブルの AUTO_INCREMENT `apply_status`
@@ -536,13 +546,13 @@ ALTER TABLE `methods`
 -- テーブルの AUTO_INCREMENT `reservation_infos`
 --
 ALTER TABLE `reservation_infos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- テーブルの AUTO_INCREMENT `reservation_slots`
 --
 ALTER TABLE `reservation_slots`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- テーブルの AUTO_INCREMENT `reserve_status`
