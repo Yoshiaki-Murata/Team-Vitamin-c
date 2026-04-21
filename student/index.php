@@ -53,9 +53,9 @@ try {
             <p>ようこそ<?php echo "  " . $_SESSION["user_name"] . "  "; ?>さん</p>
         </div>
         <div class="mb-5">
-            <div class="row">
-                <h2 class="mb-3 col-auto">キャリコン予約状況</h2>
-                <button class="btn btn-primary btn-sm col-auto" id="mReserveBtn">予約状況確認</button>
+            <div class="d-flex gap-3">
+                <h2 class="mb-3 col-auto">キャリコン実施日</h2>
+                <button type="button" class="btn btn-primary mb-3" id="mReserveBtn">予約状況確認</button>
             </div>
 
             <div>
@@ -96,13 +96,17 @@ try {
                         </tbody>
                     </table>
                 <?php else: ?>
-                    <p>予約はありません</p>
+                    <p>実施の予定はありません</p>
                 <?php endif; ?>
             </div>
         </div>
 
         <div class="mb-4">
-            <h2 class="mb-3">キャリコンプラス予約状況</h2>
+            <div class="d-flex gap-3">
+                <h2 class="mb-3">キャリコンプラス予約状況</h2>
+                <a href="./request.php" class="btn btn-warning mb-3">予約する</a>
+            </div>
+
             <div class="mb-3">
                 <?php if ($result_plus): ?>
                     <table class="table ms-4">
@@ -144,9 +148,7 @@ try {
                     <p>予約はありません</p>
                 <?php endif; ?>
             </div>
-            <div class="text-center">
-                <a href="./request.php" class="btn btn-warning">予約する</a>
-            </div>
+
         </div>
 
         <dialog class="dialog">

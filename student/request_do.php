@@ -41,7 +41,7 @@ if ($input) {
 
 
         if ($stmt_reserve_slot->execute()) {
-            echo json_encode(["success" => true, "message" => "予約が確定しました！"]);
+            echo json_encode(["success" => true, "message" => "予約を確定しました！"]);
         }
 
         $db->commit();

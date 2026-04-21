@@ -61,7 +61,9 @@ if (!empty($_POST)) {
                 ':carecon_id'           => $snapshot['carecon_id']
             ]);
 
-            header('location:index.php');
+            $stmt->execute();
+            // トップページへ画面遷移
+            header('location:complete.php');
             exit();
         } catch (PDOException $e) {
             exit('エラー: ' . $e->getMessage());
