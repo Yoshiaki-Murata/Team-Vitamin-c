@@ -6,7 +6,7 @@ require_once __DIR__ . "/../inc/function.php";
 <?php
 $db = db_connect();
 // クリックされた予約情報を取得
- $reserve_id = $_POST['reserve-id'];
+$reserve_id = $_POST['reserve-id'];
 // $reserve_id = 4;
 $sql = "SELECT 
 reservation_infos.id AS reserve_id,
@@ -39,25 +39,32 @@ $methods = $method_stmt->fetchAll(PDO::FETCH_ASSOC);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>キャンセル申請</title>
 </head>
+
 <body>
     <form action="./cancel_request_do.php" method="post">
         <main class="container mt-5 l-wrapper">
             <h1 class="mb-5 text-center">キャンセル申請</h1>
-            <div class="text-center">
-                <table class="table mb-8">
-                    <tbody>
-                        <tr class="row">
-                            <td class="col-3">予約内容</td>
-                            <td class="col-3"><?php echo $reservation["date"] ?>
-                            </td>
-                            <td class="col-3"><?php echo $reservation["time"] ?>
-                            </td>
-                            <td class="col-3"><?php echo $reservation["name"] ?></td>
-                        </tr>
-                    </tbody>
-                </table>
-                <p>希望日時、枠を交換する場合は相手の名前をご記入ください。また、補足の連絡事項があればご記入ください。</p>
-                <textarea name="text" id="js-text" class="form-control"></textarea>
+            <table class="table mb-8">
+                <thead>
+                    <tr class="row">
+                        <th class="col-4">日付</th>
+                        <th class="col-4">時間</th>
+                        <th class="col-4">実施方法</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="row">
+                        <td class="col-4"><?php echo $reservation["date"] ?>
+                        </td>
+                        <td class="col-4"><?php echo $reservation["time"] ?>
+                        </td>
+                        <td class="col-4"><?php echo $reservation["name"] ?></td>
+                    </tr>
+                </tbody>
+            </table>
+            <p id="description">キャンセル理由を記載してください。</p>
+            <textarea name="text" id="js-text" class="form-control rows=3" required></textarea>
+            <div class="mt-3">
                 <button type="button" class="btn btn-primary" id="js-open">内容を確認</button>
                 <a href="./index.php" class="btn btn-info">TOPへ戻る</a>
             </div>
@@ -87,16 +94,24 @@ $methods = $method_stmt->fetchAll(PDO::FETCH_ASSOC);
     </form>
 
     <script>
-        // change_request
+        const desc = document.getElementById('description');
         const openBtn = document.getElementById('js-open');
         const closeBtn = document.getElementById('js-close');
         const modal = document.getElementById('js-modal');
+        const error = document.createElement('div');
 
         openBtn.addEventListener('click', () => {
-            modal.showModal();
+
             const element = document.getElementById('js-text');
-            const writeArea = document.getElementById('js-text-write');
-            writeArea.textContent = element.value;
+            if (element.value) {
+                modal.showModal();
+                const writeArea = document.getElementById('js-text-write');
+                writeArea.textContent = element.value;
+            } else {
+                error.innerHTML = '';
+                error.innerHTML = '<p class=text-danger>※変更内容をテキストで入力してください。</p>';
+                desc.appendChild(error);
+            }
         });
         closeBtn.addEventListener('click', () => {
             modal.close();
