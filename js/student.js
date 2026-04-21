@@ -45,10 +45,8 @@ function renderModalTable(reserveData) {
     reserveData.forEach(r => {
         const tr = document.createElement("tr");
         tr.innerHTML = `
-            <td class="text-center">${r.date}</td>
             <td class="text-center">${r.time}</td>
             <td class="text-center">${r.name}</td>
-            <td class="text-center">${r.class_name ?? "未定"}</td>
         `;
         tbody.appendChild(tr);
     });

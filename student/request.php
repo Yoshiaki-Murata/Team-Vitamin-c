@@ -5,8 +5,9 @@ $db = db_connect();
 try {
     // 予約可能な枠がある日の情報を取得する
     $sql_reserve = "SELECT DISTINCT rs.date
-FROM reservation_slots rs
-WHERE rs.reserve_status_id=1";
+    FROM reservation_slots rs
+    WHERE rs.reserve_status_id=1
+    AND rs.carecon_id = 2";
     $stmt_reserve = $db->prepare($sql_reserve);
     $stmt_reserve->execute();
     $result = $stmt_reserve->fetchAll(PDO::FETCH_ASSOC);
