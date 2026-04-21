@@ -20,6 +20,7 @@ try {
 <!-- <?php check_array($date); ?> -->
 <main class="l-wrapper">
     <h1 class="c-title">キャリコンプラス予約画面</h1>
+    <?php if($result): ?>
     <div class="text-center">
         <select name="date" id="dateSelect" class="mb-3 d-inline-block form-select w-auto">
             <?php foreach ($result as $r): ?>
@@ -32,6 +33,9 @@ try {
         <ul id=reserveInfo class="row mx-auto list-unstyled justify-content-center">
         </ul>
     </div>
+    <?php else: ?>
+        <p class="text-center">現在予約を受け付けていません</p>
+        <?php endif; ?>
     <div class="text-center">
         <a href="./index.php" class="btn btn-warning">戻る</a>
     </div>
