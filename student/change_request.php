@@ -63,7 +63,7 @@ $methods = $method_stmt->fetchAll(PDO::FETCH_ASSOC);
                     </tr>
                 </tbody>
             </table>
-            <p>希望日時、枠を交換する場合は相手の名前をご記入ください。また、補足の連絡事項があればご記入ください。</p>
+            <p id="description">希望日時、枠を交換する場合は相手の名前をご記入ください。また、補足の連絡事項があればご記入ください。</p>
             <textarea name="text" id="js-text" class="form-control" rows="3" required></textarea>
             <div class="mt-3">
                 <button type="button" class="btn btn-primary" id="js-open">内容を確認</button>
@@ -96,15 +96,25 @@ $methods = $method_stmt->fetchAll(PDO::FETCH_ASSOC);
 
     <script>
         // change_request
+        const desc = document.getElementById('description');
         const openBtn = document.getElementById('js-open');
         const closeBtn = document.getElementById('js-close');
         const modal = document.getElementById('js-modal');
+        const error = document.createElement('div');
+
 
         openBtn.addEventListener('click', () => {
-            modal.showModal();
+
             const element = document.getElementById('js-text');
-            const writeArea = document.getElementById('js-text-write');
-            writeArea.textContent = element.value;
+            if (element.value) {
+                modal.showModal();
+                const writeArea = document.getElementById('js-text-write');
+                writeArea.textContent = element.value;
+            } else {
+                error.innerHTML = '';
+                error.innerHTML = '<p class=text-danger>※変更内容をテキストで入力してください。</p>';
+                desc.appendChild(error);
+            }
         });
         closeBtn.addEventListener('click', () => {
             modal.close();

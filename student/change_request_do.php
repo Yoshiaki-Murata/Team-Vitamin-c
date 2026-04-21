@@ -29,7 +29,7 @@ if (!empty($_POST)) {
 
             $stmt->execute();
             // トップページへ画面遷移
-            header('location:index.php');
+            header('location:complete.php');
             exit();
         } catch (PDOException $e) {
             exit('エラー: ' . $e->getMessage());
