@@ -64,7 +64,7 @@ $methods = $method_stmt->fetchAll(PDO::FETCH_ASSOC);
                 </tbody>
             </table>
             <p>希望日時、枠を交換する場合は相手の名前をご記入ください。また、補足の連絡事項があればご記入ください。</p>
-            <textarea name="text" id="js-text" class="form-control" rows="3"></textarea>
+            <textarea name="text" id="js-text" class="form-control" rows="3" required></textarea>
             <div class="mt-3">
                 <button type="button" class="btn btn-primary" id="js-open">内容を確認</button>
                 <a href="./index.php" class="btn btn-info">TOPへ戻る</a>
@@ -83,7 +83,7 @@ $methods = $method_stmt->fetchAll(PDO::FETCH_ASSOC);
                     <p id="js-text-write"></p>
                 </div>
 
-                <div class="modal-footer mt-3">
+                <div class="modal-footer mt-3 gap-2">
 
                     <input type="hidden" name="reserve_id" value="<?php echo $reserve_id; ?>">
                     <button class="btn btn-primary" type="submit">送信</button>
