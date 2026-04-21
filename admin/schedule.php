@@ -221,29 +221,31 @@ require_once './../inc/header_admin.php';
     <form method="get" class="mb-3 w-25 d-flex gap-2">
 
       <div class="w-100">
-        <label class="form-label">日付で絞り込み</label>
-        <select name="date" class="form-select" onchange="this.form.submit()">
-          <option value="">全日程</option>
-          <?php foreach ($dates as $d): ?>
-            <option value="<?php echo h($d['date']); ?>"
-              <?php if ($d['date'] === $date) echo 'selected'; ?>>
-              <?php echo h($d['date']); ?>
-            </option>
-          <?php endforeach; ?>
-        </select>
+        <label class="form-label">日付で絞り込み
+          <select name="date" class="form-select" id="date-box" onchange="this.form.submit()">
+            <option value="">全日程</option>
+            <?php foreach ($dates as $d): ?>
+              <option value="<?php echo h($d['date']); ?>"
+                <?php if ($d['date'] === $date) echo 'selected'; ?>>
+                <?php echo h($d['date']); ?>
+              </option>
+            <?php endforeach; ?>
+          </select>
+        </label>
       </div>
 
       <div class="w-100">
-        <label class="form-label">ラインで絞り込み</label>
-        <select name="line" class="form-select" onchange="this.form.submit()">
-          <option value="">全ライン</option>
-          <?php foreach ($lines as $line_select): ?>
-            <option value="<?php echo h($line_select['id']); ?>"
-              <?php if ($line_select['id'] == $line_id) echo 'selected'; ?>>
-              <?php echo h($line_select['line']); ?>
-            </option>
-          <?php endforeach; ?>
-        </select>
+        <label class="form-label">ラインで絞り込み
+          <select name="line" class="form-select" id="line-box" onchange="this.form.submit()">
+            <option value="">全ライン</option>
+            <?php foreach ($lines as $line_select): ?>
+              <option value="<?php echo h($line_select['id']); ?>"
+                <?php if ($line_select['id'] == $line_id) echo 'selected'; ?>>
+                <?php echo h($line_select['line']); ?>
+              </option>
+            <?php endforeach; ?>
+          </select>
+        </label>
       </div>
 
     </form>
@@ -411,6 +413,17 @@ require_once './../inc/header_admin.php';
 </body>
 
 <script>
+  // 日付を選択しないとラインが選択できない
+  const date = document.getElementById('date-box');
+  const line = document.getElementById('line-box');
+  if (date.value) {
+    line.disabled = false;
+  } else {
+    line.disabled = true;
+  }
+
+  // ここまで
+
   document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('.edit-btn').forEach(btn => {
       btn.addEventListener('click', () => {
