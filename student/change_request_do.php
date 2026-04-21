@@ -60,9 +60,6 @@ if (!empty($_POST)) {
                 ':res_method_name'      => $snapshot['res_method_name'],
                 ':carecon_id'           => $snapshot['carecon_id']
             ]);
-
-            $stmt->execute();
-            // トップページへ画面遷移
             header('location:complete.php');
             exit();
         } catch (PDOException $e) {
