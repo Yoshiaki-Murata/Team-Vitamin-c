@@ -22,11 +22,6 @@
           </a>
         </li>
         <li class="nav-item">
-          <a href="./request.php" class="nav-link text-reset">
-            プラス新規予約
-          </a>
-        </li>
-        <li class="nav-item">
           <a href="./logout_do.php" class="btn  btn-outline-secondary">
             ログアウト
           </a>
