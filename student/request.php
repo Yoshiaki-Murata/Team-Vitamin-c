@@ -5,16 +5,16 @@ $db = db_connect();
 $student_id = $_SESSION["user_id"];
 try {
     // 自分が予約している日付を検索する
-    $sql_check="SELECT DISTINCT rs.date
+    $sql_check = "SELECT DISTINCT rs.date
     FROM reservation_infos ri 
     INNER JOIN reservation_slots rs ON ri.slot_id=rs.id
     WHERE ri.student_id=:student_id";
-    $stmt_check=$db->prepare($sql_check);
+    $stmt_check = $db->prepare($sql_check);
     $stmt_check->execute([
-        ":student_id"=>$student_id
+        ":student_id" => $student_id
     ]);
-    $result_check=$stmt_check->fetchAll(PDO::FETCH_ASSOC);
-    
+    $result_check = $stmt_check->fetchAll(PDO::FETCH_ASSOC);
+
 
     // 予約可能な枠がある日の情報を取得する
     $sql_reserve = "SELECT DISTINCT rs.date
@@ -33,24 +33,24 @@ try {
 <!-- <?php check_array($date); ?> -->
 <main class="l-wrapper">
     <h1 class="c-title">キャリコンプラス予約画面</h1>
-    <?php if($result): ?>
-    <div class="text-center">
-        <select name="date" id="dateSelect" class="mb-3 d-inline-block form-select w-auto">
-            <?php foreach ($result as $r): ?>
-                <option value="<?php echo $r["date"]; ?>">
-                    <?php echo $r["date"]; ?>
-                </option>
-            <?php endforeach; ?>
-        </select>
+    <?php if ($result): ?>
+        <div class="text-center">
+            <select name="date" id="dateSelect" class="mb-3 d-inline-block form-select w-auto">
+                <?php foreach ($result as $r): ?>
+                    <option value="<?php echo $r["date"]; ?>">
+                        <?php echo $r["date"]; ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
 
-        <ul id=reserveInfo class="row mx-auto list-unstyled justify-content-center">
-        </ul>
-    </div>
+            <ul id=reserveInfo class="row mx-auto list-unstyled justify-content-center">
+            </ul>
+        </div>
     <?php else: ?>
         <p class="text-center">現在予約を受け付けていません</p>
-        <?php endif; ?>
+    <?php endif; ?>
     <div class="text-center">
-        <a href="./index.php" class="btn btn-warning">戻る</a>
+        <a href="./index.php" class="btn btn-secondary">戻る</a>
     </div>
 
 
@@ -72,7 +72,7 @@ try {
                 <tbody>
                 </tbody>
             </table>
-            <button class="btn btn-warning" id="modalClose">
+            <button class="btn btn-secondary" id="modalClose">
                 閉じる
             </button>
         </div>

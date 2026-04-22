@@ -27,3 +27,15 @@
 .modal-body {
     overflow-wrap: anywhere;
 }
+
+.c-title_carecon::before {
+    content: "●";
+    color: #0d6efd;
+    padding-inline-end: 5px;
+}
+
+.c-title_plus::before {
+    content: "●";
+    color: #ffc107;
+    padding-inline-end: 5px;
+}

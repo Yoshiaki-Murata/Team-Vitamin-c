@@ -25,7 +25,8 @@ carecons.name AS carecon_name,
 apply_status.name AS status_name
 FROM apply_lists
 INNER JOIN apply_status ON apply_lists.apply_status_id=apply_status.id
-INNER JOIN carecons ON apply_lists.carecon_id=carecons.id';
+INNER JOIN carecons ON apply_lists.carecon_id=carecons.id
+ORDER BY apply_lists.apply_datetime ASC';
 
   $stmt = $db->prepare($sql);
   $stmt->execute();
@@ -48,7 +49,7 @@ require_once './../inc/header_admin.php';
   <div class="l-wrapper">
     <h1 class="c-title">予約変更申請一覧</h1>
     <div class="mb-5">
-      <h2>キャリコン変更申請</h2>
+      <h2 class="c-title_carecon">キャリコン変更申請</h2>
       <table class="table">
         <thead>
           <tr>
@@ -72,7 +73,7 @@ require_once './../inc/header_admin.php';
                 <td><?php echo h($apply['status_name']); ?></td>
                 <td>
                   <button type="button"
-                    class="btn btn-info"
+                    class="btn btn-warning"
                     data-bs-toggle="modal"
                     data-bs-target="#detailApplyModal"
                     data-id="<?php echo h($apply['id']); ?>"
@@ -116,7 +117,7 @@ require_once './../inc/header_admin.php';
     </div>
 
     <div class="mb-5">
-      <h2>キャリコンプラス変更申請</h2>
+      <h2 class="c-title_plus">キャリコンプラス変更申請</h2>
       <table class="table">
         <thead>
           <tr>
@@ -140,7 +141,7 @@ require_once './../inc/header_admin.php';
                 <td><?php echo h($apply['status_name']); ?></td>
                 <td>
                   <button type="button"
-                    class="btn btn-info"
+                    class="btn btn-warning"
                     data-bs-toggle="modal"
                     data-bs-target="#detailApplyModal"
                     data-id="<?php echo h($apply['id']); ?>"
