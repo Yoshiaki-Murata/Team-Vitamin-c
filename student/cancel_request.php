@@ -57,10 +57,13 @@ $methods = $method_stmt->fetchAll(PDO::FETCH_ASSOC);
                         </tr>
                     </tbody>
                 </table>
-                <p>希望日時、枠を交換する場合は相手の名前をご記入ください。また、補足の連絡事項があればご記入ください。</p>
-                <textarea name="text" id="js-text" class="form-control"></textarea>
+                <label>
+                <p>キャンセル理由(必須)を記入して下さい。<br>
+                また、変更希望日時、面談方法の変更希望、補足の連絡事項があればご記入ください。</p>
+                <textarea name="text" id="js-text" class="form-control" required></textarea>
                 <button type="button" class="btn btn-primary" id="js-open">内容を確認</button>
                 <a href="./index.php" class="btn btn-info">TOPへ戻る</a>
+                </label>
             </div>
         </main>
 
@@ -92,13 +95,20 @@ $methods = $method_stmt->fetchAll(PDO::FETCH_ASSOC);
         const openBtn = document.getElementById('js-open');
         const closeBtn = document.getElementById('js-close');
         const modal = document.getElementById('js-modal');
+        const textarea = document.getElementById('js-text'); 
+        const form = document.getElementById('cancelForm');
 
         openBtn.addEventListener('click', () => {
-            modal.showModal();
-            const element = document.getElementById('js-text');
-            const writeArea = document.getElementById('js-text-write');
-            writeArea.textContent = element.value;
-        });
+            // 入力値の前後空白を消して、空文字かチェック
+        if (textarea.value.trim() === "") {
+            alert("キャンセル理由を入力してください。");
+            return; // ここで処理を終了（モーダルを開かない）
+        }
+        // 入力がある場合のみモーダルを表示
+        const writeArea = document.getElementById('js-text-write');
+        writeArea.textContent = textarea.value;
+        modal.showModal();
+    });
         closeBtn.addEventListener('click', () => {
             modal.close();
         });
