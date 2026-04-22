@@ -126,6 +126,7 @@ require_once './../inc/header_admin.php';
         <?php endforeach; ?>
       </tbody>
     </table>
+
     <!-- modal -->
     <div class="modal fade" id="studentModal" tabindex="-1">
       <div class="modal-dialog">

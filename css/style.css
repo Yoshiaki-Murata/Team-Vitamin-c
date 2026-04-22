@@ -18,3 +18,12 @@
     text-align: center;
     padding-block: 16px;
 }
+
+.modal-detail {
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+.modal-body {
+    overflow-wrap: anywhere;
+}
