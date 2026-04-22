@@ -260,7 +260,7 @@ require_once './../inc/header_admin.php';
             <th>教室</th>
             <th>担当</th>
             <th>キャリコン種別</th>
-            <th>予約状況</th>
+            <!-- <th>予約状況</th> -->
             <th>操作</th>
           </tr>
         </thead>
@@ -285,7 +285,7 @@ require_once './../inc/header_admin.php';
               <td><?php echo h($slot['carecon_name']); ?></td>
 
               <!-- ★ここ重要（バッジ化） -->
-              <td>
+              <!-- <td>
                 <?php if ($slot['reserve_status_id'] == 1): ?>
                   <span class="badge bg-success">空き</span>
                 <?php elseif ($slot['reserve_status_id'] == 2): ?>
@@ -295,7 +295,7 @@ require_once './../inc/header_admin.php';
                     <?php echo h($slot['reserve_status_name']); ?>
                   </span>
                 <?php endif; ?>
-              </td>
+              </td> -->
 
               <td>
                 <button type="button"
