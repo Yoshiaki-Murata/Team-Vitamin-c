@@ -68,7 +68,7 @@ $methods = $method_stmt->fetchAll(PDO::FETCH_ASSOC);
             <textarea name="text" id="js-text" class="form-control" rows="3" required></textarea>
             <div class="mt-3">
                 <button type="button" class="btn btn-primary" id="js-open">内容を確認</button>
-                <a href="./index.php" class="btn btn-info">TOPへ戻る</a>
+                <a href="./index.php" class="btn btn-secondary">TOPへ戻る</a>
         </form>
 
         </div>
@@ -76,12 +76,14 @@ $methods = $method_stmt->fetchAll(PDO::FETCH_ASSOC);
 
     <!-- modal -->
     <dialog id="js-modal" class="modal-dialog p-3 border rounded shadow">
+
         <div class="modal-content p-3">
+            <div class="modal-header">
 
-            <h2 class="modal-header fs-5 border-bottom pb-2 mb-3">
-                変更希望内容
-            </h2>
-
+                <h2 class="fs-5 border-bottom pb-2 mb-3">
+                    変更希望内容
+                </h2>
+            </div>
             <div class="modal-body">
                 <p id="js-text-write"></p>
             </div>
@@ -89,12 +91,15 @@ $methods = $method_stmt->fetchAll(PDO::FETCH_ASSOC);
             <div class="modal-footer mt-3 gap-2">
 
                 <input type="hidden" name="reserve_id" value="<?php echo $reserve_id; ?>">
-                <button class="btn btn-primary" type="submit" form="change-form">送信</button>
+                <div class="d-flex align-items-center">
+                    <button class="btn btn-primary" type="submit" form="change-form">送信</button>
 
-                <button class="btn btn-secondary" id="js-close" type="button">閉じる</button>
+                    <button class="btn btn-secondary" id="js-close" type="button">閉じる</button>
+                </div>
             </div>
         </div>
     </dialog>
+
 
     <script>
         // change_request
@@ -125,4 +130,5 @@ $methods = $method_stmt->fetchAll(PDO::FETCH_ASSOC);
 </body>
 
 </html>
+
 <?php require_once './../inc/footer.php'; ?>
