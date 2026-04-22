@@ -1,6 +1,8 @@
 <?php
 require_once __DIR__ . '/../inc/function.php';
 
+// 変更が確認されたら消す
+
 $db = db_connect();
 
 $applys = [];
