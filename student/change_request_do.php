@@ -2,15 +2,15 @@
 require_once __DIR__ . '/../inc/function.php';
 
 if (!empty($_POST)) {
-    if (!empty($_POST['text']) && !empty($_POST['reserve_id'])) {
-        $text = $_POST['text'];
-        $reserve_id = $_POST['reserve_id'];
+  if (!empty($_POST['text']) && !empty($_POST['reserve_id'])) {
+    $text = $_POST['text'];
+    $reserve_id = $_POST['reserve_id'];
 
-        try {
-            $db = db_connect();
+    try {
+      $db = db_connect();
 
-            //申請時点の情報をすべて取得
-            $sql_select = "SELECT 
+      //申請時点の情報をすべて取得
+      $sql_select = "SELECT 
                 rs.date AS res_date, 
                 t.time AS res_time, 
                 l.line AS res_line, 
@@ -28,13 +28,13 @@ if (!empty($_POST)) {
                 LEFT JOIN classes c ON rs.class_id = c.id
                 LEFT JOIN consultants con ON rs.consultant_id = con.id
                 WHERE ri.id = :reserve_id";
-            
-            $stmt_select = $db->prepare($sql_select);
-            $stmt_select->execute([':reserve_id' => $reserve_id]);
-            $snapshot = $stmt_select->fetch(PDO::FETCH_ASSOC);
 
-            //取得したコピー情報を apply_lists に挿入
-           $sql_insert = "INSERT INTO apply_lists (
+      $stmt_select = $db->prepare($sql_select);
+      $stmt_select->execute([':reserve_id' => $reserve_id]);
+      $snapshot = $stmt_select->fetch(PDO::FETCH_ASSOC);
+
+      //取得したコピー情報を apply_lists に挿入
+      $sql_insert = "INSERT INTO apply_lists (
                 reserve_info_id, apply_detail, apply_status_id, apply_datetime,
                 res_date, res_time, res_line, res_student_name, 
                 res_class_name, res_consultant_name, res_method_name, carecon_id
@@ -44,26 +44,26 @@ if (!empty($_POST)) {
                 :res_class_name, :res_consultant_name, :res_method_name, :carecon_id
             )";
 
-            $stmt = $db->prepare($sql_insert);
-            
-            date_default_timezone_set('Asia/Tokyo');
-            $stmt->execute([
-                ':reserve_id'           => $reserve_id,
-                ':text'                 => $text,
-                ':apply_datetime'       => date('Y-m-d H:i:s'),
-                ':res_date'             => $snapshot['res_date'],
-                ':res_time'             => $snapshot['res_time'],
-                ':res_line'             => $snapshot['res_line'],
-                ':res_student_name'     => $snapshot['res_student_name'],
-                ':res_class_name'       => $snapshot['res_class_name'],
-                ':res_consultant_name'  => $snapshot['res_consultant_name'],
-                ':res_method_name'      => $snapshot['res_method_name'],
-                ':carecon_id'           => $snapshot['carecon_id']
-            ]);
-            header('location:complete.php');
-            exit();
-        } catch (PDOException $e) {
-            exit('エラー: ' . $e->getMessage());
-        }
+      $stmt = $db->prepare($sql_insert);
+
+      date_default_timezone_set('Asia/Tokyo');
+      $stmt->execute([
+        ':reserve_id'           => $reserve_id,
+        ':text'                 => $text,
+        ':apply_datetime'       => date('Y-m-d H:i:s'),
+        ':res_date'             => $snapshot['res_date'],
+        ':res_time'             => $snapshot['res_time'],
+        ':res_line'             => $snapshot['res_line'],
+        ':res_student_name'     => $snapshot['res_student_name'],
+        ':res_class_name'       => $snapshot['res_class_name'],
+        ':res_consultant_name'  => $snapshot['res_consultant_name'],
+        ':res_method_name'      => $snapshot['res_method_name'],
+        ':carecon_id'           => $snapshot['carecon_id']
+      ]);
+      header('location:complete.php');
+      exit();
+    } catch (PDOException $e) {
+      exit('エラー: ' . $e->getMessage());
     }
+  }
 }

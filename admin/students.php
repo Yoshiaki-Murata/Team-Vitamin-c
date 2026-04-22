@@ -109,7 +109,7 @@ require_once './../inc/header_admin.php';
 
     <div class="col-md-2 d-flex gap-1">
       <button class="btn btn-primary w-100">検索</button>
-      <a href="student.php" class="btn btn-secondary w-100">リセット</a>
+      <a href="./students.php" class="btn btn-secondary w-100">リセット</a>
     </div>
 
   </form>

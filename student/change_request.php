@@ -31,14 +31,14 @@ $methods = $method_stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="ja">
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>変更申請</title>
-</head>
+</head> -->
 
 <body>
   <form action="./change_request_do.php" method="post">
