@@ -55,8 +55,8 @@ if (!empty($_POST)) {
                 ':res_time'             => $snapshot['res_time'],
                 ':res_line'             => $snapshot['res_line'],
                 ':res_student_name'     => $snapshot['res_student_name'],
-                ':res_class_name'       => $snapshot['res_class_name'],
-                ':res_consultant_name'  => $snapshot['res_consultant_name'],
+                ':res_class_name'       => $snapshot['res_class_name'] ?? "",
+                ':res_consultant_name'  => $snapshot['res_consultant_name']?? "",
                 ':res_method_name'      => $snapshot['res_method_name'],
                 ':carecon_id'           => $snapshot['carecon_id']
             ]);
