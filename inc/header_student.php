@@ -15,17 +15,14 @@
 <body>
   <header class="l-header">
     <nav class="bg-body-tertiary">
-      <ul class="nav justify-content-center">
-        <li class="nav-item">
-          <a href="./index.php" class="nav-link text-reset">
-            トップページ
-          </a>
-        </li>
-        <li class="nav-item">
-          <a href="./logout_do.php" class="btn  btn-outline-secondary">
-            ログアウト
-          </a>
-        </li>
-      </ul>
+      <div class="container">
+        <ul class="nav justify-content-end">
+          <li class="nav-item">
+            <a href="./logout_do.php" class="btn  btn-outline-secondary">
+              ログアウト
+            </a>
+          </li>
+        </ul>
+      </div>
     </nav>
   </header>

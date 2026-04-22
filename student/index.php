@@ -49,7 +49,7 @@ try {
 <body>
   <main class="l-wrapper">
     <div class="mb-5">
-      <h1 class="c-title">トップページ</h1>
+      <h1 class="c-title">訓練生トップページ</h1>
       <p>ようこそ<?php echo "  " . $_SESSION["user_name"] . "  "; ?>さん</p>
     </div>
     <div class="mb-5">
