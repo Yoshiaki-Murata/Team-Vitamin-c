@@ -27,3 +27,92 @@
 .modal-body {
     overflow-wrap: anywhere;
 }
+
+.c-title_carecon::before {
+    content: "●";
+    color: #0d6efd;
+    padding-inline-end: 5px;
+}
+
+.c-title_plus::before {
+    content: "●";
+    color: #ffc107;
+    padding-inline-end: 5px;
+}
+
+table tbody tr:hover {
+    background-color: #f8f9fa;
+    transition: 0.2s;
+}
+
+/* admin/index */
+.card {
+    border-radius: 14px;
+    transition: 0.25s;
+    border: none;
+}
+
+/* 共通ホバー */
+.card:hover {
+    transform: translateY(-5px);
+}
+
+/* 訓練生 */
+.card-students {
+    background-color: #e7f1ff;
+    color: #0d6efd;
+}
+
+.card-students:hover {
+    background-color: #d0e2ff;
+}
+
+/* 講師 */
+.card-consultant {
+    background-color: #e8f8f5;
+    color: #20c997;
+}
+
+.card-consultant:hover {
+    background-color: #d1f2eb;
+}
+
+/* 管理者 */
+.card-admin {
+    background-color: #f3e8ff;
+    color: #6f42c1;
+}
+
+.card-admin:hover {
+    background-color: #e2d4ff;
+}
+
+/* スケジュール */
+.card-schedule {
+    background-color: #fff4e5;
+    color: #fd7e14;
+}
+
+.card-schedule:hover {
+    background-color: #ffe8cc;
+}
+
+/* 予約 */
+.card-reserve {
+    background-color: #e9fbe9;
+    color: #198754;
+}
+
+.card-reserve:hover {
+    background-color: #d3f5d3;
+}
+
+/* 申請 */
+.card-request {
+    background-color: #ffeaea;
+    color: #dc3545;
+}
+
+.card-request:hover {
+    background-color: #ffd6d6;
+}

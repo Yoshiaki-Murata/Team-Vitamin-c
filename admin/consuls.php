@@ -23,9 +23,14 @@ require_once './../inc/header_admin.php';
   <div class="l-wrapper">
 
     <h1 class="c-title">キャリアコンサルタント一覧</h1>
-    <button type="button" class="btn btn-info mb-3" data-bs-toggle="modal" data-bs-target="#addConsultantModal">
-      新規コンサルタント登録
-    </button>
+    <div class="mb-3">
+      <button type="button"
+        class="btn btn-info"
+        data-bs-toggle="modal"
+        data-bs-target="#addConsultantModal">
+        ＋ 新規登録
+      </button>
+    </div>
 
     <!-- モーダル -->
     <div class="modal fade" id="addConsultantModal" tabindex="-1" aria-hidden="true">
@@ -52,42 +57,54 @@ require_once './../inc/header_admin.php';
       </div>
     </div>
 
-    <table class="table">
-      <thead>
-        <tr>
-          <th>名前</th>
-          <th>操作</th>
-        </tr>
-      </thead>
-      <tbody>
-        <?php foreach ($consultants as $consul): ?>
+    <div class="table-responsive">
+      <table class="table table-hover align-middle">
+        <thead class="table-light">
           <tr>
-            <td><?php echo h($consul['name']) ?></td>
-            <td>
-              <div class="d-flex gap-2">
-                <button
-                  type="button"
-                  class="btn btn-primary mb-3 edit-btn"
-                  data-bs-toggle="modal"
-                  data-bs-target="#editConsultantModal"
-                  data-id="<?php echo h($consul['id']); ?>"
-                  data-name="<?php echo h($consul['name']); ?>">
-                  編集
-                </button>
-                <button
-                  type="button"
-                  class="btn btn-danger mb-3 delete-btn"
-                  data-bs-toggle="modal"
-                  data-bs-target="#delConsultantModal"
-                  data-id="<?php echo h($consul['id']); ?>">
-                  削除
-                </button>
-              </div>
-            </td>
+            <th>名前</th>
+            <th class="text-center">操作</th>
           </tr>
-        <?php endforeach; ?>
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          <?php if (empty($consultants)): ?>
+            <tr>
+              <td colspan="2" class="text-center text-muted py-4">
+                データがありません
+              </td>
+            </tr>
+          <?php endif; ?>
+          <?php foreach ($consultants as $consul): ?>
+            <tr>
+              <td>
+                <span class="fw-semibold">
+                  <?= h($consul['name']) ?>
+                </span>
+              </td>
+              <td class="text-center">
+                <div class="d-flex gap-2 justify-content-center">
+                  <button
+                    class="btn btn-primary btn-sm edit-btn"
+                    data-bs-toggle="modal"
+                    data-bs-target="#editConsultantModal"
+                    data-id="<?= h($consul['id']); ?>"
+                    data-name="<?= h($consul['name']); ?>">
+                    編集
+                  </button>
+
+                  <button
+                    class="btn btn-danger btn-sm delete-btn"
+                    data-bs-toggle="modal"
+                    data-bs-target="#delConsultantModal"
+                    data-id="<?= h($consul['id']); ?>">
+                    削除
+                  </button>
+                </div>
+              </td>
+            </tr>
+          <?php endforeach; ?>
+        </tbody>
+      </table>
+    </div>
 
     <!-- 編集モーダル -->
     <div class="modal fade" id="editConsultantModal" tabindex="-1" aria-hidden="true">

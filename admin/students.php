@@ -9,6 +9,7 @@ $classes = [];
 $err_msg = '';
 
 $class_id = $_GET['class_id'] ?? '';
+$keyword = $_GET['keyword'] ?? '';
 
 try {
   $sql = 'SELECT 
@@ -20,228 +21,264 @@ try {
   students.admission_date,
   students.graduation_date,
   classes.name AS class_name,
-student_status.name AS status_name,
-courses.name AS course_name 
-FROM students 
-INNER JOIN classes ON students.class_id = classes.id 
-INNER JOIN student_status ON students.status_id = student_status.id INNER JOIN courses ON students.course_id = courses.id';
+  student_status.name AS status_name,
+  courses.name AS course_name 
+  FROM students 
+  INNER JOIN classes ON students.class_id = classes.id 
+  INNER JOIN student_status ON students.status_id = student_status.id 
+  INNER JOIN courses ON students.course_id = courses.id';
+
+  $where = [];
+  $params = [];
 
   if (!empty($class_id)) {
-    $sql .= ' WHERE students.class_id = :class_id';
+    $where[] = 'students.class_id = :class_id';
+    $params[':class_id'] = $class_id;
+  }
+
+  if (!empty($keyword)) {
+    $where[] = 'students.name LIKE :keyword';
+    $params[':keyword'] = '%' . $keyword . '%';
+  }
+
+  if ($where) {
+    $sql .= ' WHERE ' . implode(' AND ', $where);
   }
 
   $sql .= ' ORDER BY classes.id ASC, students.number ASC';
 
   $stmt = $db->prepare($sql);
 
-  if (!empty($class_id)) {
-    $stmt->bindValue(':class_id', $class_id, PDO::PARAM_INT);
+  foreach ($params as $key => $val) {
+    $stmt->bindValue($key, $val);
   }
 
   $stmt->execute();
   $students = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-  $sql_classes = 'SELECT id, name FROM classes ORDER BY id ASC';
-  $stmt_classes = $db->prepare($sql_classes);
-  $stmt_classes->execute();
-
+  // クラス
+  $stmt_classes = $db->query('SELECT id, name FROM classes ORDER BY id ASC');
   $classes = $stmt_classes->fetchAll(PDO::FETCH_ASSOC);
 } catch (PDOException $e) {
-  $err_msg = 'データの取得に失敗しました:' . $e->getMessage();
-};
-
-
-// 生徒の予約を取得
-$reserve_sql = "SELECT students.id,students.name, reservation_slots.date, times.time, carecons.name, methods.name AS 'method_name' FROM reservation_infos JOIN students ON reservation_infos.student_id=students.id JOIN reservation_slots ON reservation_infos.slot_id=reservation_slots.id JOIN methods ON reservation_infos.method_id=methods.id JOIN times ON reservation_slots.time_id=times.id JOIN carecons ON reservation_slots.carecon_id=carecons.id";
-$reserve_stmt = $db->prepare($reserve_sql);
-$reserve_stmt->execute();
-$reserves = $reserve_stmt->fetchAll(PDO::FETCH_ASSOC);
-
-$reserve_by_student = [];
-
-foreach ($reserves as $r) {
-  $student_id = $r['id'];
-  $reserve_by_student[$student_id][] = $r;
+  $err_msg = $e->getMessage();
 }
 
+
+// ===== 予約 =====
+$reserve_sql = "SELECT students.id,students.name, reservation_slots.date, times.time, carecons.name, methods.name AS method_name 
+FROM reservation_infos 
+JOIN students ON reservation_infos.student_id=students.id 
+JOIN reservation_slots ON reservation_infos.slot_id=reservation_slots.id 
+JOIN methods ON reservation_infos.method_id=methods.id 
+JOIN times ON reservation_slots.time_id=times.id 
+JOIN carecons ON reservation_slots.carecon_id=carecons.id";
+
+$reserves = $db->query($reserve_sql)->fetchAll(PDO::FETCH_ASSOC);
+
+$reserve_by_student = [];
+foreach ($reserves as $r) {
+  $reserve_by_student[$r['id']][] = $r;
+}
 
 require_once './../inc/header_admin.php';
 ?>
 
-<body>
-  <div class="l-wrapper">
+<div class="l-wrapper">
 
-    <h1 class="c-title">訓練生一覧</h1>
-    <button type="button" class="btn btn-info mb-3" onclick="location.href='student_add.php'">
-      新規訓練生登録
-    </button>
-    <form method="GET" class="mb-3 w-25">
-      <label class="form-label">クラス選択</label>
-      <select name="class_id" class="form-select" onchange="this.form.submit()">
+  <h1 class="c-title">訓練生一覧</h1>
+
+  <a href="student_add.php" class="btn btn-info mb-3">＋ 新規登録</a>
+
+  <!-- 検索 -->
+  <form method="GET" class="row g-2 mb-3">
+
+    <div class="col-md-4">
+      <input type="text" name="keyword" class="form-control" placeholder="名前検索" value="<?= h($keyword) ?>">
+    </div>
+
+    <div class="col-md-3">
+      <select name="class_id" class="form-select">
         <option value="">全クラス</option>
-        <?php foreach ($classes as $class_select): ?>
-          <option value="<?php echo $class_select['id']; ?>"
-            <?php if ($class_select['id'] == $class_id) echo 'selected'; ?>>
-            <?php echo h($class_select['name']); ?>
+        <?php foreach ($classes as $c): ?>
+          <option value="<?= $c['id'] ?>" <?= $c['id'] == $class_id ? 'selected' : '' ?>>
+            <?= h($c['name']) ?>
           </option>
         <?php endforeach; ?>
       </select>
-    </form>
-    <table class="table">
-      <thead>
+    </div>
+
+    <div class="col-md-2 d-flex gap-1">
+      <button class="btn btn-primary w-100">検索</button>
+      <a href="student.php" class="btn btn-secondary w-100">リセット</a>
+    </div>
+
+  </form>
+
+  <!-- テーブル -->
+  <div class="table-responsive" style="max-height:500px;">
+    <table class="table table-hover">
+      <thead class="table-light" style="position:sticky;top:0;">
         <tr>
-          <th scope="col">出席番号</th>
-          <th scope="col">名前</th>
-          <th scope="col">訓練種別</th>
-          <th scope="col">在籍状況</th>
-          <th scope="col">操作</th>
+          <th>番号</th>
+          <th>名前</th>
+          <th>コース</th>
+          <th>状態</th>
+          <th>予約</th>
+          <th></th>
         </tr>
       </thead>
+
       <tbody>
-        <?php foreach ($students as $student): ?>
+
+        <?php if (empty($students)): ?>
           <tr>
-            <th scope="row"><?php echo h($student['class_name'] . $student['number']); ?></th>
-            <td><?php echo h($student['name']); ?></td>
-            <td><?php echo h($student['course_name']); ?></td>
-            <td><?php echo h($student['status_name']); ?></td>
+            <td colspan="6" class="text-center text-muted">データがありません</td>
+          </tr>
+        <?php endif; ?>
+
+        <?php foreach ($students as $s):
+          $hasReserve = isset($reserve_by_student[$s['id']]);
+        ?>
+          <tr style="cursor:pointer;">
+            <td><?= h($s['class_name'] . $s['number']) ?></td>
+            <td><?= h($s['name']) ?></td>
+            <td><?= h($s['course_name']) ?></td>
+
             <td>
-              <button
-                type="button" class="btn btn-warning"
+              <?php if ($s['status_name'] == '在籍中'): ?>
+                <span class="badge bg-success">在籍中</span>
+              <?php else: ?>
+                <span class="badge bg-secondary"><?= h($s['status_name']) ?></span>
+              <?php endif; ?>
+            </td>
+
+            <td>
+              <?php if ($hasReserve): ?>
+                <span class="badge bg-info">あり</span>
+              <?php else: ?>
+                <span class="badge bg-light text-dark">なし</span>
+              <?php endif; ?>
+            </td>
+
+            <td>
+              <button class="btn btn-sm btn-warning"
                 data-bs-toggle="modal"
                 data-bs-target="#studentModal"
-                data-id="<?php echo $student['id']; ?>"
-                data-name="<?php echo h($student['name']); ?>"
-                data-number="<?php echo h($student['class_name'] . $student['number']); ?>"
-                data-course="<?php echo h($student['course_name']); ?>"
-                data-admission="<?php echo h($student['admission_date']); ?>"
-                data-graduation="<?php echo h($student['graduation_date']); ?>"
-                data-pass="<?php echo h($student['password']); ?>"
-                data-status="<?php echo h($student['status_name']); ?>"
-                data-login="<?php echo h($student['login_id']); ?>">
+                data-id="<?= $s['id'] ?>"
+                data-name="<?= h($s['name']) ?>"
+                data-number="<?= h($s['class_name'] . $s['number']) ?>"
+                data-course="<?= h($s['course_name']) ?>"
+                data-admission="<?= $s['admission_date'] ?>"
+                data-graduation="<?= $s['graduation_date'] ?>"
+                data-pass="<?= h($s['password']) ?>"
+                data-status="<?= h($s['status_name']) ?>"
+                data-login="<?= h($s['login_id']) ?>">
                 詳細
               </button>
-
             </td>
+
           </tr>
         <?php endforeach; ?>
+
       </tbody>
     </table>
+  </div>
 
-    <!-- modal -->
-    <div class="modal fade" id="studentModal" tabindex="-1">
-      <div class="modal-dialog">
-        <div class="modal-content">
 
-          <div class="modal-header">
-            <h5 class="modal-title">訓練生詳細</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-          </div>
+  <!-- モーダル -->
+  <div class="modal fade" id="studentModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
 
-          <div class="modal-body">
+        <div class="modal-header">
+          <h5 class="modal-title">訓練生詳細</h5>
+          <button class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
 
-            <!-- 見やすくしたリスト -->
-            <ul class="list-group list-group-flush">
-              <li class="list-group-item d-flex justify-content-between">
-                <span class="fw-bold">出席番号</span>
-                <span id="modal-number"></span>
-              </li>
-              <li class="list-group-item d-flex justify-content-between">
-                <span class="fw-bold">名前</span>
-                <span id="modal-name"></span>
-              </li>
-              <li class="list-group-item d-flex justify-content-between">
-                <span class="fw-bold">訓練種別</span>
-                <span id="modal-course"></span>
-              </li>
-              <li class="list-group-item d-flex justify-content-between">
-                <span class="fw-bold">入校日</span>
-                <span id="modal-admission"></span>
-              </li>
-              <li class="list-group-item d-flex justify-content-between">
-                <span class="fw-bold">終了予定日</span>
-                <span id="modal-graduation"></span>
-              </li>
-              <li class="list-group-item d-flex justify-content-between">
-                <span class="fw-bold">ログインID</span>
-                <span id="modal-login"></span>
-              </li>
-              <li class="list-group-item d-flex justify-content-between">
-                <span class="fw-bold">パスワード</span>
-                <span id="modal-pass"></span>
-              </li>
-              <li class="list-group-item d-flex justify-content-between">
-                <span class="fw-bold">在籍状況</span>
-                <span id="modal-status"></span>
-              </li>
-              <li class="list-group-item d-flex justify-content-between">
-                <span class="fw-bold">キャリコン予約状況</span>
-                <span id="modal-reserve">
-                  <?php foreach ($reserves as $reserve): ?>
-                    <div>
-                      <?php echo $reserve['date']; ?> <?php echo $reserve['time']; ?>
-                    </div>
-                  <?php endforeach; ?>
-                </span>
-              </li>
-            </ul>
+        <div class="modal-body">
 
-            <!-- ボタンエリア -->
-            <div class="d-flex justify-content-center gap-2 mt-4">
-              <a href="#" id="modal-edit-btn" class="btn btn-primary">
-                登録内容修正
-              </a>
-              <a href="#" id="modal-delete-btn" class="btn btn-danger">
-                削除
-              </a>
-            </div>
+          <h6 class="text-muted">基本情報</h6>
+          <p>番号：<span id="modal-number"></span></p>
+          <p>名前：<span id="modal-name"></span></p>
+          <p>コース：<span id="modal-course"></span></p>
 
+          <h6 class="text-muted mt-3">期間</h6>
+          <p>入校：<span id="modal-admission"></span></p>
+          <p>修了：<span id="modal-graduation"></span></p>
+
+          <h6 class="text-muted mt-3">アカウント</h6>
+          <p>ID：<span id="modal-login"></span></p>
+          <p>PASS：<span id="modal-pass"></span></p>
+
+          <h6 class="text-muted mt-3">予約</h6>
+          <div id="modal-reserve"></div>
+
+          <div class="d-flex gap-2 mt-4">
+            <a id="modal-edit-btn" class="btn btn-primary">編集</a>
+            <a id="modal-delete-btn" class="btn btn-danger">削除</a>
           </div>
 
         </div>
       </div>
     </div>
   </div>
-</body>
+
+</div>
+
+
 <script>
+  const reserveData = <?= json_encode($reserve_by_student) ?>;
+
+  // 行クリック
+  document.querySelectorAll("tbody tr").forEach(tr => {
+    tr.addEventListener("click", () => {
+      tr.querySelector("button").click();
+    });
+  });
+
+  // モーダル
   const modal = document.getElementById('studentModal');
 
-  modal.addEventListener('show.bs.modal', function(event) {
-    const button = event.relatedTarget;
+  modal.addEventListener('show.bs.modal', function(e) {
+    const btn = e.relatedTarget;
 
-    document.getElementById('modal-number').textContent = button.dataset.number;
-    document.getElementById('modal-name').textContent = button.dataset.name;
-    document.getElementById('modal-course').textContent = button.dataset.course;
-    document.getElementById('modal-admission').textContent = button.dataset.admission;
-    document.getElementById('modal-graduation').textContent = button.dataset.graduation;
-    document.getElementById('modal-pass').textContent = button.dataset.pass;
-    document.getElementById('modal-status').textContent = button.dataset.status;
-    document.getElementById('modal-login').textContent = button.dataset.login;
-    const reserveData = <?php echo json_encode($reserve_by_student); ?>;
-    const studentId = button.dataset.id;
-    const reserveDetail = reserveData[studentId];
+    document.getElementById('modal-number').textContent = btn.dataset.number;
+    document.getElementById('modal-name').textContent = btn.dataset.name;
+    document.getElementById('modal-course').textContent = btn.dataset.course;
+    document.getElementById('modal-admission').textContent = btn.dataset.admission;
+    document.getElementById('modal-graduation').textContent = btn.dataset.graduation;
+    document.getElementById('modal-login').textContent = btn.dataset.login;
+    document.getElementById('modal-pass').textContent = btn.dataset.pass;
 
+    const list = reserveData[btn.dataset.id];
 
-    // 予約がある場合
-    if (reserveData[studentId]) {
-      let html = '';
-      reserveDetail.forEach(e => {
-        html += `【${e.name}】<br>${e.date}<br>${e.time}<br>${e.method_name}<br>`
-      })
-      document.getElementById('modal-reserve').innerHTML = html;
+    let html = '';
+
+    if (list) {
+      list.forEach(r => {
+        html += `
+      <div class="card p-2 mb-2">
+        <div>${r.date} ${r.time}</div>
+        <div>${r.name}</div>
+        <div>${r.method_name}</div>
+      </div>`;
+      });
+    } else {
+      html = '予約なし';
     }
 
+    document.getElementById('modal-reserve').innerHTML = html;
 
-    // 予約が無い場合
-    if (!reserveData[studentId]) {
-      document.getElementById('modal-reserve').textContent = '予約なし';
+    // ボタン
+    const del = document.getElementById('modal-delete-btn');
+    del.href = 'student_del.php?id=' + btn.dataset.id;
+
+    del.onclick = function() {
+      return confirm('削除しますか？');
     }
 
-    // 編集・削除ボタン
-    const deleteBtn = document.getElementById('modal-delete-btn');
-    deleteBtn.href = 'student_del.php?id=' + button.dataset.id;
+    document.getElementById('modal-edit-btn').href = 'student_edit.php?id=' + btn.dataset.id;
 
-    const editBtn = document.getElementById('modal-edit-btn');
-    editBtn.href = 'student_edit.php?id=' + button.dataset.id;
   });
 </script>
 
