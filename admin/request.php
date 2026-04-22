@@ -132,8 +132,6 @@ require_once './../inc/header_admin.php';
                     <span class="badge bg-success px-3 py-2">完了</span>
                   <?php endif; ?>
                 </td>
-
-                <!-- 詳細 -->
                 <td class="text-center">
                   <button
                     class="btn btn-outline-warning btn-sm"
@@ -197,7 +195,7 @@ require_once './../inc/header_admin.php';
         </thead>
         <tbody>
           <?php foreach ($applys as $apply):
-            if ($apply['carecon_id'] == 1): ?>
+            if ($apply['carecon_id'] == 2): ?>
               <tr>
                 <td>
                   <div class="fw-bold"><?= h($apply['res_date']) ?></div>

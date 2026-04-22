@@ -192,7 +192,7 @@ require_once './../inc/header_admin.php';
                 </select>
               </div>
 
-              <div class="mb-3">
+              <!-- <div class="mb-3">
                 <label class="form-label fw-bold">予約状況</label>
                 <select name="reserve_status_id" class="form-select" required>
                   <?php foreach ($statuses as $status): ?>
@@ -201,7 +201,7 @@ require_once './../inc/header_admin.php';
                     </option>
                   <?php endforeach; ?>
                 </select>
-              </div>
+              </div> -->
 
             </div>
 
@@ -284,7 +284,6 @@ require_once './../inc/header_admin.php';
               <td><?php echo h($slot['consultant_name'] ?? '未定'); ?></td>
               <td><?php echo h($slot['carecon_name']); ?></td>
 
-              <!-- ★ここ重要（バッジ化） -->
               <!-- <td>
                 <?php if ($slot['reserve_status_id'] == 1): ?>
                   <span class="badge bg-success">空き</span>
