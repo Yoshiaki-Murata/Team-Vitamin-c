@@ -37,13 +37,13 @@ $methods = $method_stmt->fetchAll(PDO::FETCH_ASSOC);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>キャンセル申請</title>
+    <title>キャンセル等申請</title>
 </head>
 
 <body>
     <form action="./cancel_request_do.php" method="post" id="cancelForm">
         <main class="container mt-5 l-wrapper">
-            <h1 class="mb-5 text-center">キャンセル申請</h1>
+            <h1 class="mb-5 text-center">キャンセル等申請</h1>
             <div class="text-center">
                 <table class="table mb-8">
                     <tbody>
@@ -72,7 +72,7 @@ $methods = $method_stmt->fetchAll(PDO::FETCH_ASSOC);
             <div class="modal-content p-3">
 
                 <h2 class="modal-header fs-5 border-bottom pb-2 mb-3">
-                    変更希望内容
+                    キャンセル理由・変更希望内容等
                 </h2>
 
                 <div class="modal-body">

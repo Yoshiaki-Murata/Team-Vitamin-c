@@ -137,7 +137,7 @@ try {
                                     <td class="col-3">
                                         <form action="./cancel_request.php" method="post">
                                             <input type="hidden" name="reserve-id" id="reserve-id" value="<?php echo $rp["id"] ?>">
-                                            <input type="submit" value="キャンセル申請" class="btn btn-sm btn-danger">
+                                            <input type="submit" value="キャンセル等申請" class="btn btn-sm btn-danger">
                                         </form>
                                     </td>
                                 </tr>
