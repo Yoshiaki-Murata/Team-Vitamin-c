@@ -70,7 +70,7 @@ require_once './../inc/header_admin.php';
 
 <body>
   <div class="l-wrapper">
-    <h1 class="c-title">予約変更申請一覧</h1>
+    <h1 class="c-title">申請一覧</h1>
 
     <!-- フィルタ -->
     <form method="get" class="mb-4">

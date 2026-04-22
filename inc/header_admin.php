@@ -22,33 +22,33 @@
           </a>
         </li>
         <li class="nav-item">
-          <a href="./masters.php" class="nav-link text-reset">
-            管理者
-          </a>
-        </li>
-        <li class="nav-item">
           <a href="./students.php" class="nav-link text-reset">
             訓練生
           </a>
         </li>
         <li class="nav-item">
           <a href="./consuls.php" class="nav-link text-reset">
-            コンサルタント
+            講師
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="./masters.php" class="nav-link text-reset">
+            管理者
           </a>
         </li>
         <li class="nav-item">
           <a href="./schedule.php" class="nav-link text-reset">
-            予約枠
-          </a>
-        </li>
-        <li class="nav-item">
-          <a href="./request.php" class="nav-link text-reset">
-            申請
+            予約枠作成
           </a>
         </li>
         <li class="nav-item">
           <a href="./reservation.php" class="nav-link text-reset">
-            予約情報
+            予約状況
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="./request.php" class="nav-link text-reset">
+            申請一覧
           </a>
         </li>
         <li class="nav-item">

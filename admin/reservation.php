@@ -104,7 +104,7 @@ require_once './../inc/header_admin.php';
 
 <body>
   <div class="l-wrapper">
-    <h1 class="c-title">予約情報一覧</h1>
+    <h1 class="c-title">予約状況一覧</h1>
 
     <form method="get" class="mb-3">
       <div class="row g-2">

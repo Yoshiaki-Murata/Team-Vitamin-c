@@ -109,7 +109,7 @@ require_once './../inc/header_admin.php';
 
 <body>
   <div class="l-wrapper">
-    <h1 class="c-title">キャリコン枠作成</h1>
+    <h1 class="c-title">キャリコン予約枠作成</h1>
 
     <button class="btn btn-info mb-3" data-bs-toggle="modal" data-bs-target="#addSlotModal">
       ＋ 新規枠登録
@@ -121,7 +121,7 @@ require_once './../inc/header_admin.php';
         <div class="modal-content">
 
           <div class="modal-header">
-            <h5 class="modal-title">キャリコン枠作成</h5>
+            <h5 class="modal-title">キャリコン予約枠作成</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
           </div>
 

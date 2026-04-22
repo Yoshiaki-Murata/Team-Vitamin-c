@@ -22,7 +22,7 @@ require_once './../inc/header_admin.php';
 <body>
   <div class="l-wrapper">
 
-    <h1 class="c-title">キャリアコンサルタント一覧</h1>
+    <h1 class="c-title">講師一覧</h1>
     <div class="mb-3">
       <button type="button"
         class="btn btn-info"

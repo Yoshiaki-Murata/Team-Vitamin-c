@@ -40,7 +40,7 @@ require_once './../inc/header_admin.php';
       <div class="col-md-4">
         <a href="schedule.php" class="text-decoration-none">
           <div class="card card-schedule h-100 text-center p-4">
-            <h5 class="fw-bold mb-2">キャリコン枠作成</h5>
+            <h5 class="fw-bold mb-2">キャリコン予約枠作成</h5>
             <p class="small mb-0">スケジュール作成</p>
           </div>
         </a>
