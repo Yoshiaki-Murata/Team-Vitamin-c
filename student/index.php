@@ -57,7 +57,7 @@ try {
         <h2 class="mb-3 c-title_carecon">
           キャリコン実施日
         </h2>
-        <button type="button" class="btn btn-primary mb-3" id="mReserveBtn">予約状況確認</button>
+        <button type="button" class="btn btn-primary mb-3" id="mReserveBtn">スケジュール</button>
       </div>
 
       <div>
