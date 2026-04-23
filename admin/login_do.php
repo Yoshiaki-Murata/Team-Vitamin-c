@@ -26,7 +26,7 @@ if (!empty($_POST)) {
                     exit();
                 }
             }
-            session_msg("ログインに失敗しました");
+            session_err_msg("ログインに失敗しました");
             header('location:login.php');
             exit();
         } catch (PDOException $e) {
