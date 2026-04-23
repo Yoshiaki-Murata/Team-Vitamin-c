@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '/../inc/function.php';
+check_logined();
 
 // 変更が確認されたら消す
 

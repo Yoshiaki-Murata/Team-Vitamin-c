@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '/../inc/function.php';
+check_logined();
 
 // TODO: データ受け取り
 if (!empty($_POST)) {
