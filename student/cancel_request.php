@@ -57,8 +57,8 @@ $methods = $method_stmt->fetchAll(PDO::FETCH_ASSOC);
         </tbody>
       </table>
 
-      <p id="description">変更希望日時や予約枠を交換する場合は、交換相手のお名前をご記入ください。<br>
-        また、補足の連絡事項がある場合はご記入ください。特にない場合は「なし」とご記入ください。</p>
+      <p id="description">キャンセル理由(必須)をご記入下さい。<br>
+        面談方法の変更については面談前日午前中までに、LINE又は事務局まで直接お申し出下さい。</p>
 
       <form action="./cancel_request_do.php" method="post" id="cancelForm">
 
@@ -67,8 +67,6 @@ $methods = $method_stmt->fetchAll(PDO::FETCH_ASSOC);
         <div class="mt-3">
           <button type="button"
             class="btn btn-primary"
-            data-bs-toggle="modal"
-            data-bs-target="#js-modal"
             id="js-open">
             内容を確認
           </button>
@@ -76,32 +74,33 @@ $methods = $method_stmt->fetchAll(PDO::FETCH_ASSOC);
             TOPへ戻る
           </a>
         </div>
+        <div class="modal fade" id="js-modal" tabindex="-1">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">入力内容の確認</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+              </div>
+              <div class="modal-body">
+                <p class="fw-bold mb-2">キャンセル理由</p>
+                <p id="js-text-write" class="border p-3 rounded bg-light"></p>
+              </div>
+              <div class="modal-footer">
+                <input type="hidden" name="reserve_id" value="<?= $reserve_id ?>">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                  戻る
+                </button>
+                <button type="submit" form="cancelForm" class="btn btn-primary">
+                  送信する
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
       </form>
     </div>
 
-    <div class="modal fade" id="js-modal" tabindex="-1">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">入力内容の確認</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-          </div>
-          <div class="modal-body">
-            <p class="fw-bold mb-2">キャンセル理由・変更内容</p>
-            <p id="js-text-write" class="border p-3 rounded bg-light"></p>
-          </div>
-          <div class="modal-footer">
-            <input type="hidden" name="reserve_id" value="<?= $reserve_id ?>">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-              戻る
-            </button>
-            <button type="submit" form="cancelForm" class="btn btn-primary">
-              送信する
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
+
 
   </main>
 
@@ -122,14 +121,13 @@ $methods = $method_stmt->fetchAll(PDO::FETCH_ASSOC);
 
       <div class="modal-footer mt-3">
 
-        <input type="hidden" name="reserve_id" value="<?php echo $reserve_id; ?>">
+        <input type="hidden" name="reserve_id" value="<//?php echo $reserve_id; ?>">
         <button class="btn btn-primary" type="submit">送信</button>
 
         <button class="btn btn-secondary" id="js-close" type="button">閉じる</button>
       </div>
     </div>
   </dialog> -->
-  </form>
 
   <script>
     // change_request
