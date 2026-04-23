@@ -28,6 +28,14 @@ if (!empty($_POST)) {
             $stmt->bindParam(':password', $password, PDO::PARAM_INT);
             $stmt->execute();
 
+            if ($stmt->rowCount() === 0) {
+                $_SESSION["err_msg"] = "追加できませんでした";
+                header('location:masters.php');
+                exit();
+            } else {
+                $_SESSION["msg"] = "追加完了しました";
+            }
+
             // トップページへ画面遷移
             header('location:masters.php');
             exit();

@@ -27,6 +27,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->bindValue(':id', $id, PDO::PARAM_INT);
         $stmt->execute();
 
+
+        if ($stmt->rowCount() === 0) {
+            $_SESSION["err_msg"] = "編集できませんでした";
+            header('location:consuls.php');
+            exit();
+        } else {
+            $_SESSION["msg"] = "編集完了しました";
+        }
+
         header('Location: consuls.php');
         exit();
     } catch (PDOException $e) {

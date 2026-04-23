@@ -30,6 +30,15 @@ try {
     $stmt->bindValue(':status_id', $status_id, PDO::PARAM_INT);
     $stmt->bindValue(':id', $id, PDO::PARAM_INT);
     $stmt->execute();
+
+
+    if ($stmt->rowCount() === 0) {
+        $_SESSION["err_msg"] = "編集できませんでした";
+        header('location:request.php');
+        exit();
+    } else {
+        $_SESSION["msg"] = "編集完了しました";
+    }
 } catch (PDOException $e) {
     echo '更新に失敗しました: ' . htmlspecialchars($e->getMessage(), ENT_QUOTES, 'UTF-8');
     exit;

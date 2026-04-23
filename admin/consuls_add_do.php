@@ -28,6 +28,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->bindValue(':name', $name, PDO::PARAM_STR);
         $stmt->execute();
 
+        if ($stmt->rowCount() === 0) {
+            $_SESSION["err_msg"] = "追加できませんでした";
+            header('location:consuls.php');
+            exit();
+        } else {
+            $_SESSION["msg"] = "追加完了しました";
+        }
+
+
         header('Location: consuls.php');
         exit();
     } catch (PDOException $e) {
