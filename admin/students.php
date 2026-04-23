@@ -22,11 +22,18 @@ try {
   students.graduation_date,
   classes.name AS class_name,
   student_status.name AS status_name,
-  courses.name AS course_name 
-  FROM students 
-  INNER JOIN classes ON students.class_id = classes.id 
-  INNER JOIN student_status ON students.status_id = student_status.id 
-  INNER JOIN courses ON students.course_id = courses.id';
+  students.status_id,
+  courses.name AS course_name,
+
+  CASE 
+    WHEN students.status_id = 1 THEN 1
+    ELSE 0
+  END AS is_active
+
+FROM students 
+INNER JOIN classes ON students.class_id = classes.id 
+INNER JOIN student_status ON students.status_id = student_status.id 
+INNER JOIN courses ON students.course_id = courses.id';
 
   $where = [];
   $params = [];
@@ -65,7 +72,12 @@ try {
 
 
 // ===== 予約 =====
-$reserve_sql = "SELECT students.id,students.name, reservation_slots.date, times.time, carecons.name, methods.name AS method_name 
+$reserve_sql = "SELECT 
+students.id,students.name, 
+reservation_slots.date, 
+times.time, 
+carecons.name, 
+methods.name AS method_name 
 FROM reservation_infos 
 JOIN students ON reservation_infos.student_id=students.id 
 JOIN reservation_slots ON reservation_infos.slot_id=reservation_slots.id 
@@ -93,15 +105,15 @@ require_once './../inc/header_admin.php';
   <form method="GET" class="row g-2 mb-3">
 
     <div class="col-md-4">
-      <input type="text" name="keyword" class="form-control" placeholder="名前検索" value="<?= h($keyword) ?>">
+      <input type="text" name="keyword" class="form-control" placeholder="名前検索" value="<?php echo h($keyword) ?>">
     </div>
 
     <div class="col-md-3">
       <select name="class_id" class="form-select">
         <option value="">全クラス</option>
         <?php foreach ($classes as $c): ?>
-          <option value="<?= $c['id'] ?>" <?= $c['id'] == $class_id ? 'selected' : '' ?>>
-            <?= h($c['name']) ?>
+          <option value="<?php echo $c['id'] ?>" <?php echo $c['id'] == $class_id ? 'selected' : '' ?>>
+            <?php echo h($c['name']) ?>
           </option>
         <?php endforeach; ?>
       </select>
@@ -140,15 +152,15 @@ require_once './../inc/header_admin.php';
           $hasReserve = isset($reserve_by_student[$s['id']]);
         ?>
           <tr style="cursor:pointer;">
-            <td><?= h($s['class_name'] . $s['number']) ?></td>
-            <td><?= h($s['name']) ?></td>
-            <td><?= h($s['course_name']) ?></td>
+            <td><?php echo h($s['class_name'] . $s['number']) ?></td>
+            <td><?php echo h($s['name']) ?></td>
+            <td><?php echo h($s['course_name']) ?></td>
 
             <td>
-              <?php if ($s['status_name'] == '在籍中'): ?>
-                <span class="badge bg-success">在籍中</span>
+              <?php if ($s['is_active']): ?>
+                <span class="badge bg-success"><?php echo h($s['status_name']) ?></span>
               <?php else: ?>
-                <span class="badge bg-secondary"><?= h($s['status_name']) ?></span>
+                <span class="badge bg-danger"><?php echo h($s['status_name']) ?></span>
               <?php endif; ?>
             </td>
 
@@ -164,15 +176,15 @@ require_once './../inc/header_admin.php';
               <button class="btn btn-sm btn-warning"
                 data-bs-toggle="modal"
                 data-bs-target="#studentModal"
-                data-id="<?= $s['id'] ?>"
-                data-name="<?= h($s['name']) ?>"
-                data-number="<?= h($s['class_name'] . $s['number']) ?>"
-                data-course="<?= h($s['course_name']) ?>"
-                data-admission="<?= $s['admission_date'] ?>"
-                data-graduation="<?= $s['graduation_date'] ?>"
-                data-pass="<?= h($s['password']) ?>"
-                data-status="<?= h($s['status_name']) ?>"
-                data-login="<?= h($s['login_id']) ?>">
+                data-id="<?php echo $s['id'] ?>"
+                data-name="<?php echo h($s['name']) ?>"
+                data-number="<?php echo h($s['class_name'] . $s['number']) ?>"
+                data-course="<?php echo h($s['course_name']) ?>"
+                data-admission="<?php echo $s['admission_date'] ?>"
+                data-graduation="<?php echo $s['graduation_date'] ?>"
+                data-pass="<?php echo h($s['password']) ?>"
+                data-status="<?php echo h($s['status_name']) ?>"
+                data-login="<?php echo h($s['login_id']) ?>">
                 詳細
               </button>
             </td>
@@ -227,7 +239,7 @@ require_once './../inc/header_admin.php';
 
 
 <script>
-  const reserveData = <?= json_encode($reserve_by_student) ?>;
+  const reserveData = <?php echo json_encode($reserve_by_student) ?>;
 
   // 行クリック
   document.querySelectorAll("tbody tr").forEach(tr => {
