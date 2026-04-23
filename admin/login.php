@@ -15,6 +15,15 @@ require_once __DIR__ . "/../inc/function.php";
 
 <body>
     <main class="l-wrapper">
+        <!-- ログインメッセージ -->
+        <?php if (!empty($_SESSION["msg"])): ?>
+            <p class="alert alert-danger text-center mx-auto col-6" role="alert">
+                <?php echo h($_SESSION["msg"]);
+                unset($_SESSION["msg"]);
+                ?>
+            </p>
+        <?php endif ?>
+        <!-- ここまで -->
         <h1 class="c-title">管理者ログイン</h1>
         <form action="login_do.php" method="post">
             <div class="row justify-content-center">

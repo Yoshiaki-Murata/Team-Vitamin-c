@@ -54,3 +54,9 @@ function check_logined()
         exit();
     }
 }
+
+
+function session_msg($msg){
+    $_SESSION["msg"]=$msg;
+}
+
