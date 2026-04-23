@@ -26,6 +26,8 @@ try {
   student_status.name AS status_name,
   students.status_id,
   courses.name AS course_name,
+  courses.id AS course_id,
+students.class_id,
 
   CASE 
     WHEN students.status_id = 1 THEN 1
@@ -184,21 +186,46 @@ require_once './../inc/header_admin.php';
                 data-bs-target="#studentModal"
                 data-id="<?php echo $s['id'] ?>"
                 data-name="<?php echo h($s['name']) ?>"
-                data-number="<?php echo h($s['class_name'] . $s['number']) ?>"
-                data-course="<?php echo h($s['course_name']) ?>"
-                data-admission="<?php echo $s['admission_date'] ?>"
+                data-number="<?php echo h($s['number']) ?>"
+                data-display-number="<?php echo h($s['class_name'] . $s['number']) ?>"
+                data-course-id="<?php echo $s['course_id'] ?>"
+                data-course-name="<?php echo h($s['course_name']) ?>"
+                data-status-id="<?php echo $s['status_id'] ?>"
+                data-status-name="<?php echo h($s['status_name']) ?>" data-admission="<?php echo $s['admission_date'] ?>"
                 data-graduation="<?php echo $s['graduation_date'] ?>"
                 data-pass="<?php echo h($s['password']) ?>"
-                data-status="<?php echo h($s['status_name']) ?>"
                 data-login="<?php echo h($s['login_id']) ?>">
                 詳細
               </button>
             </td>
             <td>
-              <button type="button" id="modal-edit-btn" class="btn btn-primary btn-sm">
+              <button type="button"
+                class="btn btn-primary btn-sm"
+                data-bs-toggle="modal"
+                data-bs-target="#editStudentModal"
+                data-id="<?php echo $s['id'] ?>"
+                data-name="<?php echo h($s['name']) ?>"
+                data-number="<?php echo h($s['number']) ?>"
+                data-display-number="<?php echo h($s['class_name'] . $s['number']) ?>"
+                data-course-id="<?php echo $s['course_id'] ?>"
+                data-course-name="<?php echo h($s['course_name']) ?>"
+                data-status-id="<?php echo $s['status_id'] ?>"
+                data-status-name="<?php echo h($s['status_name']) ?>" data-admission="<?php echo $s['admission_date'] ?>"
+                data-graduation="<?php echo $s['graduation_date'] ?>"
+                data-pass="<?php echo h($s['password']) ?>"
+                data-login="<?php echo h($s['login_id']) ?>"
+                data-class="<?php echo $s['class_id'] ?>" data-status="<?php echo $s['status_id'] ?>">
                 編集
               </button>
-              <button type="button" id="modal-delete-btn" class="btn btn-danger btn-sm">
+              <button type="button"
+                class="btn btn-danger btn-sm"
+                data-bs-toggle="modal"
+                data-bs-target="#delStudentModal"
+                data-id="<?php echo $s['id'] ?>"
+                data-name="<?php echo h($s['name']) ?>"
+                data-number="<?php echo h($s['class_name'] . $s['number']) ?>"
+                data-course-id="<?php echo $s['course_id'] ?>"
+                data-course_name="<?php echo h($s['course_name']) ?>">
                 削除
               </button>
             </td>
@@ -279,7 +306,7 @@ require_once './../inc/header_admin.php';
             </div>
           </div>
           <div class="modal-footer">
-            <input type="submit" value="更新" class="btn btn-primary">
+            <input type="submit" value="登録" class="btn btn-primary">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">閉じる</button>
           </div>
         </form>
@@ -323,7 +350,7 @@ require_once './../inc/header_admin.php';
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title">訓練生新規登録</h5>
+          <h5 class="modal-title">訓練生編集</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
         </div>
         <form action="./student_edit_do.php" method="post">
@@ -388,6 +415,7 @@ require_once './../inc/header_admin.php';
             </div>
           </div>
           <div class="modal-footer">
+            <input type="hidden" name="id">
             <input type="submit" value="更新" class="btn btn-primary">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">閉じる</button>
           </div>
@@ -398,6 +426,35 @@ require_once './../inc/header_admin.php';
   <!-- ここまで -->
 
   <!-- 削除モーダル -->
+  <div class="modal fade" id="delStudentModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">削除確認</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <form action="./student_del_do.php" method="post">
+          <div class="modal-body">
+            <dl class="row">
+              <dt class="col-sm-3">番号</dt>
+              <dd class="col-sm-9" id="del-number"></dd>
+              <dt class="col-sm-3">訓練生名</dt>
+              <dd class="col-sm-9" id="del-name"></dd>
+              <dt class="col-sm-3">訓練コース</dt>
+              <dd class="col-sm-9" id="del-course"></dd>
+            </dl>
+
+            <p>この訓練生を削除しますか?</p>
+          </div>
+          <div class="modal-footer">
+            <input type="hidden" name="id" id="del-id">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">戻る</button>
+            <button type="submit" class="btn btn-danger">削除</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
   <!-- ここまで -->
 
 </div>
@@ -405,15 +462,16 @@ require_once './../inc/header_admin.php';
 
 <script>
   const reserveData = <?php echo json_encode($reserve_by_student) ?>;
-  // モーダル
-  const modal = document.getElementById('studentModal');
 
-  modal.addEventListener('show.bs.modal', function(e) {
+  // ===== 詳細モーダル =====
+  const studentModal = document.getElementById('studentModal');
+
+  studentModal.addEventListener('show.bs.modal', function(e) {
     const btn = e.relatedTarget;
 
-    document.getElementById('modal-number').textContent = btn.dataset.number;
+    document.getElementById('modal-number').textContent = btn.dataset.displayNumber;
     document.getElementById('modal-name').textContent = btn.dataset.name;
-    document.getElementById('modal-course').textContent = btn.dataset.course;
+    document.getElementById('modal-course').textContent = btn.dataset.courseName;
     document.getElementById('modal-admission').textContent = btn.dataset.admission;
     document.getElementById('modal-graduation').textContent = btn.dataset.graduation;
     document.getElementById('modal-login').textContent = btn.dataset.login;
@@ -426,19 +484,62 @@ require_once './../inc/header_admin.php';
     if (list) {
       list.forEach(r => {
         html += `
-      <div class="card p-2 mb-2">
-        <div>${r.date} ${r.time}</div>
-        <div>${r.name}</div>
-        <div>${r.method_name}</div>
-      </div>`;
+        <div class="card p-2 mb-2">
+          <div>${r.date} ${r.time}</div>
+          <div>${r.name}</div>
+          <div>${r.method_name}</div>
+        </div>`;
       });
     } else {
       html = '予約なし';
     }
 
     document.getElementById('modal-reserve').innerHTML = html;
+  });
 
 
+  // ===== 編集モーダル =====
+  const editModal = document.getElementById('editStudentModal');
+
+  editModal.addEventListener('show.bs.modal', function(e) {
+    const btn = e.relatedTarget;
+    const form = editModal.querySelector('form');
+
+    // 各フィールドセット
+    form.querySelector('[name="class_id"]').value = btn.dataset.class;
+    form.querySelector('[name="number"]').value = btn.dataset.number;
+    form.querySelector('[name="name"]').value = btn.dataset.name;
+    form.querySelector('[name="course_id"]').value = btn.dataset.courseId;
+    form.querySelector('[name="status_id"]').value = btn.dataset.statusId;
+    form.querySelector('[name="admission_date"]').value = btn.dataset.admission;
+    form.querySelector('[name="graduation_date"]').value = btn.dataset.graduation;
+    form.querySelector('[name="login_id"]').value = btn.dataset.login;
+    form.querySelector('[name="password"]').value = btn.dataset.pass;
+
+    // hidden id
+    let hidden = form.querySelector('[name="id"]');
+    if (!hidden) {
+      hidden = document.createElement('input');
+      hidden.type = 'hidden';
+      hidden.name = 'id';
+      form.appendChild(hidden);
+    }
+    hidden.value = btn.dataset.id;
+  });
+
+  // ===== 削除モーダル =====
+  const delModal = document.getElementById('delStudentModal');
+
+  delModal.addEventListener('show.bs.modal', function(e) {
+    const btn = e.relatedTarget;
+
+    // 表示
+    document.getElementById('del-number').textContent = btn.dataset.number;
+    document.getElementById('del-name').textContent = btn.dataset.name;
+    document.getElementById('del-course').textContent = btn.dataset.course_name;
+
+    // hidden id
+    document.getElementById('del-id').value = btn.dataset.id;
   });
 </script>
 

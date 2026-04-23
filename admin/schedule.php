@@ -224,8 +224,8 @@ require_once './../inc/header_admin.php';
         <select name="date" class="form-select" id="date-box">
           <option value="">全日程</option>
           <?php foreach ($dates as $d): ?>
-            <option value="<?= h($d['date']) ?>" <?= $d['date'] == $date ? 'selected' : '' ?>>
-              <?= h($d['date']) ?>
+            <option value="<?php echo h($d['date']) ?>" <?php echo $d['date'] == $date ? 'selected' : '' ?>>
+              <?php echo h($d['date']) ?>
             </option>
           <?php endforeach; ?>
         </select>
@@ -235,8 +235,8 @@ require_once './../inc/header_admin.php';
         <select name="line" class="form-select" id="line-box">
           <option value="">全ライン</option>
           <?php foreach ($lines as $l): ?>
-            <option value="<?= $l['id'] ?>" <?= $l['id'] == $line_id ? 'selected' : '' ?>>
-              <?= h($l['line']) ?>
+            <option value="<?php echo $l['id'] ?>" <?php echo $l['id'] == $line_id ? 'selected' : '' ?>>
+              <?php echo h($l['line']) ?>
             </option>
           <?php endforeach; ?>
         </select>
@@ -301,14 +301,14 @@ require_once './../inc/header_admin.php';
                   class="btn btn-sm btn-primary edit-btn"
                   data-bs-toggle="modal"
                   data-bs-target="#editSlotModal"
-                  data-id="<?= h($slot['id']); ?>"
-                  data-date="<?= h($slot['date']); ?>"
-                  data-time-id="<?= h($slot['time_id']); ?>"
-                  data-line-id="<?= h($slot['lines_id']); ?>"
-                  data-class-id="<?= h($slot['class_id']); ?>"
-                  data-consul-id="<?= h($slot['consultant_id']); ?>"
-                  data-carecon-id="<?= h($slot['carecon_id']); ?>"
-                  data-status-id="<?= h($slot['reserve_status_id']); ?>">
+                  data-id="<?php echo h($slot['id']); ?>"
+                  data-date="<?php echo h($slot['date']); ?>"
+                  data-time-id="<?php echo h($slot['time_id']); ?>"
+                  data-line-id="<?php echo h($slot['lines_id']); ?>"
+                  data-class-id="<?php echo h($slot['class_id']); ?>"
+                  data-consul-id="<?php echo h($slot['consultant_id']); ?>"
+                  data-carecon-id="<?php echo h($slot['carecon_id']); ?>"
+                  data-status-id="<?php echo h($slot['reserve_status_id']); ?>">
                   編集
                 </button>
 
@@ -316,7 +316,7 @@ require_once './../inc/header_admin.php';
                   class="btn btn-sm btn-danger del-btn"
                   data-bs-toggle="modal"
                   data-bs-target="#delSlotModal"
-                  data-id="<?= h($slot['id']); ?>">
+                  data-id="<?php echo h($slot['id']); ?>">
                   削除
                 </button>
               </td>
