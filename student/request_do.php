@@ -26,24 +26,24 @@ if ($input) {
         $sql_date = "SELECT date FROM reservation_slots WHERE id = :slot_id";
         $stmt_date = $db->prepare($sql_date);
         $stmt_date->execute([":slot_id" => $slot_id]);
-        $target_date=$stmt_date->fetchColumn();
-        
+        $target_date = $stmt_date->fetchColumn();
+
         // 予約しようとしている日付と自分の予約している日付をチェックする
-        $sql_check="SELECT COUNT(*) 
+        $sql_check = "SELECT COUNT(*) 
         FROM reservation_infos ri
         INNER JOIN reservation_slots rs ON ri.slot_id = rs.id
         WHERE ri.student_id = :student_id
         AND rs.date=:target_date";
-        $stmt_check=$db->prepare($sql_check);
+        $stmt_check = $db->prepare($sql_check);
         $stmt_check->execute([
-            ":student_id"=>$student_id,
-            ":target_date"=>$target_date
+            ":student_id" => $student_id,
+            ":target_date" => $target_date
         ]);
-        $result_date=$stmt_check->fetchColumn();
+        $result_date = $stmt_check->fetchColumn();
         // 重複チェック
-        if($result_date>0){
-            echo json_encode(["success" => false, "message" => "同じ日に複数の予約はできません"]);
-        exit;
+        if ($result_date > 0) {
+            echo json_encode(["success" => false, "message" => "同日の予約はできません"]);
+            exit;
         }
 
 
