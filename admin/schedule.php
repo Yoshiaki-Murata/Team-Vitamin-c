@@ -246,6 +246,12 @@ require_once './../inc/header_admin.php';
     </form>
     <!-- ここまで -->
 
+    <?php if (!empty($_GET['error']) && $_GET['error'] === 'has_reservation'): ?>
+      <div class="alert alert-danger">
+        この枠には予約が入っているため削除できません
+      </div>
+    <?php endif; ?>
+
     <div class="table-responsive" style="max-height: 500px;">
       <table class="table table-hover align-middle">
         <thead class="table-light" style="position: sticky; top: 0; z-index:1;">
@@ -276,17 +282,7 @@ require_once './../inc/header_admin.php';
               <td><?php echo h($slot['class_name'] ?? '未定'); ?></td>
               <td><?php echo h($slot['consultant_name'] ?? '未定'); ?></td>
               <td><?php echo h($slot['carecon_name']); ?></td>
-              <!-- <td>
-                <?php if ($slot['reserve_status_id'] == 1): ?>
-                  <span class="badge bg-success">空き</span>
-                <?php elseif ($slot['reserve_status_id'] == 2): ?>
-                  <span class="badge bg-danger">予約済</span>
-                <?php else: ?>
-                  <span class="badge bg-secondary">
-                    <?php echo h($slot['reserve_status_name']); ?>
-                  </span>
-                <?php endif; ?>
-              </td> -->
+
               <td>
                 <button type="button"
                   class="btn btn-sm btn-primary edit-btn"
@@ -386,14 +382,7 @@ require_once './../inc/header_admin.php';
                   <?php endforeach; ?>
                 </select>
               </div>
-              <div class="mb-3">
-                <label class="form-label fw-bold">予約状況</label> <select name="reserve_status_id" class="form-select" id="edit-status" required>
-                  <?php foreach ($statuses as $status): ?>
-                    <option value="<?php echo h($status['id']); ?>"> <?php echo h($status['name']); ?>
-                    </option>
-                  <?php endforeach; ?>
-                </select>
-              </div>
+
             </div>
             <div class="modal-footer">
               <input type="submit" value="更新" class="btn btn-primary">
@@ -447,12 +436,7 @@ require_once './../inc/header_admin.php';
   });
   // ここまで
 
-  // 削除確認
-  // document.querySelector('#delSlotModal form').addEventListener('submit', function(e) {
-  //   if (!confirm('本当に削除しますか？')) {
-  //     e.preventDefault();
-  //   }
-  // });
+
 
   // 編集
   document.addEventListener('DOMContentLoaded', () => {

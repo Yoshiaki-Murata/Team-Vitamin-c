@@ -51,8 +51,7 @@ try {
             lines_id = :lines_id,
             class_id = :class_id,
             consultant_id = :consultant_id,
-            carecon_id = :carecon_id,
-            reserve_status_id = :reserve_status_id
+            carecon_id = :carecon_id
         WHERE id = :id
     ';
 
@@ -65,7 +64,6 @@ try {
     $stmt->bindValue(':class_id', $class_id, PDO::PARAM_INT);
     $stmt->bindValue(':consultant_id', $consultant_id, PDO::PARAM_INT);
     $stmt->bindValue(':carecon_id', $carecon_id, PDO::PARAM_INT);
-    $stmt->bindValue(':reserve_status_id', $status_id, PDO::PARAM_INT);
 
     $stmt->execute();
 
