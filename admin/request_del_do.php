@@ -13,6 +13,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->bindValue(':id', $id, PDO::PARAM_INT);
         $stmt->execute();
 
+
+        if ($stmt->rowCount() === 0) {
+            $_SESSION["err_msg"] = "削除できませんでした";
+            header('location:masters.php?id=' . $_POST["id"]);
+            exit();
+        } else {
+            $_SESSION["msg"] = "削除完了しました";
+        }
+
+
         header('Location: request.php');
         exit();
     } catch (PDOException $e) {

@@ -15,7 +15,6 @@ try {
   $err_msg = 'データの取得に失敗しました:' . $e->getMessage();
 }
 
-
 require_once './../inc/header_admin.php';
 ?>
 
@@ -23,6 +22,23 @@ require_once './../inc/header_admin.php';
   <div class="l-wrapper">
 
     <h1 class="c-title">管理者一覧</h1>
+
+    <?php if (!empty($_SESSION["msg"])): ?>
+      <p class="alert alert-success" role="alert">
+        <?php echo $_SESSION["msg"];
+        unset($_SESSION["msg"]);
+        ?>
+      </p>
+    <?php endif; ?>
+    <?php if (!empty($_SESSION["err_msg"])): ?>
+      <p class="alert alert-danger" role="alert">
+        <?php echo $_SESSION["msg"];
+        unset($_SESSION["msg"]);
+        ?>
+      </p>
+    <?php endif; ?>
+
+
     <button type="button" class="btn btn-info mb-3" data-bs-toggle="modal" data-bs-target="#addMasterModal">
       ＋ 新規管理者登録
     </button>
@@ -44,11 +60,11 @@ require_once './../inc/header_admin.php';
               </div>
               <div class="mb-3">
                 <label class="form-label">ログインID</label>
-                <input type="text" name="login_id" class="form-control" required>
+                <input type="text" name="login_id" class="form-control" placeholder="半角英数字10字以内" required>
               </div>
               <div class="mb-3">
                 <label class="form-label">パスワード</label>
-                <input type="text" name="password" class="form-control" required>
+                <input type="text" name="password" class="form-control" placeholder="半角数字8字" required>
               </div>
             </div>
             <div class="modal-footer">
@@ -129,11 +145,11 @@ require_once './../inc/header_admin.php';
               </div>
               <div class="mb-3">
                 <label class="form-label">ログインID</label>
-                <input type="text" name="login_id" id="edit-login_id" class="form-control" required>
+                <input type="text" name="login_id" id="edit-login_id" class="form-control" placeholder="半角英数字10字以内" required>
               </div>
               <div class="mb-3">
                 <label class="form-label">パスワード</label>
-                <input type="text" name="password" class="form-control" required>
+                <input type="text" name="password" class="form-control" placeholder="半角数字8字" required>
               </div>
             </div>
             <div class="modal-footer">
@@ -158,7 +174,7 @@ require_once './../inc/header_admin.php';
           <form action="master_del_do.php" method="post">
             <div class="modal-body">
               <dl class="row">
-                <dt class="col-sm-3">講師名</dt>
+                <dt class="col-sm-3">管理者名</dt>
                 <dd class="col-sm-9" id="del-name"></dd>
               </dl>
               <p>この管理者を削除しますか？</p>

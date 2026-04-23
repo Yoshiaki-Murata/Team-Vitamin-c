@@ -111,6 +111,21 @@ require_once './../inc/header_admin.php';
   <div class="l-wrapper">
     <h1 class="c-title">キャリコン予約枠作成</h1>
 
+    <?php if (!empty($_SESSION["msg"])): ?>
+      <p class="alert alert-success" role="alert">
+        <?php echo $_SESSION["msg"];
+        unset($_SESSION["msg"]);
+        ?>
+      </p>
+    <?php endif; ?>
+    <?php if (!empty($_SESSION["err_msg"])): ?>
+      <p class="alert alert-danger" role="alert">
+        <?php echo $_SESSION["msg"];
+        unset($_SESSION["msg"]);
+        ?>
+      </p>
+    <?php endif; ?>
+
     <button class="btn btn-info mb-3" data-bs-toggle="modal" data-bs-target="#addSlotModal">
       ＋ 新規枠登録
     </button>
@@ -323,7 +338,7 @@ require_once './../inc/header_admin.php';
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title">キャリコン枠編集</h5>
+            <h5 class="modal-title">予約枠編集</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
           </div>
           <form action="./schedule_edit_do.php" method="post">
@@ -411,7 +426,7 @@ require_once './../inc/header_admin.php';
                 <dt class="col-sm-3">時間</dt>
                 <dd class="col-sm-9" id="del-time"></dd>
               </dl>
-              <p>このキャリコン枠を削除しますか？</p>
+              <p>この予約枠を削除しますか？</p>
               <input type="hidden" name="id" id="delete-id">
             </div>
             <div class="modal-footer">

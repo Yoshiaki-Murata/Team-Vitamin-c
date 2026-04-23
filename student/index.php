@@ -27,9 +27,10 @@ try {
     $stmt_cr = $db->prepare($sql_cr);
     $stmt_cr->execute();
     $cr = $stmt_cr->fetchAll(PDO::FETCH_ASSOC);
-  } else {
-    // キャリコンプラスの情報を取得
-    $sql_plus = "SELECT ri.id,ti.time,rsl.date,mt.name AS method_name,cl.name AS class_name FROM reservation_infos ri 
+  }
+
+  // キャリコンプラスの情報を取得
+  $sql_plus = "SELECT ri.id,ti.time,rsl.date,mt.name AS method_name,cl.name AS class_name FROM reservation_infos ri 
             INNER JOIN reservation_slots rsl ON ri.slot_id = rsl.id
             INNER JOIN methods mt ON ri.method_id= mt.id
             INNER JOIN times ti ON rsl.time_id = ti.id
@@ -37,11 +38,10 @@ try {
             LEFT JOIN carecons cr ON rsl.carecon_id =cr.id
             WHERE ri.student_id=:login_id AND rsl.carecon_id=2";
 
-    $stmt_plus = $db->prepare($sql_plus);
-    $stmt_plus->bindParam(":login_id", $login_id, PDO::PARAM_INT);
-    $stmt_plus->execute();
-    $result_plus = $stmt_plus->fetchAll(PDO::FETCH_ASSOC);
-  }
+  $stmt_plus = $db->prepare($sql_plus);
+  $stmt_plus->bindParam(":login_id", $login_id, PDO::PARAM_INT);
+  $stmt_plus->execute();
+  $result_plus = $stmt_plus->fetchAll(PDO::FETCH_ASSOC);
 } catch (PDOException $e) {
   echo "エラ‐" . $e->getMessage();
 }
@@ -55,15 +55,17 @@ try {
       <h1 class="c-title">訓練生トップページ</h1>
       <p>ようこそ<?php echo "  " . $_SESSION["user_name"] . "  "; ?>さん</p>
     </div>
-    <div class="mb-5">
-      <div class="d-flex gap-3">
-        <h2 class="mb-3 c-title_carecon">
-          キャリコン実施日
-        </h2>
-        <button type="button" class="btn btn-primary mb-3" id="mReserveBtn">スケジュール</button>
-      </div>
 
-      <?php if ($course_id === 1): ?>
+    <?php if ($course_id === 1): ?>
+      <div class="mb-5">
+        <div class="d-flex gap-3">
+          <h2 class="mb-3 c-title_carecon">
+            キャリコン実施日
+          </h2>
+          <button type="button" class="btn btn-primary mb-3" id="mReserveBtn">スケジュール</button>
+        </div>
+
+
         <div>
           <?php if ($result_must): ?>
             <table class="table ms-4">
@@ -105,8 +107,10 @@ try {
             <p>実施の予定はありません</p>
           <?php endif; ?>
         </div>
-    </div>
-  <?php else: ?>
+      </div>
+    <?php endif; ?>
+
+
     <div class="mb-4">
       <div class="d-flex gap-3">
         <h2 class="mb-3 c-title_plus">キャリコンプラス予約状況</h2>
@@ -156,29 +160,28 @@ try {
       </div>
 
     </div>
-  <?php endif; ?>
 
-  <dialog class="dialog">
-    <div class="mb-4">
-      <h2 class="text-center mb-5">
-        キャリコン　予約情報
-      </h2>
-      <select name="modalDate" id="modalDate" class="form-select mx-auto w-50 mb-4">
-        <?php foreach ($cr as $c): ?>
-          <option value="<?php echo $c["date"]; ?>"><?php echo $c["date"]; ?></option>
-        <?php endforeach; ?>
-      </select>
-      <table class="table" id="modalTable">
-        <thead>
-          <th class="text-center">時間帯</th>
-          <th class="text-center">予約者</th>
-        </thead>
-        <tbody>
-        </tbody>
-      </table>
-    </div>
-    <button class="btn btn-secondary mx-auto" id="closeModal">閉じる</button>
-  </dialog>
+    <dialog class="dialog">
+      <div class="mb-4">
+        <h2 class="text-center mb-5">
+          キャリコン　予約情報
+        </h2>
+        <select name="modalDate" id="modalDate" class="form-select mx-auto w-50 mb-4">
+          <?php foreach ($cr as $c): ?>
+            <option value="<?php echo $c["date"]; ?>"><?php echo $c["date"]; ?></option>
+          <?php endforeach; ?>
+        </select>
+        <table class="table" id="modalTable">
+          <thead>
+            <th class="text-center">時間帯</th>
+            <th class="text-center">予約者</th>
+          </thead>
+          <tbody>
+          </tbody>
+        </table>
+      </div>
+      <button class="btn btn-secondary mx-auto" id="closeModal">閉じる</button>
+    </dialog>
 
   </main>
   <script src="./../js/student.js"></script>

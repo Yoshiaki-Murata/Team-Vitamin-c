@@ -64,7 +64,7 @@ $methods = $method_stmt->fetchAll(PDO::FETCH_ASSOC);
 
         <textarea name="text" id="js-text" class="form-control mb-3" rows="3" required></textarea>
 
-        <div class="mt-3">
+        <div class="mt-3 text-center">
           <button type="button"
             class="btn btn-primary"
             id="js-open">

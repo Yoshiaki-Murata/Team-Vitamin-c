@@ -68,6 +68,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt->bindValue(':status', $status, PDO::PARAM_INT);
     $stmt->bindValue(':slot_id', $slot_id, PDO::PARAM_INT);
     $stmt->execute();
+
+    if ($stmt->rowCount() === 0) {
+      $_SESSION["err_msg"] = "追加できませんでした";
+      header('location:reservation.php');
+      exit();
+    } else {
+      $_SESSION["msg"] = "追加完了しました";
+    }
   } catch (PDOException $e) {
     die('エラー: ' . $e->getMessage());
   }

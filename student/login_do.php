@@ -22,11 +22,13 @@ if (!empty($_POST)) {
                 if ($password == $result['password']) {
                     $_SESSION['user_id'] = $result['id'];
                     $_SESSION['user_name'] = $result['name'];
-                    $_SESSION["user_class_id"]=$result["class_id"];
+                    $_SESSION["user_class_id"] = $result["class_id"];
+                    $_SESSION['user_course_id'] = $result['course_id'];
                     header('location:index.php');
                     exit();
                 }
             }
+            session_err_msg("ログインに失敗しました");
             header('location:login.php');
             exit();
         } catch (PDOException $e) {

@@ -35,6 +35,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->bindValue(':id', $id, PDO::PARAM_INT);
         $stmt->execute();
 
+
+        if ($stmt->rowCount() === 0) {
+            $_SESSION["err_msg"] = "削除できませんでした";
+            header('location:schedule.php');
+            exit();
+        } else {
+            $_SESSION["msg"] = "削除完了しました";
+        }
+
+
         header('Location: schedule.php');
         exit;
     } catch (PDOException $e) {

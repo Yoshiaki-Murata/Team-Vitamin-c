@@ -64,6 +64,17 @@ try {
         $stmt->execute();
     }
 
+
+    if ($stmt->rowCount() === 0) {
+        $_SESSION["err_msg"] = "削除できませんでした";
+        header('location:masters.php?id=' . $_POST["id"]);
+        exit();
+    } else {
+        $_SESSION["msg"] = "削除完了しました";
+    }
+
+
+    // 一覧へ戻る
     header('Location: students.php');
     exit;
 } catch (PDOException $e) {

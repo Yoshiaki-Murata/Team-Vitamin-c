@@ -16,6 +16,21 @@ require_once __DIR__ . "/../inc/function.php";
 <body>
     <main class="l-wrapper">
         <h1 class="c-title">訓練生ログイン</h1>
+        <!-- ログインメッセージ -->
+        <?php if (!empty($_SESSION["err_msg"])): ?>
+            <p class="alert alert-danger text-center mx-auto col-6" role="alert">
+                <?php echo h($_SESSION["err_msg"]);
+                unset($_SESSION["err_msg"]);
+                ?>
+            </p>
+        <?php elseif (!empty($_SESSION["success_msg"])): ?>
+            <p class="alert alert-success text-center mx-auto col-6" role="alert">
+                <?php echo h($_SESSION["success_msg"]);
+                unset($_SESSION["success_msg"]);
+                ?>
+            </p>
+        <?php endif ?>
+        <!-- ここまで -->
         <form action="./login_do.php" method="post">
             <div class="row justify-content-center">
                 <div class="mb-3 col-6">

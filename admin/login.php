@@ -15,12 +15,27 @@ require_once __DIR__ . "/../inc/function.php";
 
 <body>
     <main class="l-wrapper">
+        <!-- ログインメッセージ -->
+        <?php if (!empty($_SESSION["err_msg"])): ?>
+            <p class="alert alert-danger text-center mx-auto col-6" role="alert">
+                <?php echo h($_SESSION["err_msg"]);
+                unset($_SESSION["err_msg"]);
+                ?>
+            </p>
+        <?php elseif (!empty($_SESSION["success_msg"])): ?>
+            <p class="alert alert-success text-center mx-auto col-6" role="alert">
+                <?php echo h($_SESSION["success_msg"]);
+                unset($_SESSION["success_msg"]);
+                ?>
+            </p>
+        <?php endif ?>
+        <!-- ここまで -->
         <h1 class="c-title">管理者ログイン</h1>
         <form action="login_do.php" method="post">
             <div class="row justify-content-center">
                 <div class="mb-3 col-6">
                     <label for="login_id" class="form-laber">ログインID</label>
-                    <input type="text" name="login_id" id="login_id" class="form-control" autocomplete="login_id" placeholder="半角英数字10字">
+                    <input type="text" name="login_id" id="login_id" class="form-control" autocomplete="login_id" placeholder="半角英数字10字以内">
                 </div>
             </div>
             <div class="row justify-content-center">
