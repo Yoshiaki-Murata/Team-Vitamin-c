@@ -445,11 +445,11 @@ require_once './../inc/header_admin.php';
   // ここまで
 
   // 削除確認
-  document.querySelector('#delSlotModal form').addEventListener('submit', function(e) {
-    if (!confirm('本当に削除しますか？')) {
-      e.preventDefault();
-    }
-  });
+  // document.querySelector('#delSlotModal form').addEventListener('submit', function(e) {
+  //   if (!confirm('本当に削除しますか？')) {
+  //     e.preventDefault();
+  //   }
+  // });
 
   // 編集
   document.addEventListener('DOMContentLoaded', () => {
