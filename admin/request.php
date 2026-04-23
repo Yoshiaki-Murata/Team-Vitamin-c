@@ -79,9 +79,9 @@ require_once './../inc/header_admin.php';
           <select name="status" class="form-select">
             <option value="">対応ステータス</option>
             <?php foreach ($statuses as $s): ?>
-              <option value="<?= h($s['id']) ?>"
-                <?= ($s['id'] == $status_id) ? 'selected' : '' ?>>
-                <?= h($s['name']) ?>
+              <option value="<?php echo h($s['id']) ?>"
+                <?php echo ($s['id'] == $status_id) ? 'selected' : '' ?>>
+                <?php echo h($s['name']) ?>
               </option>
             <?php endforeach; ?>
           </select>
@@ -114,14 +114,14 @@ require_once './../inc/header_admin.php';
             if ($apply['carecon_id'] == 1): ?>
               <tr>
                 <td>
-                  <div class="fw-bold"><?= h($apply['res_date']) ?></div>
-                  <small class="text-muted"><?= h($apply['res_time']) ?></small>
+                  <div class="fw-bold"><?php echo h($apply['res_date']) ?></div>
+                  <small class="text-muted"><?php echo h($apply['res_time']) ?></small>
                 </td>
                 <td>
-                  <span class="fw-semibold"><?= h($apply['res_student_name']) ?></span>
+                  <span class="fw-semibold"><?php echo h($apply['res_student_name']) ?></span>
                 </td>
                 <td>
-                  <small><?= h($apply['apply_datetime']) ?></small>
+                  <small><?php echo h($apply['apply_datetime']) ?></small>
                 </td>
                 <td>
                   <?php if ($apply['apply_status_id'] == 1): ?>
@@ -137,18 +137,18 @@ require_once './../inc/header_admin.php';
                     class="btn btn-outline-warning btn-sm"
                     data-bs-toggle="modal"
                     data-bs-target="#detailApplyModal"
-                    data-id="<?= h($apply['id']) ?>"
-                    data-student="<?= h($apply['res_student_name']) ?>"
-                    data-datetime="<?= h($apply['apply_datetime']) ?>"
-                    data-detail="<?= h($apply['apply_detail']) ?>"
-                    data-date="<?= h($apply['res_date']) ?>"
-                    data-time="<?= h($apply['res_time']) ?>"
-                    data-line="<?= h($apply['res_line']) ?>"
-                    data-consultant="<?= h($apply['res_consultant_name']) ?>"
-                    data-class="<?= h($apply['res_class_name']) ?>"
-                    data-carecon="<?= h($apply['carecon_name']) ?>"
-                    data-status="<?= h($apply['status_name']) ?>"
-                    data-method="<?= h($apply['res_method_name']) ?>">
+                    data-id="<?php echo h($apply['id']) ?>"
+                    data-student="<?php echo h($apply['res_student_name']) ?>"
+                    data-datetime="<?php echo h($apply['apply_datetime']) ?>"
+                    data-detail="<?php echo h($apply['apply_detail']) ?>"
+                    data-date="<?php echo h($apply['res_date']) ?>"
+                    data-time="<?php echo h($apply['res_time']) ?>"
+                    data-line="<?php echo h($apply['res_line']) ?>"
+                    data-consultant="<?php echo h($apply['res_consultant_name']) ?>"
+                    data-class="<?php echo h($apply['res_class_name']) ?>"
+                    data-carecon="<?php echo h($apply['carecon_name']) ?>"
+                    data-status="<?php echo h($apply['status_name']) ?>"
+                    data-method="<?php echo h($apply['res_method_name']) ?>">
                     詳細
                   </button>
                 </td>
@@ -160,15 +160,23 @@ require_once './../inc/header_admin.php';
                       class="btn btn-primary btn-sm edit-btn"
                       data-bs-toggle="modal"
                       data-bs-target="#editApplyModal"
-                      data-id="<?= h($apply['id']) ?>"
-                      data-status-id="<?= h($apply['apply_status_id']) ?>">
+                      data-id="<?php echo h($apply['id']) ?>"
+                      data-status-id="<?php echo h($apply['apply_status_id']) ?>">
                       編集
                     </button>
                     <button
                       class="btn btn-danger btn-sm del-btn"
                       data-bs-toggle="modal"
                       data-bs-target="#delApplyModal"
-                      data-id="<?= h($apply['id']) ?>">
+                      data-id="<?php echo h($apply['id']) ?>"
+                      data-student="<?php echo h($apply['res_student_name']) ?>"
+                      data-datetime="<?php echo h($apply['apply_datetime']) ?>"
+                      data-detail="<?php echo h($apply['apply_detail']) ?>"
+                      data-date="<?php echo h($apply['res_date']) ?>"
+                      data-time="<?php echo h($apply['res_time']) ?>"
+                      data-line="<?php echo h($apply['res_line']) ?>"
+                      data-carecon="<?php echo h($apply['carecon_name']) ?>"
+                      data-status="<?php echo h($apply['status_name']) ?>">
                       削除
                     </button>
                   </div>
@@ -198,14 +206,14 @@ require_once './../inc/header_admin.php';
             if ($apply['carecon_id'] == 2): ?>
               <tr>
                 <td>
-                  <div class="fw-bold"><?= h($apply['res_date']) ?></div>
-                  <small class="text-muted"><?= h($apply['res_time']) ?></small>
+                  <div class="fw-bold"><?php echo h($apply['res_date']) ?></div>
+                  <small class="text-muted"><?php echo h($apply['res_time']) ?></small>
                 </td>
                 <td>
-                  <span class="fw-semibold"><?= h($apply['res_student_name']) ?></span>
+                  <span class="fw-semibold"><?php echo h($apply['res_student_name']) ?></span>
                 </td>
                 <td>
-                  <small><?= h($apply['apply_datetime']) ?></small>
+                  <small><?php echo h($apply['apply_datetime']) ?></small>
                 </td>
                 <td>
                   <?php if ($apply['apply_status_id'] == 1): ?>
@@ -223,18 +231,18 @@ require_once './../inc/header_admin.php';
                     class="btn btn-outline-warning btn-sm"
                     data-bs-toggle="modal"
                     data-bs-target="#detailApplyModal"
-                    data-id="<?= h($apply['id']) ?>"
-                    data-student="<?= h($apply['res_student_name']) ?>"
-                    data-datetime="<?= h($apply['apply_datetime']) ?>"
-                    data-detail="<?= h($apply['apply_detail']) ?>"
-                    data-date="<?= h($apply['res_date']) ?>"
-                    data-time="<?= h($apply['res_time']) ?>"
-                    data-line="<?= h($apply['res_line']) ?>"
-                    data-consultant="<?= h($apply['res_consultant_name']) ?>"
-                    data-class="<?= h($apply['res_class_name']) ?>"
-                    data-carecon="<?= h($apply['carecon_name']) ?>"
-                    data-status="<?= h($apply['status_name']) ?>"
-                    data-method="<?= h($apply['res_method_name']) ?>">
+                    data-id="<?php echo h($apply['id']) ?>"
+                    data-student="<?php echo h($apply['res_student_name']) ?>"
+                    data-datetime="<?php echo h($apply['apply_datetime']) ?>"
+                    data-detail="<?php echo h($apply['apply_detail']) ?>"
+                    data-date="<?php echo h($apply['res_date']) ?>"
+                    data-time="<?php echo h($apply['res_time']) ?>"
+                    data-line="<?php echo h($apply['res_line']) ?>"
+                    data-consultant="<?php echo h($apply['res_consultant_name']) ?>"
+                    data-class="<?php echo h($apply['res_class_name']) ?>"
+                    data-carecon="<?php echo h($apply['carecon_name']) ?>"
+                    data-status="<?php echo h($apply['status_name']) ?>"
+                    data-method="<?php echo h($apply['res_method_name']) ?>">
                     詳細
                   </button>
                 </td>
@@ -246,8 +254,8 @@ require_once './../inc/header_admin.php';
                       class="btn btn-primary btn-sm edit-btn"
                       data-bs-toggle="modal"
                       data-bs-target="#editApplyModal"
-                      data-id="<?= h($apply['id']) ?>"
-                      data-status-id="<?= h($apply['apply_status_id']) ?>">
+                      data-id="<?php echo h($apply['id']) ?>"
+                      data-status-id="<?php echo h($apply['apply_status_id']) ?>">
                       編集
                     </button>
 
@@ -255,7 +263,15 @@ require_once './../inc/header_admin.php';
                       class="btn btn-danger btn-sm del-btn"
                       data-bs-toggle="modal"
                       data-bs-target="#delApplyModal"
-                      data-id="<?= h($apply['id']) ?>">
+                      data-id="<?php echo h($apply['id']) ?>"
+                      data-student="<?php echo h($apply['res_student_name']) ?>"
+                      data-datetime="<?php echo h($apply['apply_datetime']) ?>"
+                      data-detail="<?php echo h($apply['apply_detail']) ?>"
+                      data-date="<?php echo h($apply['res_date']) ?>"
+                      data-time="<?php echo h($apply['res_time']) ?>"
+                      data-line="<?php echo h($apply['res_line']) ?>"
+                      data-carecon="<?php echo h($apply['carecon_name']) ?>"
+                      data-status="<?php echo h($apply['status_name']) ?>">
                       削除
                     </button>
                   </div>
@@ -366,6 +382,31 @@ require_once './../inc/header_admin.php';
               <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">
+              <h6>●申請情報</h6>
+              <dl class="row mb-3">
+                <dt class="col-sm-3">申請者</dt>
+                <dd class="col-sm-9" id="del-student"></dd>
+                <dt class="col-sm-3">申請日時</dt>
+                <dd class="col-sm-9" id="del-datetime"></dd>
+                <dt class="col-sm-3">変更詳細</dt>
+                <dd class="col-sm-9" id="del-detail"></dd>
+              </dl>
+              <h6>●予約情報</h6>
+              <dl class="row mb-3">
+                <dt class="col-sm-3">予約日</dt>
+                <dd class="col-sm-9" id="del-date"></dd>
+                <dt class="col-sm-3">予約時間</dt>
+                <dd class="col-sm-9" id="del-time"></dd>
+                <dt class="col-sm-3">予約ライン</dt>
+                <dd class="col-sm-9" id="del-line"></dd>
+                <dt class="col-sm-3">キャリコン種別</dt>
+                <dd class="col-sm-9" id="del-carecon"></dd>
+              </dl>
+              <dl class="row mb-3">
+                <dt class="col-sm-3">対応ステータス</dt>
+                <dd class="col-sm-9" id="del-status"></dd>
+              </dl>
+
               <p>この申請を削除しますか?</p>
               <input type="hidden" name="id" class="del-id">
             </div>
@@ -405,6 +446,24 @@ require_once './../inc/header_admin.php';
         const id = this.dataset.id;
         const input = document.querySelector('#delApplyModal .del-id');
         if (input) input.value = id || '';
+
+        const student = btn.getAttribute('data-student');
+        const datetime = btn.getAttribute('data-datetime');
+        const detail = btn.getAttribute('data-detail');
+        const date = btn.getAttribute('data-date');
+        const time = btn.getAttribute('data-time');
+        const line = btn.getAttribute('data-line');
+        const carecon = btn.getAttribute('data-carecon');
+        const status = btn.getAttribute('data-status');
+
+        document.getElementById('del-student').textContent = student;
+        document.getElementById('del-datetime').textContent = datetime;
+        document.getElementById('del-detail').textContent = detail;
+        document.getElementById('del-date').textContent = date;
+        document.getElementById('del-time').textContent = time;
+        document.getElementById('del-line').textContent = line;
+        document.getElementById('del-carecon').textContent = carecon;
+        document.getElementById('del-status').textContent = status;
       });
     });
 
