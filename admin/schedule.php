@@ -111,6 +111,21 @@ require_once './../inc/header_admin.php';
   <div class="l-wrapper">
     <h1 class="c-title">キャリコン予約枠作成</h1>
 
+    <?php if (!empty($_SESSION["msg"])): ?>
+      <p class="alert alert-success" role="alert">
+        <?php echo $_SESSION["msg"];
+        unset($_SESSION["msg"]);
+        ?>
+      </p>
+    <?php endif; ?>
+    <?php if (!empty($_SESSION["err_msg"])): ?>
+      <p class="alert alert-danger" role="alert">
+        <?php echo $_SESSION["msg"];
+        unset($_SESSION["msg"]);
+        ?>
+      </p>
+    <?php endif; ?>
+
     <button class="btn btn-info mb-3" data-bs-toggle="modal" data-bs-target="#addSlotModal">
       ＋ 新規枠登録
     </button>
