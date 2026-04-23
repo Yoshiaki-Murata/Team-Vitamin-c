@@ -41,87 +41,94 @@ $methods = $method_stmt->fetchAll(PDO::FETCH_ASSOC);
 </head> -->
 
 <body>
-  <form action="./change_request_do.php" method="post">
-    <main class="container mt-5 l-wrapper">
-      <h1 class="mb-5 text-center">変更申請</h1>
 
-      <table class="table mb-8">
-        <thead>
-          <tr>
-            <th>日付</th>
-            <th>時間</th>
-            <th>実施方法</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td class="col-3"><?php echo $reservation["date"] ?>
-            </td>
-            <td class="col-3"><?php echo $reservation["time"] ?>
-            </td>
-            <td class="col-3"><?php echo $reservation["name"] ?></td>
-          </tr>
-        </tbody>
-      </table>
-      <p id="description">希望日時や予約枠を交換する場合は、交換相手のお名前をご記入ください。<br>
-        また、補足の連絡事項がある場合はご記入ください。</p>
-      <textarea name="text" id="js-text" class="form-control" rows="3" required></textarea>
-      <div class="mt-3">
-        <button type="button" class="btn btn-primary" id="js-open">内容を確認</button>
-        <a href="./index.php" class="btn btn-info">TOPへ戻る</a>
-      </div>
+    <main class="container mt-5 l-wrapper">
+        <h1 class="mb-5 text-center">変更申請</h1>
+
+        <table class="table mb-8">
+            <thead>
+                <tr>
+                    <th>日付</th>
+                    <th>時間</th>
+                    <th>実施方法</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="col-3"><?php echo $reservation["date"] ?>
+                    </td>
+                    <td class="col-3"><?php echo $reservation["time"] ?>
+                    </td>
+                    <td class="col-3"><?php echo $reservation["name"] ?></td>
+                </tr>
+            </tbody>
+        </table>
+        <p id="description">希望日時、枠を交換する場合は相手の名前をご記入ください。また、補足の連絡事項があればご記入ください。</p>
+        <form action="./change_request_do.php" method="post" id="change-form">
+            <textarea name="text" id="js-text" class="form-control" rows="3" required></textarea>
+            <div class="mt-3">
+                <button type="button" class="btn btn-primary" id="js-open">内容を確認</button>
+                <a href="./index.php" class="btn btn-secondary">TOPへ戻る</a>
+        </form>
+
+        </div>
     </main>
 
     <!-- modal -->
     <dialog id="js-modal" class="modal-dialog p-3 border rounded shadow">
-      <div class="modal-content p-3">
 
-        <h2 class="modal-header fs-5 border-bottom pb-2 mb-3">
-          変更希望内容
-        </h2>
+        <div class="modal-content p-3">
+            <div class="modal-header">
 
-        <div class="modal-body">
-          <p id="js-text-write"></p>
+                <h2 class="fs-5 border-bottom pb-2 mb-3">
+                    変更希望内容
+                </h2>
+            </div>
+            <div class="modal-body">
+                <p id="js-text-write"></p>
+            </div>
+
+            <div class="modal-footer mt-3 gap-2">
+
+                <input type="hidden" name="reserve_id" value="<?php echo $reserve_id; ?>">
+                <div class="d-flex align-items-center">
+                    <button class="btn btn-primary" type="submit" form="change-form">送信</button>
+
+                    <button class="btn btn-secondary" id="js-close" type="button">閉じる</button>
+                </div>
+            </div>
         </div>
-
-        <div class="modal-footer mt-3 gap-2">
-
-          <input type="hidden" name="reserve_id" value="<?php echo $reserve_id; ?>">
-          <button class="btn btn-primary" type="submit">送信</button>
-
-          <button class="btn btn-secondary" id="js-close" type="button">閉じる</button>
-        </div>
-      </div>
     </dialog>
-  </form>
-
-  <script>
-    // change_request
-    const desc = document.getElementById('description');
-    const openBtn = document.getElementById('js-open');
-    const closeBtn = document.getElementById('js-close');
-    const modal = document.getElementById('js-modal');
-    const error = document.createElement('div');
 
 
-    openBtn.addEventListener('click', () => {
+    <script>
+        // change_request
+        const desc = document.getElementById('description');
+        const openBtn = document.getElementById('js-open');
+        const closeBtn = document.getElementById('js-close');
+        const modal = document.getElementById('js-modal');
+        const error = document.createElement('div');
 
-      const element = document.getElementById('js-text');
-      if (element.value) {
-        modal.showModal();
-        const writeArea = document.getElementById('js-text-write');
-        writeArea.textContent = element.value;
-      } else {
-        error.innerHTML = '';
-        error.innerHTML = '<p class=text-danger>※変更内容をテキストで入力してください。</p>';
-        desc.appendChild(error);
-      }
-    });
-    closeBtn.addEventListener('click', () => {
-      modal.close();
-    })
-  </script>
+
+        openBtn.addEventListener('click', () => {
+
+            const element = document.getElementById('js-text');
+            if (element.value) {
+                modal.showModal();
+                const writeArea = document.getElementById('js-text-write');
+                writeArea.textContent = element.value;
+            } else {
+                error.innerHTML = '';
+                error.innerHTML = '<p class=text-danger>※変更内容をテキストで入力してください。</p>';
+                desc.appendChild(error);
+            }
+        });
+        closeBtn.addEventListener('click', () => {
+            modal.close();
+        })
+    </script>
 </body>
 
 </html>
+
 <?php require_once './../inc/footer.php'; ?>
