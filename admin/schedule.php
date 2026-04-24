@@ -127,7 +127,8 @@ require_once './../inc/header_admin.php';
     <?php endif; ?>
     <?php if (!empty($_SESSION["err_msg"])): ?>
       <p class="alert alert-danger" role="alert">
-        <?php echo h($_SESSION["err_msg"]); ?>
+        <?php echo h($_SESSION["err_msg"]);
+        unset($_SESSION["err_msg"]); ?>
       </p>
     <?php endif; ?>
 

@@ -116,13 +116,15 @@ require_once './../inc/header_admin.php';
   <h1 class="c-title">訓練生一覧</h1>
   <?php if (!empty($_SESSION["msg"])): ?>
     <p class="alert alert-success" role="alert">
-      <?php echo h($_SESSION["msg"]); ?>
+      <?php echo h($_SESSION["msg"]);
+      unset($_SESSION["msg"]); ?>
 
     </p>
   <?php endif; ?>
   <?php if (!empty($_SESSION["err_msg"])): ?>
     <p class="alert alert-danger" role="alert">
-      <?php echo h($_SESSION["err_msg"]); ?>
+      <?php echo h($_SESSION["err_msg"]);
+      unset($_SESSION["err_msg"]); ?>
 
     <?php endif; ?>
 
