@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . "/../inc/function.php";
+check_logined_student();
 $db = db_connect();
 $db->beginTransaction();
 

@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . "/../inc/function.php";
+check_logined_student();
 
 $name = $_SESSION["user_name"];
 $login_id = $_SESSION["user_id"];

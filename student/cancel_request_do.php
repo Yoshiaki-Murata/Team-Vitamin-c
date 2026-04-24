@@ -1,6 +1,7 @@
 <?php
 ob_start();
 require_once __DIR__ . '/../inc/function.php';
+check_logined_student();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') { // emptyより確実な判定
   if (!empty($_POST['text']) && !empty($_POST['reserve_id'])) {
@@ -34,9 +35,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') { // emptyより確実な判定
       $stmt_select->execute([':reserve_id' => $reserve_id]);
       $snapshot = $stmt_select->fetch(PDO::FETCH_ASSOC);
       // データが取得できなかった場合のガード
-            if (!$snapshot) {
-                exit('指定された予約情報が見つかりません。');
-            }
+      if (!$snapshot) {
+        exit('指定された予約情報が見つかりません。');
+      }
 
       //取得したコピー情報を apply_lists に挿入
       $sql_insert = "INSERT INTO apply_lists (
@@ -71,7 +72,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') { // emptyより確実な判定
     } catch (PDOException $e) {
       exit('エラー: ' . $e->getMessage());
     }
-  }else {
-        exit('入力項目が足りません。');
-    }
+  } else {
+    exit('入力項目が足りません。');
+  }
 }

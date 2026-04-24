@@ -1,9 +1,8 @@
 <?php
 require_once __DIR__ . "/../inc/function.php";
-?>
-<?php include __DIR__ . "/../inc/header_student.php" ?>
+include __DIR__ . "/../inc/header_student.php";
+check_logined_student();
 
-<?php
 $db = db_connect();
 // クリックされた予約情報を取得
 $reserve_id = $_POST['reserve-id'];
