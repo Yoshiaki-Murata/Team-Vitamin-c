@@ -27,14 +27,14 @@ require_once './../inc/header_admin.php';
 
     <?php if (!empty($_SESSION["msg"])): ?>
       <p class="alert alert-success" role="alert">
-        <?php echo $_SESSION["msg"];
+        <?php echo h($_SESSION["msg"]);
         unset($_SESSION["msg"]);
         ?>
       </p>
     <?php endif; ?>
     <?php if (!empty($_SESSION["err_msg"])): ?>
       <p class="alert alert-danger" role="alert">
-        <?php echo $_SESSION["err_msg"];
+        <?php echo h($_SESSION["err_msg"]);
         unset($_SESSION["err_msg"]);
         ?>
       </p>
@@ -93,7 +93,7 @@ require_once './../inc/header_admin.php';
             <tr>
               <td>
                 <span class="fw-semibold">
-                  <?php echo h($consul['name']) ?>
+                  <?php echo h($consul['name']); ?>
                 </span>
               </td>
               <td class="text-center">

@@ -116,14 +116,14 @@ require_once './../inc/header_admin.php';
 
     <?php if (!empty($_SESSION["msg"])): ?>
       <p class="alert alert-success" role="alert">
-        <?php echo $_SESSION["msg"];
+        <?php echo h($_SESSION["msg"]);
         unset($_SESSION["msg"]);
         ?>
       </p>
     <?php endif; ?>
     <?php if (!empty($_SESSION["err_msg"])): ?>
       <p class="alert alert-danger" role="alert">
-        <?php echo $_SESSION["err_msg"];
+        <?php echo h($_SESSION["err_msg"]);
         unset($_SESSION["err_msg"]);
         ?>
       </p>
@@ -136,8 +136,8 @@ require_once './../inc/header_admin.php';
           <select name="line" class="form-select">
             <option value="">ライン</option>
             <?php foreach ($lines as $l): ?>
-              <option value="<?php echo h($l['id']) ?>" <?php echo ($l['id'] == $line_id) ? 'selected' : '' ?>>
-                <?php echo h($l['line']) ?>
+              <option value="<?php echo h($l['id']); ?>" <?php echo h(($l['id'] == $line_id) ? 'selected' : ''); ?>>
+                <?php echo h($l['line']); ?>
               </option>
             <?php endforeach; ?>
           </select>
@@ -148,8 +148,8 @@ require_once './../inc/header_admin.php';
           <select name="date" class="form-select">
             <option value="">日付</option>
             <?php foreach ($dates as $d): ?>
-              <option value="<?php echo h($d['date']) ?>" <?php echo ($d['date'] === $date) ? 'selected' : '' ?>>
-                <?php echo h($d['date']) ?>
+              <option value="<?php echo h($d['date']); ?>" <?php echo h(($d['date'] === $date) ? 'selected' : ''); ?>>
+                <?php echo h($d['date']); ?>
               </option>
             <?php endforeach; ?>
           </select>
@@ -160,7 +160,7 @@ require_once './../inc/header_admin.php';
           <select name="student_id" class="form-select">
             <option value="">訓練生</option>
             <?php foreach ($students as $s): ?>
-              <option value="<?php echo h($s['id']); ?>" <?php echo ($s['id'] == $student_id) ? 'selected' : '' ?>>
+              <option value="<?php echo h($s['id']); ?>" <?php echo h(($s['id'] == $student_id) ? 'selected' : ''); ?>>
                 <?php echo h($s['name']); ?>
               </option>
             <?php endforeach; ?>
@@ -171,7 +171,7 @@ require_once './../inc/header_admin.php';
           <select name="carecon" class="form-select">
             <option value="">キャリコン種別</option>
             <?php foreach ($carecons as $carecon): ?>
-              <option value="<?php echo h($carecon['id']); ?>" <?php echo ($carecon['id'] == $carecon_id) ? 'selected' : '' ?>>
+              <option value="<?php echo h($carecon['id']); ?>" <?php echo h(($carecon['id'] == $carecon_id) ? 'selected' : ''); ?>>
                 <?php echo h($carecon['name']); ?>
               </option>
             <?php endforeach; ?>
@@ -183,7 +183,7 @@ require_once './../inc/header_admin.php';
           <select name="method" class="form-select">
             <option value="">方法</option>
             <?php foreach ($methods as $m): ?>
-              <option value="<?php echo h($m['id']); ?>" <?php echo ($m['id'] == $method_id) ? 'selected' : '' ?>>
+              <option value="<?php echo h($m['id']); ?>" <?php echo h(($m['id'] == $method_id) ? 'selected' : ''); ?>>
                 <?php echo h($m['name']); ?>
               </option>
             <?php endforeach; ?>
@@ -194,8 +194,8 @@ require_once './../inc/header_admin.php';
         <div class="col-md-2">
           <select name="status" class="form-select">
             <option value="">予約状況</option>
-            <option value="1" <?php echo ($status_id == 1) ? 'selected' : '' ?>>空き</option>
-            <option value="2" <?php echo ($status_id == 2) ? 'selected' : '' ?>>予約済</option>
+            <option value="1" <?php echo ($status_id == 1) ? 'selected' : ''; ?>>空き</option>
+            <option value="2" <?php echo ($status_id == 2) ? 'selected' : ''; ?>>予約済</option>
           </select>
         </div>
 
@@ -240,12 +240,12 @@ require_once './../inc/header_admin.php';
 
               <td><?php echo h($row['reserve_line']); ?></td>
               <td><?php echo h($row['date']); ?></td>
-              <td><?php echo h($row['reserve_time']) ?></td>
+              <td><?php echo h($row['reserve_time']); ?></td>
               <td><?php echo $row['reserve_student'] ? h($row['reserve_student']) : '-'; ?></td>
-              <td><?php echo $row['reserve_class'] ?: '未定'; ?></td>
-              <td><?php echo $row['reserve_consultant'] ?: '未定'; ?></td>
-              <td><?php echo $row['reserve_carecon'];; ?></td>
-              <td><?php echo $row['reserve_method'] ?: '-'; ?></td>
+              <td><?php echo h($row['reserve_class']) ?: '未定'; ?></td>
+              <td><?php echo h($row['reserve_consultant']) ?: '未定'; ?></td>
+              <td><?php echo h($row['reserve_carecon']); ?></td>
+              <td><?php echo h($row['reserve_method']) ?: '-'; ?></td>
 
               <td>
                 <?php if ($row['reserve_status_id'] == 1): ?>

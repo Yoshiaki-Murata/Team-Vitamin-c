@@ -29,7 +29,7 @@ require_once __DIR__ . "/../inc/function.php";
                 unset($_SESSION["success_msg"]);
                 ?>
             </p>
-        <?php endif ?>
+        <?php endif; ?>
         <!-- ここまで -->
         <form action="./login_do.php" method="post">
             <div class="row justify-content-center">

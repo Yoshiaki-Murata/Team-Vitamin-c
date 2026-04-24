@@ -116,14 +116,14 @@ require_once './../inc/header_admin.php';
   <h1 class="c-title">訓練生一覧</h1>
   <?php if (!empty($_SESSION["msg"])): ?>
     <p class="alert alert-success" role="alert">
-      <?php echo $_SESSION["msg"];
+      <?php echo h($_SESSION["msg"]);
       unset($_SESSION["msg"]);
       ?>
     </p>
   <?php endif; ?>
   <?php if (!empty($_SESSION["err_msg"])): ?>
     <p class="alert alert-danger" role="alert">
-      <?php echo $_SESSION["err_msg"];
+      <?php echo h($_SESSION["err_msg"]);
       unset($_SESSION["err_msg"]);
       ?>
     </p>
@@ -142,7 +142,7 @@ require_once './../inc/header_admin.php';
       <select name="class_id" class="form-select">
         <option value="">全クラス</option>
         <?php foreach ($classes as $c): ?>
-          <option value="<?php echo $c['id']; ?>" <?php echo $c['id'] == $class_id ? 'selected' : ''; ?>>
+          <option value="<?php echo h($c['id']); ?>" <?php echo $c['id'] == $class_id ? 'selected' : ''; ?>>
             <?php echo h($c['name']); ?>
           </option>
         <?php endforeach; ?>
@@ -203,7 +203,7 @@ require_once './../inc/header_admin.php';
                 data-name="<?php echo h($s['name']); ?>"
                 data-number="<?php echo h($s['number']); ?>"
                 data-display-number="<?php echo h($s['class_name'] . $s['number']); ?>"
-                data-course-id="<?php echo $s['course_id']; ?>"
+                data-course-id="<?php echo h($s['course_id']); ?>"
                 data-course-name="<?php echo h($s['course_name']); ?>"
                 data-status-id="<?php echo h($s['status_id']); ?>"
                 data-status-name="<?php echo h($s['status_name']); ?>" data-admission="<?php echo h($s['admission_date']); ?>"
