@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '/../inc/function.php';
+check_logined();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $name = $_POST['name'];
