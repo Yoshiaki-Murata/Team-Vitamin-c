@@ -461,11 +461,17 @@ require_once './../inc/header_admin.php';
 
       c.onchange = () => {
         const val = c.value;
-        //s.innerHTML = '<option value=""></option>';
+
+        // 一旦全部クリア
+        s.innerHTML = '<option value="">選択してください</option>';
+
         opts.forEach(o => {
-          if (!val || o.dataset.classId === val) s.appendChild(o);
+          if (!val || o.dataset.classId === val) {
+            s.appendChild(o);
+          }
         });
       };
+
       c.dispatchEvent(new Event('change'));
     }
 
