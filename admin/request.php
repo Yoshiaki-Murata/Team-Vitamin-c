@@ -74,14 +74,14 @@ require_once './../inc/header_admin.php';
     <h1 class="c-title">申請一覧</h1>
 
     <?php if (!empty($_SESSION["msg"])): ?>
-      <p class="alert alert-success" role="alert">
+      <p class="alert alert-success text-center mx-auto col-6" role="alert">
         <?php echo $_SESSION["msg"];
         unset($_SESSION["msg"]);
         ?>
       </p>
     <?php endif; ?>
     <?php if (!empty($_SESSION["err_msg"])): ?>
-      <p class="alert alert-danger" role="alert">
+      <p class="alert alert-danger text-center mx-auto col-6" role="alert">
         <?php echo $_SESSION["err_msg"];
         unset($_SESSION["err_msg"]);
         ?>
