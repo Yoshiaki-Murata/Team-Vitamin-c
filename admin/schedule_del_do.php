@@ -21,12 +21,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if ($stmt->fetchColumn() > 0) {
             // 予約あり → 削除させない
-            header('Location: schedule.php?error=has_reservation');
-            exit;
-        }
-
-        if ($stmt->fetchColumn() > 0) {
-            header('Location: schedule.php?error=has_reservation');
+            $_SESSION["err_msg"] = "予約済みのため削除できません";
+            header('Location: schedule.php');
             exit;
         }
 

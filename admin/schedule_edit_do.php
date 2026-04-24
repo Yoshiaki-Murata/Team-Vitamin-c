@@ -69,7 +69,7 @@ try {
     $stmt->execute();
 
     if ($stmt->rowCount() === 0) {
-        $_SESSION["err_msg"] = "編集できませんでした";
+        $_SESSION["msg"] = "変更はありません";
         header('location:schedule.php');
         exit();
     } else {
