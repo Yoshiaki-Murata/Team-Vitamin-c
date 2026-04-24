@@ -59,6 +59,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     exit;
   } catch (Exception $e) {
     $db->rollBack();
-    exit('エラー: ' . $e->getMessage());
+    session_err_msg("DB更新に失敗しました");
+    header('Location: reservation.php');
+    exit;
   }
 }

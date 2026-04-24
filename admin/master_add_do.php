@@ -41,7 +41,9 @@ if (!empty($_POST)) {
             header('location:masters.php');
             exit();
         } catch (PDOException $e) {
-            exit('エラー: ' . $e->getMessage());
+            session_err_msg("DB更新に失敗しました");
+            header('location:masters.php');
+            exit();
         }
     }
 }
