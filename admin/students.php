@@ -307,17 +307,7 @@ require_once './../inc/header_admin.php';
               <label class="fw-bold">パスワード</label>
               <input type="text" name="password" class="form-control mb-3" maxlength="8" placeholder="数字8桁" required>
             </div>
-            <div class="form-group">
-              <label class="fw-bold">在籍状況</label>
-              <select name="status_id" id="status_id" class="form-control form-control-sm mb-3" aria-label="Small select example" required>
-                <?php foreach ($statuses as  $status): ?>
-                  <option value="<?php echo h($status["id"]); ?>"
-                    <?php if ($status["id"] == 1) echo 'selected'; ?>>
-                    <?php echo h($status["name"]); ?>
-                  </option>
-                <?php endforeach; ?>
-              </select>
-            </div>
+
           </div>
           <div class="modal-footer">
             <input type="submit" value="登録" class="btn btn-primary">
@@ -338,20 +328,21 @@ require_once './../inc/header_admin.php';
           <button class="btn-close" data-bs-dismiss="modal"></button>
         </div>
         <div class="modal-body">
-          <h6 class="text-muted">基本情報</h6>
+          <h6 class="text-muted">●基本情報</h6>
           <p>番号：<span id="modal-number"></span></p>
           <p>名前：<span id="modal-name"></span></p>
           <p>コース：<span id="modal-course"></span></p>
+          <p>在籍状況：<span id="modal-status"></span></p>
 
-          <h6 class="text-muted mt-3">期間</h6>
+          <h6 class="text-muted">●期間</h6>
           <p>入校：<span id="modal-admission"></span></p>
           <p>修了：<span id="modal-graduation"></span></p>
 
-          <h6 class="text-muted mt-3">アカウント</h6>
+          <h6 class="text-muted">●アカウント</h6>
           <p>ID：<span id="modal-login"></span></p>
           <p>PASS：<span id="modal-pass"></span></p>
 
-          <h6 class="text-muted mt-3">予約</h6>
+          <h6 class="text-muted">●予約</h6>
           <div id="modal-reserve"></div>
         </div>
       </div>
@@ -486,6 +477,7 @@ require_once './../inc/header_admin.php';
     document.getElementById('modal-number').textContent = btn.dataset.displayNumber;
     document.getElementById('modal-name').textContent = btn.dataset.name;
     document.getElementById('modal-course').textContent = btn.dataset.courseName;
+    document.getElementById('modal-status').textContent = btn.dataset.statusName;
     document.getElementById('modal-admission').textContent = btn.dataset.admission;
     document.getElementById('modal-graduation').textContent = btn.dataset.graduation;
     document.getElementById('modal-login').textContent = btn.dataset.login;
