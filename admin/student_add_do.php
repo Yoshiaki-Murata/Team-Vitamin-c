@@ -19,12 +19,12 @@ $admission_date = $_POST['admission_date'] ?? '';
 $graduation_date = $_POST['graduation_date'] ?? '';
 $login_id = $_POST['login_id'] ?? '';
 $password = $_POST['password'] ?? '';
-$status_id = $_POST['status_id'] ?? '';
+$status_id = $_POST['status_id'] ?? 1;
 
 // 最低限バリデーション
-if ($status_id === '') {
-    exit('在籍状況を選択してください');
-}
+// if ($status_id === '') {
+//     exit('在籍状況を選択してください');
+// }
 
 if ($password === '') {
     exit('パスワードを入力してください');

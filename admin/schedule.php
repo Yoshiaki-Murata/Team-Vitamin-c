@@ -285,7 +285,6 @@ require_once './../inc/header_admin.php';
             <th>教室</th>
             <th>担当</th>
             <th>キャリコン種別</th>
-            <!-- <th>予約状況</th> -->
             <th>操作</th>
           </tr>
         </thead>
