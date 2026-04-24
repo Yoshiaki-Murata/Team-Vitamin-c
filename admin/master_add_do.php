@@ -13,7 +13,7 @@ if (!empty($_POST)) {
         // ログインID 数字とアルファベット 4字以上10字以下
         if (!preg_match('/^[0-9a-z]{4,10}$/', $login_id)) {
             header('masters.php');
-            exit('ID登録不可');
+            exit('ID登録不可 数字とアルファベット 4字以上10字以下');
         }
 
 

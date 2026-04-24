@@ -146,7 +146,7 @@ require_once './../inc/header_admin.php';
               </div>
               <div class="mb-3">
                 <label class="form-label">ログインID</label>
-                <input type="text" name="login_id" id="edit-login_id" class="form-control" placeholder="半角英数字10字以内" required>
+                <input type="text" name="login_id" id="edit-login_id" class="form-control" placeholder="半角英数字10字以内">
               </div>
               <div class="mb-3">
                 <label class="form-label">パスワード</label>
