@@ -285,6 +285,7 @@ require_once './../inc/header_admin.php';
             <th>教室</th>
             <th>担当</th>
             <th>キャリコン種別</th>
+            <th>予約状況</th>
             <th>操作</th>
           </tr>
         </thead>
@@ -304,7 +305,17 @@ require_once './../inc/header_admin.php';
               <td><?php echo h($slot['class_name'] ?? '未定'); ?></td>
               <td><?php echo h($slot['consultant_name'] ?? '未定'); ?></td>
               <td><?php echo h($slot['carecon_name']); ?></td>
-
+              <td>
+                <?php if ($slot['reserve_status_id'] == 1): ?>
+                  <span class="badge bg-light text-dark">
+                    なし
+                  </span>
+                <?php else: ?>
+                  <span class="badge bg-info">
+                    あり
+                  </span>
+                <?php endif; ?>
+              </td>
               <td>
                 <button type="button"
                   class="btn btn-sm btn-primary edit-btn"
