@@ -143,9 +143,9 @@ require_once './../inc/header_admin.php';
                   <?php if ($apply['apply_status_id'] == 1): ?>
                     <span class="badge bg-secondary px-3 py-2">未対応</span>
                   <?php elseif ($apply['apply_status_id'] == 2): ?>
-                    <span class="badge bg-success  px-3 py-2">対応済み</span>
+                    <span class="badge bg-success  px-3 py-2">対応済</span>
                   <?php else: ?>
-                    <span class="badge bg-warning text-dark px-3 py-2">対応中</span>
+                    <span class="badge bg-warning px-3 py-2">対応中</span>
                   <?php endif; ?>
                 </td>
                 <td class="text-center">
@@ -235,7 +235,7 @@ require_once './../inc/header_admin.php';
                   <?php if ($apply['apply_status_id'] == 1): ?>
                     <span class="badge bg-secondary px-3 py-2">未対応</span>
                   <?php elseif ($apply['apply_status_id'] == 2): ?>
-                    <span class="badge bg-success text-dark px-3 py-2">対応済</span>
+                    <span class="badge bg-success px-3 py-2">対応済</span>
                   <?php else: ?>
                     <span class="badge bg-warning px-3 py-2">対応中</span>
                   <?php endif; ?>
