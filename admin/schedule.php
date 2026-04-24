@@ -132,8 +132,10 @@ require_once './../inc/header_admin.php';
       </p>
     <?php endif; ?>
 
+
+
     <button class="btn btn-info mb-3" data-bs-toggle="modal" data-bs-target="#addSlotModal">
-      ＋ 新規枠登録
+      ＋ 新規枠作成
     </button>
 
     <!-- モーダル -->
@@ -252,7 +254,7 @@ require_once './../inc/header_admin.php';
 
       <div class="col-md-3">
         <select name="carecon" class="form-select" id="carecon-box">
-          <option value="">全キャリコン</option>
+          <option value="">キャリコン種別</option>
           <?php foreach ($carecons as $carecon): ?>
             <option value="<?php echo h($carecon['id']); ?>" <?php echo $carecon['id'] == $carecon_id ? 'selected' : ''; ?>>
               <?php echo h($carecon['name']); ?>
