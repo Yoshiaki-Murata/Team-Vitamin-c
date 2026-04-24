@@ -309,7 +309,7 @@ require_once './../inc/header_admin.php';
               <input type="hidden" name="slot_id" id="add-slot-id">
 
               <div class="mb-3">
-                <label>クラス</label>
+                <label>訓練生クラス</label>
                 <select id="add-class" name="class_id" class="form-select">
                   <option value="">選択してください</option>
                   <?php foreach ($classes as $c): ?>
@@ -367,7 +367,7 @@ require_once './../inc/header_admin.php';
               <input type="hidden" name="id" id="edit-id">
 
               <div class="mb-3">
-                <label class="form-label">クラス</label>
+                <label class="form-label">訓練生クラス</label>
                 <select name="class_id" id="edit-class" class="form-select">
                   <option value="">選択してください</option>
                   <?php foreach ($classes as $class): ?>

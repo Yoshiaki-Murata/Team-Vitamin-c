@@ -117,10 +117,7 @@ require_once './../inc/header_admin.php';
   <?php if (!empty($_SESSION["msg"])): ?>
     <p class="alert alert-success" role="alert">
       <?php echo h($_SESSION["msg"]); ?>
-    <p class="alert alert-success text-center mx-auto col-6" role="alert">
-      <?php echo $_SESSION["msg"];
-      unset($_SESSION["msg"]);
-      ?>
+
     </p>
   <?php endif; ?>
   <?php if (!empty($_SESSION["err_msg"])): ?>
