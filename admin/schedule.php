@@ -20,6 +20,7 @@ $err_mgs = '';
 // ★ GET修正（キー統一）
 $line_id = $_GET['line'] ?? '';
 $date = $_GET['date'] ?? '';
+$carecon_id = $_GET['carecon'] ?? '';
 
 try {
 
@@ -35,6 +36,11 @@ try {
   if (!empty($line_id)) {
     $where[] = 'reservation_slots.lines_id = :line_id';
     $params[':line_id'] = $line_id;
+  }
+
+  if (!empty($carecon_id)) {
+    $where[] = 'reservation_slots.carecon_id = :carecon_id';
+    $params[':carecon_id'] = $carecon_id;
   }
 
   $sql = 'SELECT 
@@ -207,18 +213,6 @@ require_once './../inc/header_admin.php';
                   <?php endforeach; ?>
                 </select>
               </div>
-
-              <!-- <div class="mb-3">
-                <label class="form-label fw-bold">予約状況</label>
-                <select name="reserve_status_id" class="form-select" required>
-                  <?php foreach ($statuses as $status): ?>
-                    <option value="<?php echo h($status['id']); ?>" <?php echo $status['id'] == 1 ? 'selected' : '' ?>>
-                      <?php echo h($status['name']); ?>
-                    </option>
-                  <?php endforeach; ?>
-                </select>
-              </div> -->
-
             </div>
 
             <div class="modal-footer">
@@ -245,6 +239,7 @@ require_once './../inc/header_admin.php';
           <?php endforeach; ?>
         </select>
       </div>
+
       <div class="col-md-3">
         <select name="line" class="form-select" id="line-box">
           <option value="">全ライン</option>
@@ -255,6 +250,18 @@ require_once './../inc/header_admin.php';
           <?php endforeach; ?>
         </select>
       </div>
+
+      <div class="col-md-3">
+        <select name="carecon" class="form-select" id="carecon-box">
+          <option value="">全キャリコン</option>
+          <?php foreach ($carecons as $carecon): ?>
+            <option value="<?php echo $carecon['id']; ?>" <?php echo $carecon['id'] == $carecon_id ? 'selected' : '' ?>>
+              <?php echo h($carecon['name']); ?>
+            </option>
+          <?php endforeach; ?>
+        </select>
+      </div>
+
       <div class="col-md-2 d-flex gap-1">
         <button class="btn btn-primary w-100">検索</button>
         <a href="schedule.php" class="btn btn-secondary w-100">リセット</a>
@@ -465,7 +472,6 @@ require_once './../inc/header_admin.php';
         document.getElementById('edit-class').value = btn.dataset.classId ?? '';
         document.getElementById('edit-consul').value = btn.dataset.consulId ?? '';
         document.getElementById('edit-carecon').value = btn.dataset.careconId;
-        document.getElementById('edit-status').value = btn.dataset.statusId;
       });
     });
 
