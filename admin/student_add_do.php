@@ -49,10 +49,10 @@ if (!preg_match('/^[0-9a-i]{10}$/', $login_id)) {
     exit('ID登録不可');
 }
 
-// パスワード 
+// パスワード 数字8字
 if (!preg_match('/^\d{8}$/', $password)) {
     //header('location:student_add.php');
-    exit('パスワード');
+    exit('パスワードが登録できません');
 }
 
 try {

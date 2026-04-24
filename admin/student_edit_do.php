@@ -145,8 +145,8 @@ try {
     $db->commit();
 
     if ($stmt->rowCount() === 0) {
-        $_SESSION["err_msg"] = "編集できませんでした";
-        header('location:masters.php');
+        $_SESSION["msg"] = "変更はありませんでした";
+        header('location:students.php');
         exit();
     } else {
         $_SESSION["msg"] = "編集完了しました";

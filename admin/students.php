@@ -162,7 +162,7 @@ require_once './../inc/header_admin.php';
           <th>番号</th>
           <th>名前</th>
           <th>コース</th>
-          <th>状態</th>
+          <th>在籍状況</th>
           <th>予約</th>
           <th>詳細</th>
           <th>操作</th>
@@ -310,7 +310,6 @@ require_once './../inc/header_admin.php';
             <div class="form-group">
               <label class="fw-bold">在籍状況</label>
               <select name="status_id" id="status_id" class="form-control form-control-sm mb-3" aria-label="Small select example" required>
-                <option value="">在籍状況</option>
                 <?php foreach ($statuses as  $status): ?>
                   <option value="<?php echo h($status["id"]); ?>"
                     <?php if ($status["id"] == 1) echo 'selected'; ?>>
