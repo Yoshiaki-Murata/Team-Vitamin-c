@@ -193,7 +193,7 @@ require_once './../inc/header_admin.php';
         <!-- 状態 -->
         <div class="col-md-2">
           <select name="status" class="form-select">
-            <option value="">状態</option>
+            <option value="">予約状況</option>
             <option value="1" <?php echo ($status_id == 1) ? 'selected' : '' ?>>空き</option>
             <option value="2" <?php echo ($status_id == 2) ? 'selected' : '' ?>>予約済</option>
           </select>
@@ -218,9 +218,9 @@ require_once './../inc/header_admin.php';
             <th>訓練生</th>
             <th>教室</th>
             <th>講師</th>
-            <th>種別</th>
+            <th>キャリコン種別</th>
             <th>方法</th>
-            <th>状態</th>
+            <th>予約状況</th>
             <th></th>
           </tr>
         </thead>
