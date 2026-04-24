@@ -1,7 +1,8 @@
 <?php
 require_once __DIR__ . "/../inc/function.php";
+check_logined_student();
 
-$date=$_GET["date"];
+$date = $_GET["date"];
 $class_id = $_SESSION["user_class_id"];
 $login_id = $_SESSION["user_id"];
 $db = db_connect();

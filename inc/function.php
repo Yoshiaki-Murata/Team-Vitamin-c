@@ -55,11 +55,26 @@ function check_logined()
     }
 }
 
+// 訓練生ページへログイン時チェック
+function check_logined_student()
+{
+    if (session_status() == PHP_SESSION_NONE) {
+        session_start();
+    }
+
+    if (!isset($_SESSION["user_id"])) {
+        header("location:login.php");
+        exit();
+    }
+}
+
 // 成功したときのメッセージ
-function session_success_msg($success_msg){
-    $_SESSION["success_msg"]=$success_msg;
+function session_success_msg($success_msg)
+{
+    $_SESSION["success_msg"] = $success_msg;
 }
 // 失敗したときのメッセージ
-function session_err_msg($err_msg){
-    $_SESSION["err_msg"]=$err_msg;
+function session_err_msg($err_msg)
+{
+    $_SESSION["err_msg"] = $err_msg;
 }

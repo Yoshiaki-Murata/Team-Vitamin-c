@@ -1,6 +1,7 @@
 <?php
 
 require_once __DIR__ . '/../inc/function.php';
+check_logined();
 
 $db = db_connect();
 $masters = [];
@@ -32,8 +33,8 @@ require_once './../inc/header_admin.php';
     <?php endif; ?>
     <?php if (!empty($_SESSION["err_msg"])): ?>
       <p class="alert alert-danger" role="alert">
-        <?php echo $_SESSION["msg"];
-        unset($_SESSION["msg"]);
+        <?php echo $_SESSION["err_msg"];
+        unset($_SESSION["err_msg"]);
         ?>
       </p>
     <?php endif; ?>

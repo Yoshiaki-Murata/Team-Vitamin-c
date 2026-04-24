@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '/../inc/function.php';
+check_logined();
 
 $db = db_connect();
 
@@ -115,8 +116,8 @@ require_once './../inc/header_admin.php';
     <?php endif; ?>
     <?php if (!empty($_SESSION["err_msg"])): ?>
       <p class="alert alert-danger" role="alert">
-        <?php echo $_SESSION["msg"];
-        unset($_SESSION["msg"]);
+        <?php echo $_SESSION["err_msg"];
+        unset($_SESSION["err_msg"]);
         ?>
       </p>
     <?php endif; ?>
@@ -441,7 +442,7 @@ require_once './../inc/header_admin.php';
 
       c.onchange = () => {
         const val = c.value;
-        s.innerHTML = '<option value="">選択</option>';
+        //s.innerHTML = '<option value=""></option>';
         opts.forEach(o => {
           if (!val || o.dataset.classId === val) s.appendChild(o);
         });

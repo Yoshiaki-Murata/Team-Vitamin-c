@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '/../inc/function.php';
+check_logined();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
@@ -84,12 +85,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt->execute();
 
 
-    if ($stmt->rowCount() === 0) {
-      $_SESSION["err_msg"] = "編集できませんでした";
-      header('location:reservation.php');
-      exit();
-    } else {
+    if ($stmt->execute()) {
+
       $_SESSION["msg"] = "編集完了しました";
+    } else {
+      $_SESSION["err_msg"] = "編集できませんでした";
+      exit();
     }
   } catch (PDOException $e) {
     die('エラー: ' . $e->getMessage());

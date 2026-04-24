@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '/../inc/function.php';
+check_logined();
 
 $db = db_connect();
 
@@ -142,6 +143,15 @@ try {
     }
 
     $db->commit();
+
+    if ($stmt->rowCount() === 0) {
+        $_SESSION["err_msg"] = "編集できませんでした";
+        header('location:masters.php');
+        exit();
+    } else {
+        $_SESSION["msg"] = "編集完了しました";
+    }
+
 
     header('Location: students.php');
     exit;

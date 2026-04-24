@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '/../inc/function.php';
+check_logined_student();
 
 if (!empty($_POST)) {
   if (!empty($_POST['text']) && !empty($_POST['reserve_id'])) {
