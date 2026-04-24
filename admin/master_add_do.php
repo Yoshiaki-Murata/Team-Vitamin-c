@@ -16,6 +16,12 @@ if (!empty($_POST)) {
             exit('ID登録不可 数字とアルファベット 4字以上10字以下');
         }
 
+        // パスワード 数字8字
+        if (!preg_match('/^[0-9]{8}$/', $password)) {
+            header('masters.php');
+            exit('パスワード登録不可 半角数字8字');
+        }
+
 
 
         // DBに接続
@@ -41,7 +47,7 @@ if (!empty($_POST)) {
             header('location:masters.php');
             exit();
         } catch (PDOException $e) {
-            session_err_msg("DB更新に失敗しました");
+            session_err_msg("登録できませんでした");
             header('location:masters.php');
             exit();
         }
