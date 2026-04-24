@@ -54,7 +54,7 @@ $methods = $method_stmt->fetchAll(PDO::FETCH_ASSOC);
                 </tr>
             </tbody>
         </table>
-        <p id="description">希望日時、枠を交換する場合は相手の名前をご記入ください。また、補足の連絡事項があればご記入ください。</p>
+        <p id="description">希望日時、枠を交換する場合は相手の名前をご記入ください。また、補足の連絡事項があればご記入ください。(50文字以内)</p>
         <form action="./change_request_do.php" method="post" id="change-form">
             <input type="hidden" name="reserve_id" value="<?php echo $reserve_id; ?>">
             <textarea name="text" id="js-text" class="form-control" rows="3" required></textarea>
@@ -102,13 +102,13 @@ $methods = $method_stmt->fetchAll(PDO::FETCH_ASSOC);
         openBtn.addEventListener('click', () => {
 
             const element = document.getElementById('js-text');
-            if (element.value) {
+            if (element.value && element.value.length <= 50) {
                 modal.show();
                 const writeArea = document.getElementById('js-text-write');
                 writeArea.textContent = element.value;
             } else {
                 error.innerHTML = '';
-                error.innerHTML = '<p class=text-danger>※変更内容をテキストで入力してください。</p>';
+                error.innerHTML = '<p class=text-danger>※変更内容を50文字以内のテキストで入力してください。</p>';
                 desc.appendChild(error);
             }
         });
