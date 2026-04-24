@@ -128,332 +128,332 @@ require_once './../inc/header_admin.php';
     <?php if (!empty($_SESSION["err_msg"])): ?>
       <p class="alert alert-danger" role="alert">
         <?php echo h($_SESSION["err_msg"]); ?>
+      </p>
+    <?php endif; ?>
 
-      <?php endif; ?>
+    <button class="btn btn-info mb-3" data-bs-toggle="modal" data-bs-target="#addSlotModal">
+      ＋ 新規枠登録
+    </button>
 
-      <button class="btn btn-info mb-3" data-bs-toggle="modal" data-bs-target="#addSlotModal">
-        ＋ 新規枠登録
-      </button>
+    <!-- モーダル -->
+    <div class="modal fade" id="addSlotModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
 
-      <!-- モーダル -->
-      <div class="modal fade" id="addSlotModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">キャリコン予約枠作成</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
 
-            <div class="modal-header">
-              <h5 class="modal-title">キャリコン予約枠作成</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          <form action="./schedule_add_do.php" method="post">
+            <div class="modal-body px-4">
+              <div class="mb-3">
+                <label class="form-label fw-bold">日付</label>
+                <input type="date" name="date" class="form-control" required>
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label fw-bold">時間</label>
+                <select name="time_id" class="form-select" required>
+                  <option value="" disabled>時間</option>
+                  <?php foreach ($times as $time): ?>
+                    <option value="<?php echo h($time['id']); ?>">
+                      <?php echo h($time['time']); ?>
+                    </option>
+                  <?php endforeach; ?>
+                </select>
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label fw-bold">ライン</label>
+                <select name="lines_id" class="form-select" required>
+                  <option value="" disabled>ライン</option>
+                  <?php foreach ($lines as $line): ?>
+                    <option value="<?php echo h($line['id']); ?>">
+                      <?php echo h($line['line']); ?>
+                    </option>
+                  <?php endforeach; ?>
+                </select>
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label fw-bold">教室</label>
+                <select name="class_id" class="form-select">
+                  <option value="">未定</option>
+                  <?php foreach ($classes as $class): ?>
+                    <option value="<?php echo h($class['id']); ?>">
+                      <?php echo h($class['name']); ?>
+                    </option>
+                  <?php endforeach; ?>
+                </select>
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label fw-bold">担当</label>
+                <select name="consultant_id" class="form-select">
+                  <option value="">未定</option>
+                  <?php foreach ($consultants as $consultant): ?>
+                    <option value="<?php echo h($consultant['id']); ?>">
+                      <?php echo h($consultant['name']); ?>
+                    </option>
+                  <?php endforeach; ?>
+                </select>
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label fw-bold">キャリコン種別</label>
+                <select name="carecon_id" class="form-select" required>
+                  <option value="" disabled>キャリコン種別</option>
+                  <?php foreach ($carecons as $carecon): ?>
+                    <option value="<?php echo h($carecon['id']); ?>">
+                      <?php echo h($carecon['name']); ?>
+                    </option>
+                  <?php endforeach; ?>
+                </select>
+              </div>
             </div>
 
-            <form action="./schedule_add_do.php" method="post">
-              <div class="modal-body px-4">
-                <div class="mb-3">
-                  <label class="form-label fw-bold">日付</label>
-                  <input type="date" name="date" class="form-control" required>
-                </div>
+            <div class="modal-footer">
+              <input type="submit" value="登録" class="btn btn-primary">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">閉じる</button>
+            </div>
 
-                <div class="mb-3">
-                  <label class="form-label fw-bold">時間</label>
-                  <select name="time_id" class="form-select" required>
-                    <option value="" disabled>時間</option>
-                    <?php foreach ($times as $time): ?>
-                      <option value="<?php echo h($time['id']); ?>">
-                        <?php echo h($time['time']); ?>
-                      </option>
-                    <?php endforeach; ?>
-                  </select>
-                </div>
+          </form>
 
-                <div class="mb-3">
-                  <label class="form-label fw-bold">ライン</label>
-                  <select name="lines_id" class="form-select" required>
-                    <option value="" disabled>ライン</option>
-                    <?php foreach ($lines as $line): ?>
-                      <option value="<?php echo h($line['id']); ?>">
-                        <?php echo h($line['line']); ?>
-                      </option>
-                    <?php endforeach; ?>
-                  </select>
-                </div>
-
-                <div class="mb-3">
-                  <label class="form-label fw-bold">教室</label>
-                  <select name="class_id" class="form-select">
-                    <option value="">未定</option>
-                    <?php foreach ($classes as $class): ?>
-                      <option value="<?php echo h($class['id']); ?>">
-                        <?php echo h($class['name']); ?>
-                      </option>
-                    <?php endforeach; ?>
-                  </select>
-                </div>
-
-                <div class="mb-3">
-                  <label class="form-label fw-bold">担当</label>
-                  <select name="consultant_id" class="form-select">
-                    <option value="">未定</option>
-                    <?php foreach ($consultants as $consultant): ?>
-                      <option value="<?php echo h($consultant['id']); ?>">
-                        <?php echo h($consultant['name']); ?>
-                      </option>
-                    <?php endforeach; ?>
-                  </select>
-                </div>
-
-                <div class="mb-3">
-                  <label class="form-label fw-bold">キャリコン種別</label>
-                  <select name="carecon_id" class="form-select" required>
-                    <option value="" disabled>キャリコン種別</option>
-                    <?php foreach ($carecons as $carecon): ?>
-                      <option value="<?php echo h($carecon['id']); ?>">
-                        <?php echo h($carecon['name']); ?>
-                      </option>
-                    <?php endforeach; ?>
-                  </select>
-                </div>
-              </div>
-
-              <div class="modal-footer">
-                <input type="submit" value="登録" class="btn btn-primary">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">閉じる</button>
-              </div>
-
-            </form>
-
-          </div>
         </div>
       </div>
-      <!-- ここまでモーダル -->
+    </div>
+    <!-- ここまでモーダル -->
 
-      <!-- フィルター -->
-      <form method="get" class="row g-2 mb-3">
-        <div class="col-md-3">
-          <select name="date" class="form-select" id="date-box">
-            <option value="">全日程</option>
-            <?php foreach ($dates as $d): ?>
-              <option value="<?php echo h($d['date']); ?>" <?php echo $d['date'] == $date ? 'selected' : ''; ?>>
-                <?php echo h($d['date']); ?>
-              </option>
-            <?php endforeach; ?>
-          </select>
-        </div>
+    <!-- フィルター -->
+    <form method="get" class="row g-2 mb-3">
+      <div class="col-md-3">
+        <select name="date" class="form-select" id="date-box">
+          <option value="">全日程</option>
+          <?php foreach ($dates as $d): ?>
+            <option value="<?php echo h($d['date']); ?>" <?php echo $d['date'] == $date ? 'selected' : ''; ?>>
+              <?php echo h($d['date']); ?>
+            </option>
+          <?php endforeach; ?>
+        </select>
+      </div>
 
-        <div class="col-md-3">
-          <select name="line" class="form-select" id="line-box">
-            <option value="">全ライン</option>
-            <?php foreach ($lines as $l): ?>
-              <option value="<?php echo h($l['id']); ?>" <?php echo $l['id'] == $line_id ? 'selected' : ''; ?>>
-                <?php echo h($l['line']); ?>
-              </option>
-            <?php endforeach; ?>
-          </select>
-        </div>
+      <div class="col-md-3">
+        <select name="line" class="form-select" id="line-box">
+          <option value="">全ライン</option>
+          <?php foreach ($lines as $l): ?>
+            <option value="<?php echo h($l['id']); ?>" <?php echo $l['id'] == $line_id ? 'selected' : ''; ?>>
+              <?php echo h($l['line']); ?>
+            </option>
+          <?php endforeach; ?>
+        </select>
+      </div>
 
-        <div class="col-md-3">
-          <select name="carecon" class="form-select" id="carecon-box">
-            <option value="">全キャリコン</option>
-            <?php foreach ($carecons as $carecon): ?>
-              <option value="<?php echo h($carecon['id']); ?>" <?php echo $carecon['id'] == $carecon_id ? 'selected' : ''; ?>>
-                <?php echo h($carecon['name']); ?>
-              </option>
-            <?php endforeach; ?>
-          </select>
-        </div>
+      <div class="col-md-3">
+        <select name="carecon" class="form-select" id="carecon-box">
+          <option value="">全キャリコン</option>
+          <?php foreach ($carecons as $carecon): ?>
+            <option value="<?php echo h($carecon['id']); ?>" <?php echo $carecon['id'] == $carecon_id ? 'selected' : ''; ?>>
+              <?php echo h($carecon['name']); ?>
+            </option>
+          <?php endforeach; ?>
+        </select>
+      </div>
 
-        <div class="col-md-2 d-flex gap-1">
-          <button class="btn btn-primary w-100">検索</button>
-          <a href="schedule.php" class="btn btn-secondary w-100">リセット</a>
-        </div>
-      </form>
-      <!-- ここまで -->
+      <div class="col-md-2 d-flex gap-1">
+        <button class="btn btn-primary w-100">検索</button>
+        <a href="schedule.php" class="btn btn-secondary w-100">リセット</a>
+      </div>
+    </form>
+    <!-- ここまで -->
 
-      <?php if (!empty($_GET['error']) && $_GET['error'] === 'has_reservation'): ?>
-        <div class="alert alert-danger">
-          この枠には予約が入っているため削除できません
-        </div>
-      <?php endif; ?>
+    <?php if (!empty($_GET['error']) && $_GET['error'] === 'has_reservation'): ?>
+      <div class="alert alert-danger">
+        この枠には予約が入っているため削除できません
+      </div>
+    <?php endif; ?>
 
-      <div class="table-responsive" style="max-height: 500px;">
-        <table class="table table-hover align-middle">
-          <thead class="table-light" style="position: sticky; top: 0; z-index:1;">
+    <div class="table-responsive" style="max-height: 500px;">
+      <table class="table table-hover align-middle">
+        <thead class="table-light" style="position: sticky; top: 0; z-index:1;">
+          <tr>
+            <th>日付</th>
+            <th>時間</th>
+            <th>ライン</th>
+            <th>教室</th>
+            <th>担当</th>
+            <th>キャリコン種別</th>
+            <th>予約状況</th>
+            <th>操作</th>
+          </tr>
+        </thead>
+        <tbody>
+          <?php if (empty($slots)): ?>
             <tr>
-              <th>日付</th>
-              <th>時間</th>
-              <th>ライン</th>
-              <th>教室</th>
-              <th>担当</th>
-              <th>キャリコン種別</th>
-              <th>予約状況</th>
-              <th>操作</th>
+              <td colspan="8" class="text-center text-muted py-4">
+                データがありません
+              </td>
             </tr>
-          </thead>
-          <tbody>
-            <?php if (empty($slots)): ?>
-              <tr>
-                <td colspan="8" class="text-center text-muted py-4">
-                  データがありません
-                </td>
-              </tr>
-            <?php endif; ?>
-            <?php foreach ($slots as $slot): ?>
-              <tr style="cursor:pointer;">
-                <td><?php echo h($slot['date']); ?></td>
-                <td><?php echo h($slot['time_slot']); ?></td>
-                <td><?php echo h($slot['line_number']); ?></td>
-                <td><?php echo h($slot['class_name'] ?? '未定'); ?></td>
-                <td><?php echo h($slot['consultant_name'] ?? '未定'); ?></td>
-                <td><?php echo h($slot['carecon_name']); ?></td>
-                <td>
-                  <?php if ($slot['reserve_status_id'] == 1): ?>
-                    <span class="badge bg-light text-dark">
-                      なし
-                    </span>
-                  <?php else: ?>
-                    <span class="badge bg-info">
-                      あり
-                    </span>
-                  <?php endif; ?>
-                </td>
-                <td>
-                  <button type="button"
-                    class="btn btn-sm btn-primary edit-btn"
-                    data-bs-toggle="modal"
-                    data-bs-target="#editSlotModal"
-                    data-id="<?php echo h($slot['id']); ?>"
-                    data-date="<?php echo h($slot['date']); ?>"
-                    data-time-id="<?php echo h($slot['time_id']); ?>"
-                    data-line-id="<?php echo h($slot['lines_id']); ?>"
-                    data-class-id="<?php echo h($slot['class_id']); ?>"
-                    data-consul-id="<?php echo h($slot['consultant_id']); ?>"
-                    data-carecon-id="<?php echo h($slot['carecon_id']); ?>"
-                    data-status-id="<?php echo h($slot['reserve_status_id']); ?>">
-                    編集
-                  </button>
-                  <button type="button"
-                    class="btn btn-sm btn-danger del-btn"
-                    data-bs-toggle="modal"
-                    data-bs-target="#delSlotModal"
-                    data-id="<?php echo h($slot['id']); ?>"
-                    data-date="<?php echo h($slot['date']); ?>"
-                    data-time-id="<?php echo h($slot['time_id']); ?>"
-                    data-time-slot="<?php echo h($slot['time_slot']); ?>"
-                    data-line-id="<?php echo h($slot['lines_id']); ?>"
-                    data-line-number="<?php echo h($slot['line_number']); ?>">
-                    削除
-                  </button>
-                </td>
-              </tr>
-            <?php endforeach; ?>
+          <?php endif; ?>
+          <?php foreach ($slots as $slot): ?>
+            <tr style="cursor:pointer;">
+              <td><?php echo h($slot['date']); ?></td>
+              <td><?php echo h($slot['time_slot']); ?></td>
+              <td><?php echo h($slot['line_number']); ?></td>
+              <td><?php echo h($slot['class_name'] ?? '未定'); ?></td>
+              <td><?php echo h($slot['consultant_name'] ?? '未定'); ?></td>
+              <td><?php echo h($slot['carecon_name']); ?></td>
+              <td>
+                <?php if ($slot['reserve_status_id'] == 1): ?>
+                  <span class="badge bg-light text-dark">
+                    なし
+                  </span>
+                <?php else: ?>
+                  <span class="badge bg-info">
+                    あり
+                  </span>
+                <?php endif; ?>
+              </td>
+              <td>
+                <button type="button"
+                  class="btn btn-sm btn-primary edit-btn"
+                  data-bs-toggle="modal"
+                  data-bs-target="#editSlotModal"
+                  data-id="<?php echo h($slot['id']); ?>"
+                  data-date="<?php echo h($slot['date']); ?>"
+                  data-time-id="<?php echo h($slot['time_id']); ?>"
+                  data-line-id="<?php echo h($slot['lines_id']); ?>"
+                  data-class-id="<?php echo h($slot['class_id']); ?>"
+                  data-consul-id="<?php echo h($slot['consultant_id']); ?>"
+                  data-carecon-id="<?php echo h($slot['carecon_id']); ?>"
+                  data-status-id="<?php echo h($slot['reserve_status_id']); ?>">
+                  編集
+                </button>
+                <button type="button"
+                  class="btn btn-sm btn-danger del-btn"
+                  data-bs-toggle="modal"
+                  data-bs-target="#delSlotModal"
+                  data-id="<?php echo h($slot['id']); ?>"
+                  data-date="<?php echo h($slot['date']); ?>"
+                  data-time-id="<?php echo h($slot['time_id']); ?>"
+                  data-time-slot="<?php echo h($slot['time_slot']); ?>"
+                  data-line-id="<?php echo h($slot['lines_id']); ?>"
+                  data-line-number="<?php echo h($slot['line_number']); ?>">
+                  削除
+                </button>
+              </td>
+            </tr>
+          <?php endforeach; ?>
 
-          </tbody>
-        </table>
-      </div>
+        </tbody>
+      </table>
+    </div>
 
-      <!-- 編集モーダル -->
-      <div class="modal fade" id="editSlotModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title">予約枠編集</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
-            <form action="./schedule_edit_do.php" method="post">
-              <div class="modal-body px-4">
-                <input type="hidden" name="id" id="edit-id">
-                <div class="mb-3">
-                  <label class="form-label fw-bold">日付</label> <input type="date" name="date" class="form-control" id="edit-date" required>
-                </div>
-                <div class="mb-3">
-                  <label class="form-label fw-bold">時間</label> <select name="time_id" class="form-select" id="edit-time" required>
-                    <option value="" disabled>時間</option>
-                    <?php foreach ($times as $time): ?>
-                      <option value="<?php echo h($time['id']); ?>">
-                        <?php echo h($time['time']); ?>
-                      </option>
-                    <?php endforeach; ?>
-                  </select>
-                </div>
-                <div class="mb-3">
-                  <label class="form-label fw-bold">ライン</label> <select name="lines_id" class="form-select" id="edit-line" required>
-                    <option value="" disabled>ライン</option>
-                    <?php foreach ($lines as $line): ?>
-                      <option value="<?php echo h($line['id']); ?>">
-                        <?php echo h($line['line']); ?>
-                      </option>
-                    <?php endforeach; ?>
-                  </select>
-                </div>
-                <div class="mb-3">
-                  <label class="form-label fw-bold">教室</label> <select name="class_id" class="form-select" id="edit-class">
-                    <option value="">未定</option>
-                    <?php foreach ($classes as $class): ?>
-                      <option value="<?php echo h($class['id']); ?>">
-                        <?php echo h($class['name']); ?>
-                      </option>
-                    <?php endforeach; ?>
-                  </select>
-                </div>
-                <div class="mb-3">
-                  <label class="form-label fw-bold">担当</label> <select name="consultant_id" class="form-select" id="edit-consul">
-                    <option value="">未定</option>
-                    <?php foreach ($consultants as $consultant): ?> <option value="<?php echo h($consultant['id']); ?>">
-                        <?php echo h($consultant['name']); ?>
-                      </option>
-                    <?php endforeach; ?>
-                  </select>
-                </div>
-                <div class="mb-3">
-                  <label class="form-label fw-bold">キャリコン種別</label>
-                  <select name="carecon_id" class="form-select" id="edit-carecon" required>
-                    <option value="" disabled>キャリコン種別</option>
-                    <?php foreach ($carecons as $carecon): ?>
-                      <option value="<?php echo h($carecon['id']); ?>">
-                        <?php echo h($carecon['name']); ?>
-                      </option>
-                    <?php endforeach; ?>
-                  </select>
-                </div>
-
-              </div>
-              <div class="modal-footer">
-                <input type="submit" value="更新" class="btn btn-primary">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">閉じる</button>
-              </div>
-            </form>
+    <!-- 編集モーダル -->
+    <div class="modal fade" id="editSlotModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">予約枠編集</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
           </div>
+          <form action="./schedule_edit_do.php" method="post">
+            <div class="modal-body px-4">
+              <input type="hidden" name="id" id="edit-id">
+              <div class="mb-3">
+                <label class="form-label fw-bold">日付</label> <input type="date" name="date" class="form-control" id="edit-date" required>
+              </div>
+              <div class="mb-3">
+                <label class="form-label fw-bold">時間</label> <select name="time_id" class="form-select" id="edit-time" required>
+                  <option value="" disabled>時間</option>
+                  <?php foreach ($times as $time): ?>
+                    <option value="<?php echo h($time['id']); ?>">
+                      <?php echo h($time['time']); ?>
+                    </option>
+                  <?php endforeach; ?>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label class="form-label fw-bold">ライン</label> <select name="lines_id" class="form-select" id="edit-line" required>
+                  <option value="" disabled>ライン</option>
+                  <?php foreach ($lines as $line): ?>
+                    <option value="<?php echo h($line['id']); ?>">
+                      <?php echo h($line['line']); ?>
+                    </option>
+                  <?php endforeach; ?>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label class="form-label fw-bold">教室</label> <select name="class_id" class="form-select" id="edit-class">
+                  <option value="">未定</option>
+                  <?php foreach ($classes as $class): ?>
+                    <option value="<?php echo h($class['id']); ?>">
+                      <?php echo h($class['name']); ?>
+                    </option>
+                  <?php endforeach; ?>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label class="form-label fw-bold">担当</label> <select name="consultant_id" class="form-select" id="edit-consul">
+                  <option value="">未定</option>
+                  <?php foreach ($consultants as $consultant): ?> <option value="<?php echo h($consultant['id']); ?>">
+                      <?php echo h($consultant['name']); ?>
+                    </option>
+                  <?php endforeach; ?>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label class="form-label fw-bold">キャリコン種別</label>
+                <select name="carecon_id" class="form-select" id="edit-carecon" required>
+                  <option value="" disabled>キャリコン種別</option>
+                  <?php foreach ($carecons as $carecon): ?>
+                    <option value="<?php echo h($carecon['id']); ?>">
+                      <?php echo h($carecon['name']); ?>
+                    </option>
+                  <?php endforeach; ?>
+                </select>
+              </div>
+
+            </div>
+            <div class="modal-footer">
+              <input type="submit" value="更新" class="btn btn-primary">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">閉じる</button>
+            </div>
+          </form>
         </div>
       </div>
-      <!-- ここまで -->
-      <!-- 削除モーダル -->
-      <div class="modal fade" id="delSlotModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title">削除確認</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
-            <form action="./schedule_del_do.php" method="post">
-              <div class="modal-body">
-                <dl class="row">
-                  <dt class="col-sm-3">ライン</dt>
-                  <dd class="col-sm-9" id="del-line"></dd>
-                  <dt class="col-sm-3">日付</dt>
-                  <dd class="col-sm-9" id="del-date"></dd>
-                  <dt class="col-sm-3">時間</dt>
-                  <dd class="col-sm-9" id="del-time"></dd>
-                </dl>
-                <p>この予約枠を削除しますか？</p>
-                <input type="hidden" name="id" id="delete-id">
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">戻る</button>
-                <button type="submit" class="btn btn-danger">削除</button>
-              </div>
-            </form>
+    </div>
+    <!-- ここまで -->
+    <!-- 削除モーダル -->
+    <div class="modal fade" id="delSlotModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">削除確認</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
           </div>
+          <form action="./schedule_del_do.php" method="post">
+            <div class="modal-body">
+              <dl class="row">
+                <dt class="col-sm-3">ライン</dt>
+                <dd class="col-sm-9" id="del-line"></dd>
+                <dt class="col-sm-3">日付</dt>
+                <dd class="col-sm-9" id="del-date"></dd>
+                <dt class="col-sm-3">時間</dt>
+                <dd class="col-sm-9" id="del-time"></dd>
+              </dl>
+              <p>この予約枠を削除しますか？</p>
+              <input type="hidden" name="id" id="delete-id">
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">戻る</button>
+              <button type="submit" class="btn btn-danger">削除</button>
+            </div>
+          </form>
         </div>
       </div>
-      <!-- ここまで -->
+    </div>
+    <!-- ここまで -->
 
   </div>
 </body>
