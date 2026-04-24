@@ -16,6 +16,7 @@ $date = $_GET['date'] ?? '';
 $student_id = $_GET['student_id'] ?? '';
 $status_id = $_GET['status'] ?? '';
 $method_id = $_GET['method'] ?? '';
+$carecon_id = $_GET['carecon'] ?? '';
 
 try {
   $where = [];
@@ -44,6 +45,11 @@ try {
   if (!empty($method_id)) {
     $where[] = 'methods.id = :method';
     $params[':method'] = $method_id;
+  }
+
+  if (!empty($carecon_id)) {
+    $where[] = 'carecons.id=:carecon';
+    $params[':carecon'] = $carecon_id;
   }
 
   $sql = 'SELECT 
@@ -96,6 +102,7 @@ try {
   $classes = $db->query('SELECT * FROM classes ORDER BY id ASC')->fetchAll(PDO::FETCH_ASSOC);
   $lines = $db->query('SELECT * FROM carecon_lines ORDER BY id ASC')->fetchAll(PDO::FETCH_ASSOC);
   $dates = $db->query('SELECT DISTINCT DATE(date) as date FROM reservation_slots ORDER BY date ASC')->fetchAll(PDO::FETCH_ASSOC);
+  $carecons = $db->query('SELECT * FROM carecons ORDER BY id ASC')->fetchAll(PDO::FETCH_ASSOC);
 } catch (PDOException $e) {
   $err_msg = 'データの取得に失敗しました:' . $e->getMessage();
 }
@@ -124,6 +131,17 @@ require_once './../inc/header_admin.php';
 
     <form method="get" class="mb-3">
       <div class="row g-2">
+        <!-- ライン -->
+        <div class="col-md-2">
+          <select name="line" class="form-select">
+            <option value="">ライン</option>
+            <?php foreach ($lines as $l): ?>
+              <option value="<?php echo h($l['id']) ?>" <?php echo ($l['id'] == $line_id) ? 'selected' : '' ?>>
+                <?php echo h($l['line']) ?>
+              </option>
+            <?php endforeach; ?>
+          </select>
+        </div>
 
         <!-- 日付 -->
         <div class="col-md-2">
@@ -132,18 +150,6 @@ require_once './../inc/header_admin.php';
             <?php foreach ($dates as $d): ?>
               <option value="<?php echo h($d['date']) ?>" <?php echo ($d['date'] === $date) ? 'selected' : '' ?>>
                 <?php echo h($d['date']) ?>
-              </option>
-            <?php endforeach; ?>
-          </select>
-        </div>
-
-        <!-- ライン -->
-        <div class="col-md-2">
-          <select name="line" class="form-select">
-            <option value="">ライン</option>
-            <?php foreach ($lines as $l): ?>
-              <option value="<?php echo h($l['id']) ?>" <?php echo ($l['id'] == $line_id) ? 'selected' : '' ?>>
-                <?php echo h($l['line']) ?>
               </option>
             <?php endforeach; ?>
           </select>
@@ -161,12 +167,14 @@ require_once './../inc/header_admin.php';
           </select>
         </div>
 
-        <!-- 状態 -->
         <div class="col-md-2">
-          <select name="status" class="form-select">
-            <option value="">状態</option>
-            <option value="1" <?php echo ($status_id == 1) ? 'selected' : '' ?>>空き</option>
-            <option value="2" <?php echo ($status_id == 2) ? 'selected' : '' ?>>予約済</option>
+          <select name="carecon" class="form-select">
+            <option value="">キャリコン種別</option>
+            <?php foreach ($carecons as $carecon): ?>
+              <option value="<?php echo $carecon['id']; ?>" <?php echo ($carecon['id'] == $carecon_id) ? 'selected' : '' ?>>
+                <?php echo h($carecon['name']); ?>
+              </option>
+            <?php endforeach; ?>
           </select>
         </div>
 
@@ -179,6 +187,15 @@ require_once './../inc/header_admin.php';
                 <?php echo h($m['name']) ?>
               </option>
             <?php endforeach; ?>
+          </select>
+        </div>
+
+        <!-- 状態 -->
+        <div class="col-md-2">
+          <select name="status" class="form-select">
+            <option value="">状態</option>
+            <option value="1" <?php echo ($status_id == 1) ? 'selected' : '' ?>>空き</option>
+            <option value="2" <?php echo ($status_id == 2) ? 'selected' : '' ?>>予約済</option>
           </select>
         </div>
 
@@ -201,6 +218,7 @@ require_once './../inc/header_admin.php';
             <th>訓練生</th>
             <th>教室</th>
             <th>講師</th>
+            <th>種別</th>
             <th>方法</th>
             <th>状態</th>
             <th></th>
@@ -226,6 +244,7 @@ require_once './../inc/header_admin.php';
               <td><?php echo $row['reserve_student'] ? h($row['reserve_student']) : '-' ?></td>
               <td><?php echo $row['reserve_class'] ?: '未定' ?></td>
               <td><?php echo $row['reserve_consultant'] ?: '未定' ?></td>
+              <td><?php echo $row['reserve_carecon']; ?></td>
               <td><?php echo $row['reserve_method'] ?: '-' ?></td>
 
               <td>
