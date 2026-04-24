@@ -30,7 +30,7 @@ try {
 }
 ?>
 
-<?php include __DIR__ . "/../inc/header_student.php" ?>
+<?php include __DIR__ . "/../inc/header_student.php"; ?>
 <!-- <?php check_array($date); ?> -->
 <main class="l-wrapper">
     <h1 class="c-title">キャリコンプラス予約画面</h1>
@@ -38,8 +38,8 @@ try {
         <div class="text-center">
             <select name="date" id="dateSelect" class="mb-3 d-inline-block form-select w-auto">
                 <?php foreach ($result as $r): ?>
-                    <option value="<?php echo $r["date"]; ?>">
-                        <?php echo $r["date"]; ?>
+                    <option value="<?php echo h($r["date"]); ?>">
+                        <?php echo h($r["date"]); ?>
                     </option>
                 <?php endforeach; ?>
             </select>

@@ -46,17 +46,17 @@ $methods = $method_stmt->fetchAll(PDO::FETCH_ASSOC);
             </thead>
             <tbody>
                 <tr>
-                    <td class="col-3"><?php echo $reservation["date"] ?>
+                    <td class="col-3"><?php echo h($reservation["date"]); ?>
                     </td>
-                    <td class="col-3"><?php echo $reservation["time"] ?>
+                    <td class="col-3"><?php echo h($reservation["time"]); ?>
                     </td>
-                    <td class="col-3"><?php echo $reservation["name"] ?></td>
+                    <td class="col-3"><?php echo h($reservation["name"]); ?></td>
                 </tr>
             </tbody>
         </table>
         <p id="description">希望日時、枠を交換する場合は相手の名前をご記入ください。また、補足の連絡事項があればご記入ください。(50文字以内)</p>
         <form action="./change_request_do.php" method="post" id="change-form">
-            <input type="hidden" name="reserve_id" value="<?php echo $reserve_id; ?>">
+            <input type="hidden" name="reserve_id" value="<?php echo h($reserve_id); ?>">
             <textarea name="text" id="js-text" class="form-control" rows="3" required></textarea>
             <div class="mt-3 text-center">
                 <button type="button" class="btn btn-primary" id="js-open">内容を確認</button>

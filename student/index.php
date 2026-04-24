@@ -48,13 +48,13 @@ try {
 }
 ?>
 
-<?php include __DIR__ . "/../inc/header_student.php" ?>
+<?php include __DIR__ . "/../inc/header_student.php"; ?>
 
 <body>
   <main class="l-wrapper">
     <div class="mb-5">
       <h1 class="c-title">訓練生トップページ</h1>
-      <p>ようこそ<?php echo "  " . $_SESSION["user_name"] . "  "; ?>さん</p>
+      <p>ようこそ<?php echo "  " . h($_SESSION["user_name"]) . "  "; ?>さん</p>
     </div>
 
     <?php if ($course_id === 1): ?>
@@ -83,20 +83,20 @@ try {
                 <?php foreach ($result_must as $rm): ?>
                   <tr class="row">
                     <td class="col-2">
-                      <?php echo $rm["date"]; ?>
+                      <?php echo h($rm["date"]); ?>
                     </td>
                     <td class="col-2">
-                      <?php echo $rm["time"]; ?>
+                      <?php echo h($rm["time"]); ?>
                     </td>
                     <td class="col-3">
-                      <?php echo $rm["method_name"]; ?>
+                      <?php echo h($rm["method_name"]); ?>
                     </td>
                     <td class="col-2">
-                      <?php echo $rm["class_name"] ?? "未定"; ?>
+                      <?php echo h($rm["class_name"] ?? "未定"); ?>
                     </td>
                     <td class="col-3">
                       <form action="./change_request.php" method="post">
-                        <input type="hidden" name="reserve-id" id="reserve-id" value="<?php echo $rm["id"] ?>">
+                        <input type="hidden" name="reserve-id" id="reserve-id" value="<?php echo h($rm["id"]); ?>">
                         <input type="submit" value="変更申請" class="btn btn-sm btn-danger">
                       </form>
                     </td>
@@ -134,20 +134,20 @@ try {
               <?php foreach ($result_plus as $rp): ?>
                 <tr class="row">
                   <td class="col-2">
-                    <?php echo $rp["date"]; ?>
+                    <?php echo h($rp["date"]); ?>
                   </td>
                   <td class="col-2">
-                    <?php echo $rp["time"]; ?>
+                    <?php echo h($rp["time"]); ?>
                   </td>
                   <td class="col-3">
-                    <?php echo $rp["method_name"]; ?>
+                    <?php echo h($rp["method_name"]); ?>
                   </td>
                   <td class="col-2">
-                    <?php echo $rp["class_name"] ?? "未定"; ?>
+                    <?php echo h($rp["class_name"] ?? "未定"); ?>
                   </td>
                   <td class="col-3">
                     <form action="./cancel_request.php" method="post">
-                      <input type="hidden" name="reserve-id" id="reserve-id" value="<?php echo $rp["id"] ?>">
+                      <input type="hidden" name="reserve-id" id="reserve-id" value="<?php echo h($rp["id"]); ?>">
                       <input type="submit" value="キャンセル申請" class="btn btn-sm btn-danger">
                     </form>
                   </td>
@@ -169,7 +169,7 @@ try {
         </h2>
         <select name="modalDate" id="modalDate" class="form-select mx-auto w-50 mb-4">
           <?php foreach ($cr as $c): ?>
-            <option value="<?php echo $c["date"]; ?>"><?php echo $c["date"]; ?></option>
+            <option value="<?php echo h($c["date"]); ?>"><?php echo h($c["date"]); ?></option>
           <?php endforeach; ?>
         </select>
         <table class="table" id="modalTable">

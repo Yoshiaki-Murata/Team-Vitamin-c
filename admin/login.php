@@ -28,7 +28,7 @@ require_once __DIR__ . "/../inc/function.php";
                 unset($_SESSION["success_msg"]);
                 ?>
             </p>
-        <?php endif ?>
+        <?php endif; ?>
         <!-- ここまで -->
         <h1 class="c-title">管理者ログイン</h1>
         <form action="login_do.php" method="post">
