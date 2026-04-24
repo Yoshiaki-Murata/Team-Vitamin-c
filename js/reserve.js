@@ -155,6 +155,9 @@ document.querySelector("#modalTable").addEventListener("click", async (e) => {
 
             const result= await response.json();
             if(result.success){
+                dialog.close();
+                const currentDate=document.getElementById("dateSelect").value;
+                updateDisplay(currentDate);
                 alert(result.message);
             }else{
                 alert(result.message);

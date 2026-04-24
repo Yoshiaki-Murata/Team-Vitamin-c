@@ -8,7 +8,7 @@ $db = db_connect();
 
 ?>
 
-<?php include __DIR__ . "/../inc/header_student.php" ?>
+<?php include __DIR__ . "/../inc/header_student.php"; ?>
 
 <body>
     <main class="l-wrapper">

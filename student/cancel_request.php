@@ -30,7 +30,7 @@ $method_stmt->execute();
 $methods = $method_stmt->fetchAll(PDO::FETCH_ASSOC);
 
 ?>
-<?php include __DIR__ . "/../inc/header_student.php" ?>
+<?php include __DIR__ . "/../inc/header_student.php"; ?>
 
 <!DOCTYPE html>
 <html lang="ja">
@@ -49,11 +49,11 @@ $methods = $method_stmt->fetchAll(PDO::FETCH_ASSOC);
         </thead>
         <tbody>
           <tr>
-            <td><?php echo $reservation["date"] ?>
+            <td><?php echo h($reservation["date"]); ?>
             </td>
-            <td><?php echo $reservation["time"] ?>
+            <td><?php echo h($reservation["time"]); ?>
             </td>
-            <td><?php echo $reservation["name"] ?></td>
+            <td><?php echo h($reservation["name"]); ?></td>
           </tr>
         </tbody>
       </table>
@@ -87,7 +87,7 @@ $methods = $method_stmt->fetchAll(PDO::FETCH_ASSOC);
                 <p id="js-text-write" class="border p-3 rounded bg-light"></p>
               </div>
               <div class="modal-footer">
-                <input type="hidden" name="reserve_id" value="<?= $reserve_id ?>">
+                <input type="hidden" name="reserve_id" value="<?php echo h($reserve_id); ?>">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                   戻る
                 </button>
@@ -105,56 +105,9 @@ $methods = $method_stmt->fetchAll(PDO::FETCH_ASSOC);
 
   </main>
 
-  <!-- modal -->
-  <!-- <dialog id="js-modal" class="modal-dialog p-3 border rounded shadow">
-    <div class="modal-content p-3">
 
-      <h2 class="modal-header fs-5 border-bottom pb-2 mb-3">
-        変更希望内容
-      </h2>
-      <h2 class="modal-header fs-5 border-bottom pb-2 mb-3">
-        キャンセル理由・変更希望内容等
-      </h2>
-
-      <div class="modal-body">
-        <p id="js-text-write"></p>
-      </div>
-
-      <div class="modal-footer mt-3">
-
-        <input type="hidden" name="reserve_id" value="<//?php echo $reserve_id; ?>">
-        <button class="btn btn-primary" type="submit">送信</button>
-
-        <button class="btn btn-secondary" id="js-close" type="button">閉じる</button>
-      </div>
-    </div>
-  </dialog> -->
 
   <script>
-    // change_request
-    // const openBtn = document.getElementById('js-open');
-    // const closeBtn = document.getElementById('js-close');
-    // const modal = document.getElementById('js-modal');
-    // const textarea = document.getElementById('js-text');
-    // const form = document.getElementById('cancelForm');
-
-    // openBtn.addEventListener('click', () => {
-    //   modal.showModal();
-    //   const element = document.getElementById('js-text');
-    //   const writeArea = document.getElementById('js-text-write');
-    //   writeArea.textContent = element.value;
-    // });
-    // closeBtn.addEventListener('click', () => {
-    //   modal.close();
-    // });
-    // 最終的な送信時のチェック（念のため）
-    // form.addEventListener('submit', (event) => {
-    //   if (textarea.value.trim() === "") {
-    //     alert("入力してください");
-    //     event.preventDefault();
-    //   }
-    // });
-
     document.addEventListener('DOMContentLoaded', function() {
       const openBtn = document.getElementById('js-open');
       const textarea = document.getElementById('js-text');

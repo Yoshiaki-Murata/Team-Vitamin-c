@@ -116,6 +116,8 @@ require_once './../inc/header_admin.php';
   <h1 class="c-title">訓練生一覧</h1>
   <?php if (!empty($_SESSION["msg"])): ?>
     <p class="alert alert-success" role="alert">
+      <?php echo h($_SESSION["msg"]); ?>
+    <p class="alert alert-success text-center mx-auto col-6" role="alert">
       <?php echo $_SESSION["msg"];
       unset($_SESSION["msg"]);
       ?>
@@ -123,6 +125,8 @@ require_once './../inc/header_admin.php';
   <?php endif; ?>
   <?php if (!empty($_SESSION["err_msg"])): ?>
     <p class="alert alert-danger" role="alert">
+      <?php echo h($_SESSION["err_msg"]); ?>
+    <p class="alert alert-danger text-center mx-auto col-6" role="alert">
       <?php echo $_SESSION["err_msg"];
       unset($_SESSION["err_msg"]);
       ?>
@@ -136,14 +140,14 @@ require_once './../inc/header_admin.php';
   <!-- 検索 -->
   <form method="GET" class="row g-2 mb-3">
     <div class="col-md-4">
-      <input type="text" name="keyword" class="form-control" placeholder="名前検索" value="<?php echo h($keyword) ?>">
+      <input type="text" name="keyword" class="form-control" placeholder="名前検索" value="<?php echo h($keyword); ?>">
     </div>
     <div class="col-md-3">
       <select name="class_id" class="form-select">
         <option value="">全クラス</option>
         <?php foreach ($classes as $c): ?>
-          <option value="<?php echo $c['id'] ?>" <?php echo $c['id'] == $class_id ? 'selected' : '' ?>>
-            <?php echo h($c['name']) ?>
+          <option value="<?php echo h($c['id']); ?>" <?php echo $c['id'] == $class_id ? 'selected' : ''; ?>>
+            <?php echo h($c['name']); ?>
           </option>
         <?php endforeach; ?>
       </select>
@@ -178,14 +182,14 @@ require_once './../inc/header_admin.php';
           $hasReserve = isset($reserve_by_student[$s['id']]);
         ?>
           <tr style="cursor:pointer;">
-            <td><?php echo h($s['class_name'] . $s['number']) ?></td>
-            <td><?php echo h($s['name']) ?></td>
-            <td><?php echo h($s['course_name']) ?></td>
+            <td><?php echo h($s['class_name'] . $s['number']); ?></td>
+            <td><?php echo h($s['name']); ?></td>
+            <td><?php echo h($s['course_name']); ?></td>
             <td>
               <?php if ($s['is_active']): ?>
-                <span class="badge bg-success"><?php echo h($s['status_name']) ?></span>
+                <span class="badge bg-success"><?php echo h($s['status_name']); ?></span>
               <?php else: ?>
-                <span class="badge bg-danger"><?php echo h($s['status_name']) ?></span>
+                <span class="badge bg-danger"><?php echo h($s['status_name']); ?></span>
               <?php endif; ?>
             </td>
             <td>
@@ -199,17 +203,17 @@ require_once './../inc/header_admin.php';
               <button class="btn btn-sm btn-warning"
                 data-bs-toggle="modal"
                 data-bs-target="#studentModal"
-                data-id="<?php echo $s['id'] ?>"
-                data-name="<?php echo h($s['name']) ?>"
-                data-number="<?php echo h($s['number']) ?>"
-                data-display-number="<?php echo h($s['class_name'] . $s['number']) ?>"
-                data-course-id="<?php echo $s['course_id'] ?>"
-                data-course-name="<?php echo h($s['course_name']) ?>"
-                data-status-id="<?php echo $s['status_id'] ?>"
-                data-status-name="<?php echo h($s['status_name']) ?>" data-admission="<?php echo $s['admission_date'] ?>"
-                data-graduation="<?php echo $s['graduation_date'] ?>"
-                data-pass="<?php echo h($s['password']) ?>"
-                data-login="<?php echo h($s['login_id']) ?>">
+                data-id="<?php echo h($s['id']); ?>"
+                data-name="<?php echo h($s['name']); ?>"
+                data-number="<?php echo h($s['number']); ?>"
+                data-display-number="<?php echo h($s['class_name'] . $s['number']); ?>"
+                data-course-id="<?php echo h($s['course_id']); ?>"
+                data-course-name="<?php echo h($s['course_name']); ?>"
+                data-status-id="<?php echo h($s['status_id']); ?>"
+                data-status-name="<?php echo h($s['status_name']); ?>" data-admission="<?php echo h($s['admission_date']); ?>"
+                data-graduation="<?php echo h($s['graduation_date']); ?>"
+                data-pass="<?php echo h($s['password']); ?>"
+                data-login="<?php echo h($s['login_id']); ?>">
                 詳細
               </button>
             </td>
@@ -218,29 +222,29 @@ require_once './../inc/header_admin.php';
                 class="btn btn-primary btn-sm"
                 data-bs-toggle="modal"
                 data-bs-target="#editStudentModal"
-                data-id="<?php echo $s['id'] ?>"
-                data-name="<?php echo h($s['name']) ?>"
-                data-number="<?php echo h($s['number']) ?>"
-                data-display-number="<?php echo h($s['class_name'] . $s['number']) ?>"
-                data-course-id="<?php echo $s['course_id'] ?>"
-                data-course-name="<?php echo h($s['course_name']) ?>"
-                data-status-id="<?php echo $s['status_id'] ?>"
-                data-status-name="<?php echo h($s['status_name']) ?>" data-admission="<?php echo $s['admission_date'] ?>"
-                data-graduation="<?php echo $s['graduation_date'] ?>"
-                data-pass="<?php echo h($s['password']) ?>"
-                data-login="<?php echo h($s['login_id']) ?>"
-                data-class="<?php echo $s['class_id'] ?>" data-status="<?php echo $s['status_id'] ?>">
+                data-id="<?php echo h($s['id']); ?>"
+                data-name="<?php echo h($s['name']); ?>"
+                data-number="<?php echo h($s['number']); ?>"
+                data-display-number="<?php echo h($s['class_name'] . $s['number']); ?>"
+                data-course-id="<?php echo h($s['course_id']); ?>"
+                data-course-name="<?php echo h($s['course_name']); ?>"
+                data-status-id="<?php echo h($s['status_id']); ?>"
+                data-status-name="<?php echo h($s['status_name']); ?>" data-admission="<?php echo h($s['admission_date']); ?>"
+                data-graduation="<?php echo h($s['graduation_date']); ?>"
+                data-pass="<?php echo h($s['password']); ?>"
+                data-login="<?php echo h($s['login_id']); ?>"
+                data-class="<?php echo h($s['class_id']); ?>" data-status="<?php echo h($s['status_id']); ?>">
                 編集
               </button>
               <button type="button"
                 class="btn btn-danger btn-sm"
                 data-bs-toggle="modal"
                 data-bs-target="#delStudentModal"
-                data-id="<?php echo $s['id'] ?>"
-                data-name="<?php echo h($s['name']) ?>"
-                data-number="<?php echo h($s['class_name'] . $s['number']) ?>"
-                data-course-id="<?php echo $s['course_id'] ?>"
-                data-course_name="<?php echo h($s['course_name']) ?>">
+                data-id="<?php echo h($s['id']); ?>"
+                data-name="<?php echo h($s['name']); ?>"
+                data-number="<?php echo h($s['class_name'] . $s['number']); ?>"
+                data-course-id="<?php echo h($s['course_id']); ?>"
+                data-course_name="<?php echo h($s['course_name']); ?>">
                 削除
               </button>
             </td>
