@@ -157,5 +157,7 @@ try {
     exit;
 } catch (PDOException $e) {
     $db->rollBack();
-    echo '更新失敗: ' . $e->getMessage();
+    session_err_msg("DB更新に失敗しました");
+    header('Location: students.php');
+    exit;
 }

@@ -27,6 +27,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         header('Location: request.php');
         exit();
     } catch (PDOException $e) {
-        exit('エラー: ' . $e->getMessage());
+        session_err_msg("DB更新に失敗しました");
+        header('Location: request.php');
+        exit();
     }
 }

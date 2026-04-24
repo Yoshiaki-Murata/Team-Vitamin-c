@@ -92,8 +92,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       $_SESSION["err_msg"] = "編集できませんでした";
       exit();
     }
+    header('Location: reservation.php');
+    exit;
   } catch (PDOException $e) {
-    die('エラー: ' . $e->getMessage());
+    session_err_msg("DB更新に失敗しました");
+    header('Location: reservation.php');
+    exit;
   }
 
   header('Location: reservation.php');

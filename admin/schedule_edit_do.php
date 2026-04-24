@@ -79,5 +79,7 @@ try {
     header('Location:schedule.php');
     exit;
 } catch (PDOException $e) {
-    echo '更新失敗: ' . $e->getMessage();
+    session_err_msg("DB更新に失敗しました");
+    header('Location:schedule.php');
+    exit;
 }

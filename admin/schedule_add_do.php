@@ -74,5 +74,7 @@ try {
     header('Location:schedule.php');
     exit;
 } catch (PDOException $e) {
-    echo '登録失敗: ' . $e->getMessage();
+    session_err_msg("DB更新に失敗しました");
+    header('Location:schedule.php');
+    exit;
 }
