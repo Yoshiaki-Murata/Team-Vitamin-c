@@ -233,8 +233,8 @@ require_once './../inc/header_admin.php';
         <select name="date" class="form-select" id="date-box">
           <option value="">全日程</option>
           <?php foreach ($dates as $d): ?>
-            <option value="<?php echo h($d['date']) ?>" <?php echo $d['date'] == $date ? 'selected' : '' ?>>
-              <?php echo h($d['date']) ?>
+            <option value="<?php echo h($d['date']); ?>" <?php echo $d['date'] == $date ? 'selected' : ''; ?>>
+              <?php echo h($d['date']); ?>
             </option>
           <?php endforeach; ?>
         </select>
@@ -244,8 +244,8 @@ require_once './../inc/header_admin.php';
         <select name="line" class="form-select" id="line-box">
           <option value="">全ライン</option>
           <?php foreach ($lines as $l): ?>
-            <option value="<?php echo $l['id'] ?>" <?php echo $l['id'] == $line_id ? 'selected' : '' ?>>
-              <?php echo h($l['line']) ?>
+            <option value="<?php echo h($l['id']); ?>" <?php echo $l['id'] == $line_id ? 'selected' : ''; ?>>
+              <?php echo h($l['line']); ?>
             </option>
           <?php endforeach; ?>
         </select>
@@ -255,7 +255,7 @@ require_once './../inc/header_admin.php';
         <select name="carecon" class="form-select" id="carecon-box">
           <option value="">全キャリコン</option>
           <?php foreach ($carecons as $carecon): ?>
-            <option value="<?php echo $carecon['id']; ?>" <?php echo $carecon['id'] == $carecon_id ? 'selected' : '' ?>>
+            <option value="<?php echo h($carecon['id']); ?>" <?php echo $carecon['id'] == $carecon_id ? 'selected' : ''; ?>>
               <?php echo h($carecon['name']); ?>
             </option>
           <?php endforeach; ?>
@@ -338,9 +338,9 @@ require_once './../inc/header_admin.php';
                   data-id="<?php echo h($slot['id']); ?>"
                   data-date="<?php echo h($slot['date']); ?>"
                   data-time-id="<?php echo h($slot['time_id']); ?>"
-                  data-time-slot="<?php echo h($slot['time_slot']) ?>"
+                  data-time-slot="<?php echo h($slot['time_slot']); ?>"
                   data-line-id="<?php echo h($slot['lines_id']); ?>"
-                  data-line-number="<?php echo h($slot['line_number']) ?>">
+                  data-line-number="<?php echo h($slot['line_number']); ?>">
                   削除
                 </button>
               </td>

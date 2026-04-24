@@ -160,8 +160,8 @@ require_once './../inc/header_admin.php';
           <select name="student_id" class="form-select">
             <option value="">訓練生</option>
             <?php foreach ($students as $s): ?>
-              <option value="<?php echo $s['id'] ?>" <?php echo ($s['id'] == $student_id) ? 'selected' : '' ?>>
-                <?php echo h($s['name']) ?>
+              <option value="<?php echo h($s['id']); ?>" <?php echo ($s['id'] == $student_id) ? 'selected' : '' ?>>
+                <?php echo h($s['name']); ?>
               </option>
             <?php endforeach; ?>
           </select>
@@ -171,7 +171,7 @@ require_once './../inc/header_admin.php';
           <select name="carecon" class="form-select">
             <option value="">キャリコン種別</option>
             <?php foreach ($carecons as $carecon): ?>
-              <option value="<?php echo $carecon['id']; ?>" <?php echo ($carecon['id'] == $carecon_id) ? 'selected' : '' ?>>
+              <option value="<?php echo h($carecon['id']); ?>" <?php echo ($carecon['id'] == $carecon_id) ? 'selected' : '' ?>>
                 <?php echo h($carecon['name']); ?>
               </option>
             <?php endforeach; ?>
@@ -183,8 +183,8 @@ require_once './../inc/header_admin.php';
           <select name="method" class="form-select">
             <option value="">方法</option>
             <?php foreach ($methods as $m): ?>
-              <option value="<?php echo $m['id'] ?>" <?php echo ($m['id'] == $method_id) ? 'selected' : '' ?>>
-                <?php echo h($m['name']) ?>
+              <option value="<?php echo h($m['id']); ?>" <?php echo ($m['id'] == $method_id) ? 'selected' : '' ?>>
+                <?php echo h($m['name']); ?>
               </option>
             <?php endforeach; ?>
           </select>
@@ -238,14 +238,14 @@ require_once './../inc/header_admin.php';
           <?php foreach ($reservations as $row): ?>
             <tr style="cursor:pointer;">
 
-              <td><?php echo h($row['reserve_line']) ?></td>
-              <td><?php echo h($row['date']) ?></td>
+              <td><?php echo h($row['reserve_line']); ?></td>
+              <td><?php echo h($row['date']); ?></td>
               <td><?php echo h($row['reserve_time']) ?></td>
-              <td><?php echo $row['reserve_student'] ? h($row['reserve_student']) : '-' ?></td>
-              <td><?php echo $row['reserve_class'] ?: '未定' ?></td>
-              <td><?php echo $row['reserve_consultant'] ?: '未定' ?></td>
-              <td><?php echo $row['reserve_carecon']; ?></td>
-              <td><?php echo $row['reserve_method'] ?: '-' ?></td>
+              <td><?php echo $row['reserve_student'] ? h($row['reserve_student']) : '-'; ?></td>
+              <td><?php echo $row['reserve_class'] ?: '未定'; ?></td>
+              <td><?php echo $row['reserve_consultant'] ?: '未定'; ?></td>
+              <td><?php echo $row['reserve_carecon'];; ?></td>
+              <td><?php echo $row['reserve_method'] ?: '-'; ?></td>
 
               <td>
                 <?php if ($row['reserve_status_id'] == 1): ?>
@@ -254,7 +254,7 @@ require_once './../inc/header_admin.php';
                   <span class="badge bg-danger">予約済</span>
                 <?php else: ?>
                   <span class="badge bg-secondary">
-                    <?php echo h($row['reservation_status']) ?>
+                    <?php echo h($row['reservation_status']); ?>
                   </span>
                 <?php endif; ?>
               </td>
@@ -263,25 +263,25 @@ require_once './../inc/header_admin.php';
                 <?php if ($row['reservation_id']): ?>
                   <button class="btn btn-sm btn-primary edit-btn"
                     data-bs-toggle="modal" data-bs-target="#editReserveModal"
-                    data-id="<?php echo $row['reservation_id'] ?>"
-                    data-student-id="<?php echo $row['student_id'] ?>"
-                    data-method-id="<?php echo $row['method_id'] ?>"
-                    data-student-class-id="<?php echo $row['student_class_id'] ?>">
+                    data-id="<?php echo h($row['reservation_id']); ?>"
+                    data-student-id="<?php echo h($row['student_id']); ?>"
+                    data-method-id="<?php echo h($row['method_id']); ?>"
+                    data-student-class-id="<?php echo h($row['student_class_id']); ?>">
                     変更</button>
 
                   <button class="btn btn-sm btn-danger del-btn"
                     data-bs-toggle="modal" data-bs-target="#delReserveModal"
-                    data-id="<?php echo $row['reservation_id'] ?>"
-                    data-carecon="<?php echo $row['reserve_carecon']; ?>"
-                    data-date="<?php echo $row['date']; ?>"
-                    data-time="<?php echo $row['reserve_time']; ?>"
-                    data-student="<?php echo $row['reserve_student']; ?>">
+                    data-id="<?php echo h($row['reservation_id']); ?>"
+                    data-carecon="<?php echo h($row['reserve_carecon']); ?>"
+                    data-date="<?php echo h($row['date']); ?>"
+                    data-time="<?php echo h($row['reserve_time']); ?>"
+                    data-student="<?php echo h($row['reserve_student']); ?>">
                     削除</button>
 
                 <?php else: ?>
                   <button class="btn btn-sm btn-warning add-btn"
                     data-bs-toggle="modal" data-bs-target="#addReserveModal"
-                    data-id="<?php echo $row['slot_id'] ?>">
+                    data-id="<?php echo h($row['slot_id']); ?>">
                     追加</button>
                 <?php endif; ?>
               </td>
@@ -313,7 +313,7 @@ require_once './../inc/header_admin.php';
                 <select id="add-class" name="class_id" class="form-select">
                   <option value="">選択してください</option>
                   <?php foreach ($classes as $c): ?>
-                    <option value="<?php echo $c['id'] ?>"><?php echo $c['name'] ?></option>
+                    <option value="<?php echo h($c['id']); ?>"><?php echo h($c['name']); ?></option>
                   <?php endforeach; ?>
                 </select>
               </div>
@@ -323,8 +323,8 @@ require_once './../inc/header_admin.php';
                 <select id="add-student" name="student_id" class="form-select">
                   <option value="">選択してください</option>
                   <?php foreach ($students as $s): ?>
-                    <option value="<?php echo $s['id'] ?>" data-class-id="<?php echo $s['class_id'] ?>">
-                      <?php echo $s['name'] ?>
+                    <option value="<?php echo h($s['id']); ?>" data-class-id="<?php echo h($s['class_id']); ?>">
+                      <?php echo h($s['name']); ?>
                     </option>
                   <?php endforeach; ?>
                 </select>
@@ -334,7 +334,7 @@ require_once './../inc/header_admin.php';
                 <label>実施方法</label>
                 <select name="method_id" class="form-select">
                   <?php foreach ($methods as $m): ?>
-                    <option value="<?php echo $m['id'] ?>"><?php echo $m['name'] ?></option>
+                    <option value="<?php echo h($m['id']); ?>"><?php echo h($m['name']); ?></option>
                   <?php endforeach; ?>
                 </select>
               </div>
@@ -371,8 +371,8 @@ require_once './../inc/header_admin.php';
                 <select name="class_id" id="edit-class" class="form-select">
                   <option value="">選択してください</option>
                   <?php foreach ($classes as $class): ?>
-                    <option value="<?php echo h($class['id']) ?>">
-                      <?php echo h($class['name']) ?>
+                    <option value="<?php echo h($class['id']); ?>">
+                      <?php echo h($class['name']); ?>
                     </option>
                   <?php endforeach; ?>
                 </select>
@@ -383,8 +383,8 @@ require_once './../inc/header_admin.php';
                 <select name="student_id" id="edit-student" class="form-select">
                   <option value="">選択してください</option>
                   <?php foreach ($students as $student): ?>
-                    <option value="<?php echo h($student['id']) ?>" data-class-id="<?php echo h($student['class_id']) ?>">
-                      <?php echo h($student['name']) ?>
+                    <option value="<?php echo h($student['id']); ?>" data-class-id="<?php echo h($student['class_id']); ?>">
+                      <?php echo h($student['name']); ?>
                     </option>
                   <?php endforeach; ?>
                 </select>
@@ -395,8 +395,8 @@ require_once './../inc/header_admin.php';
                 <select name="method_id" id="edit-method" class="form-select">
                   <option value="">選択してください</option>
                   <?php foreach ($methods as $method): ?>
-                    <option value="<?php echo h($method['id']) ?>">
-                      <?php echo h($method['name']) ?>
+                    <option value="<?php echo h($method['id']); ?>">
+                      <?php echo h($method['name']); ?>
                     </option>
                   <?php endforeach; ?>
                 </select>
